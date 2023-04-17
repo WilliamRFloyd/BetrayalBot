@@ -17,5 +17,5 @@ def initialize_slash_commands(bot):
 
     @bot.slash_command()
     async def role(inter, role: Role, hidden: bool = False):
-        await inter.response.send_message("Imagine a description of %s" % (status), ephemeral=hidden)
+        await inter.response.send_message("Imagine a description of %s" % (role), ephemeral=hidden)
 
