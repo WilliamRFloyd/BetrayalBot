@@ -9,6 +9,7 @@ AlignmentColours = {
         }
 
 
+
 def levenshtein_distance(s, t):
     m, n = len(s), len(t)
     d = [[0] * (n + 1) for _ in range(m + 1)]
