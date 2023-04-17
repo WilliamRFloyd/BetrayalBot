@@ -10,7 +10,6 @@ from disnake.ext import commands
 from disnake import utils
 from disnake import TextInputStyle
 import datetime
-
 import slash
 
 #Creating connenction to discord
