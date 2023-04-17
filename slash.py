@@ -1,21 +1,13 @@
 from enum import Enum
-
-class Status(str, Enum):
-    Cursed = "cursed"
-    Frozen = "Frozen"
-
-class Role(str, Enum):
-    Terminal = "terminal"
-    Gunman = "gunman"
-
+import cmd_status
+import cmd_role
 
 # Initialize all the slash commands
 def initialize_slash_commands(bot):
     @bot.slash_command()
-    async def status(inter, status: Status, hidden: bool = False):
-        await inter.response.send_message("Imagine a description of %s" % (status), ephemeral=hidden)
+    async def status(inter, status: cmd_status.Status, hidden: bool = False):
+        await cmd_status.status(inter, status, hidden)
 
-    @bot.slash_command()
-    async def role(inter, role: Role, hidden: bool = False):
-        await inter.response.send_message("Imagine a description of %s" % (role), ephemeral=hidden)
-
+    @bot.slash_command(description="View a Betrayal role")
+    async def viewrole(inter, role: str, hidden: bool = False):
+        await cmd_role.role(inter, role, hidden)
