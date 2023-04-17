@@ -10,6 +10,7 @@ from disnake.ext import commands
 from disnake import utils
 from disnake import TextInputStyle
 import datetime
+import slash
 
 #Creating connenction to discord
 load_dotenv()
@@ -18,6 +19,8 @@ intents.message_content = True
 intents.members = True
 token = os.getenv('DISCORD_TOKEN')
 bot = commands.Bot(command_prefix='/', intents=intents, case_insensitive=True)
+
+slash.initialize_slash_commands(bot)
 
 #Coverts rarity to numeric value
 def rarityToNum(rarity: str) -> int:
