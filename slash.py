@@ -5,7 +5,7 @@ import cmd_role
 # Initialize all the slash commands
 def initialize_slash_commands(bot):
     @bot.slash_command()
-    async def status(inter, status: cmd_status.Status, hidden: bool = False):
+    async def viewstatus(inter, status: cmd_status.Status, hidden: bool = False):
         await cmd_status.status(inter, status, hidden)
 
     @bot.slash_command(description="View a Betrayal role")
