@@ -453,7 +453,7 @@ async def viewability(ctx, ability: str, hidden: bool = False):
                 effect = abilityinfo["effect"]
                 embed = disnake.Embed(title=f'{name}', description=f'{rarity}', color=rarityColors[rarity])
                 embed.add_field(name=f'Effect:', value=f'{effect}', inline=False)
-                await ctx.send(embed=embed)
+                await ctx.send(embed=embed, ephemeral=hidden, components=[disnake.ui.Button(label=f'View {role}', style=disnake.ButtonStyle.secondary, custom_id=f'viewrole_{role}')])
                 return
             else:
                 abilityList.append(a)
@@ -469,7 +469,8 @@ async def viewability(ctx, ability: str, hidden: bool = False):
                 effect = abilityinfo["effect"]
                 embed = disnake.Embed(title=f'{name}', description=f'{rarity}', color=rarityColors[rarity])
                 embed.add_field(name=f'Effect:', value=f'{effect}', inline=False)
-                await ctx.send(response, embed=embed, ephemeral=hidden)
+                await ctx.send(response, embed=embed, ephemeral=hidden, components=[disnake.ui.Button(label=f'View {role}', style=disnake.ButtonStyle.secondary, custom_id=f'viewrole_{role}')])
+
 
 #Code for viewing information of a specific perk
 @bot.slash_command(description="View the information about the specified perk")
@@ -483,7 +484,7 @@ async def viewperk(ctx, perk: str, hidden: bool = False):
         for p, effect in info["perks"].items():
             if perk.lower() == p.lower():
                 embed = disnake.Embed(title=f'{p}', description=f'{effect}')
-                await ctx.send(embed=embed)
+                await ctx.send(embed=embed, ephemeral=hidden, components=[disnake.ui.Button(label=f'View {role}', style=disnake.ButtonStyle.secondary, custom_id=f'viewrole_{role}')])
                 return
             else:
                 perkList.append(p)
@@ -495,7 +496,7 @@ async def viewperk(ctx, perk: str, hidden: bool = False):
         for p, effect in info["perks"].items():
             if closestPerk.lower() == p.lower():
                 embed = disnake.Embed(title=f'{p}', description=f'{effect}')
-                await ctx.send(response, embed=embed, ephemeral=hidden)
+                await ctx.send(response, embed=embed, ephemeral=hidden, components=[disnake.ui.Button(label=f'View {role}', style=disnake.ButtonStyle.secondary, custom_id=f'viewrole_{role}')])
                 return
 
 #Code for viewing information of a specific status
@@ -523,7 +524,7 @@ async def viewstatus(ctx, status: str, hidden: bool = False):
     for s, info in data["statuses"].items():
         if status.lower() == s.lower() or status.lower() + "ed" == s.lower() or status.lower() + "d" == s.lower():
             embed = disnake.Embed(title=f'{s}', description=f'{info}', color=statusColors[s])
-            await ctx.send(embed=embed)
+            await ctx.send(embed=embed, ephemeral=hidden)
             return
         else:
             statusList.append(s)
@@ -1144,6 +1145,80 @@ async def help_listener(ctx: disnake.MessageInteraction):
         await ctx.send("Button Indeed")
     elif ctx.component.custom_id in ["good", "neutral", "evil"]:
         await ctx.send(ctx.component.label)
+    elif ctx.component.custom_id.startswith("viewrole_"):
+        rolename = ctx.component.custom_id.split("_")[1]
+        file = open("info.json")
+        data = json.load(file)
+        file.close()
+        alignmentColors = {
+            "Good": 0x00FF00,
+            "Neutral": 0x888888,
+            "Evil": 0xFF0000,
+            "Ball": 0xFFFFFF,
+            "Traveller": 0xFFFF00
+            }
+
+        roleList = []
+        for r, info in data["classes"].items():
+            if rolename.lower() == r.lower():
+                name = r
+                alignment = info["alignment"]
+                description = info["description"]
+                abilities = info["abilities"]
+                perks = info["perks"]
+                achievements = info["achievements"]
+                
+                embed = disnake.Embed(title=f'{name}', description=f'**{alignment}**\n{description}\n\n**Abilities:**', color=alignmentColors[alignment])
+                i = 0
+                for ability, info in abilities.items():
+                    extra = ""
+                    i += 1
+                    if i == len(abilities):
+                        extra = "\n\n**Perks:**"
+                    embed.add_field(name=f'{ability} [x{info["charges"]}]', value=f'{info["effect"]}{extra}', inline=False)
+                i = 0
+                for perk, info in perks.items():
+                    extra = ""
+                    i += 1
+                    if i == len(perks):
+                        extra = "\n\n**Achievements:**"
+                    embed.add_field(name=f'{perk}', value=f'{info}{extra}', inline=False)
+                for achievement, info in achievements.items():
+                    embed.add_field(name=f'{achievement}', value=f'{info}', inline=False)
+                await ctx.send(embed=embed, ephemeral=True)
+                return
+            else:
+                roleList.append(r)
+        closestRole = find_most_similar_string(rolename, roleList)
+        info = data["classes"][closestRole]
+        name = closestRole
+        alignment = info["alignment"]
+        description = info["description"]
+        abilities = info["abilities"]
+        perks = info["perks"]
+        achievements = info["achievements"]
+        
+        embed = disnake.Embed(title=f'{name}', description=f'**{alignment}**\n{description}\n\n**Abilities:**', color=alignmentColors[alignment])
+        i = 0
+        for ability, info in abilities.items():
+            extra = ""
+            i += 1
+            if i == len(abilities):
+                extra = "\n\n**Perks:**"
+            embed.add_field(name=f'{ability} [x{info["charges"]}]', value=f'{info["effect"]}{extra}', inline=False)
+        i = 0
+        for perk, info in perks.items():
+            extra = ""
+            i += 1
+            if i == len(perks):
+                extra = "\n\n**Achievements:**"
+            embed.add_field(name=f'{perk}', value=f'{info}{extra}', inline=False)
+        for achievement, info in achievements.items():
+            embed.add_field(name=f'{achievement}', value=f'{info}', inline=False)
+        await ctx.send(embed=embed, ephemeral=True)
+    else:
+        await ctx.send("Unknown Button Interaction", ephemeral=True)
+
 
 #Runs bot
 bot.run(token)
