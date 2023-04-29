@@ -19,6 +19,39 @@ intents.members = True
 token = os.getenv('DISCORD_TOKEN')
 bot = commands.Bot(command_prefix='/', intents=intents, case_insensitive=True)
 
+#Nerd Stuff idk
+def levenshtein_distance(s, t):
+    m, n = len(s), len(t)
+    d = [[0] * (n + 1) for _ in range(m + 1)]
+
+    for i in range(m + 1):
+        d[i][0] = i
+
+    for j in range(n + 1):
+        d[0][j] = j
+
+    for j in range(1, n + 1):
+        for i in range(1, m + 1):
+            if s[i - 1] == t[j - 1]:
+                d[i][j] = d[i - 1][j - 1]
+            else:
+                d[i][j] = min(d[i - 1][j], d[i][j - 1], d[i - 1][j - 1]) + 1
+
+    return d[m][n]
+
+
+def find_most_similar_string(string, string_array):
+    closest_string = None
+    closest_distance = float('inf')
+
+    for candidate_string in string_array:
+        distance = levenshtein_distance(string, candidate_string)
+        if distance < closest_distance:
+            closest_distance = distance
+            closest_string = candidate_string
+
+    return closest_string
+
 #Coverts rarity to numeric value
 def rarityToNum(rarity: str) -> int:
     rarity = rarity.lower()
@@ -172,12 +205,17 @@ def inventoryString(inventory):
         if i != len(inventory["immunities"]) - 1:
             string += ", "
     for k, v in inventory.items():
-        if k not in ("coins", "bonus", "items", "statuses", "effects", "aas", "id", "immunities"):
+        if k not in ("coins", "bonus", "items", "statuses", "effects", "aas", "id", "immunities", "vote"):
             string += f'\n{k}: '
             for i in range(len(v)):
                 string += v[i]
                 if i != len(v) - 1:
                     string += ", "
+    string += "\nVote(s): "
+    for i in range(len(inventory["vote"])):
+        string += inventory["vote"][i]
+        if i != len(inventory["vote"]) - 1:
+            string += ", "
     string += "```"
     return string
 
@@ -206,6 +244,9 @@ async def itemRain(ctx, arg1="0", arg2="1"):
         await ctx.send(f'Do this is bots channel')
         return
     arg2 = int(arg2)
+    if arg2 > 50:
+        await ctx.send(f'Capped at 50')
+        arg2 = 50
     if arg1.isdigit():
         arg1 = int(arg1)
         for i in range(arg2):
@@ -232,6 +273,9 @@ async def anyAbility(ctx, arg1="0", arg2="1"):
         await ctx.send(f'Do this is bots channel')
         return
     arg2 = int(arg2)
+    if arg2 > 50:
+        await ctx.send(f'Capped at 50')
+        arg2 = 50
     if arg1.isdigit():
         arg1 = int(arg1)
         for i in range(arg2):
@@ -249,6 +293,9 @@ async def carepackage(ctx, arg1=0, arg2=1):
         await ctx.send(f'Do this is bots channel')
         return
     arg2 = int(arg2)
+    if arg2 > 50:
+        await ctx.send(f'Capped at 50')
+        arg2 = 50
     arg1 = int(arg1)
     for i in range(arg2):
         item = itemGen(arg1)
@@ -256,8 +303,8 @@ async def carepackage(ctx, arg1=0, arg2=1):
         await ctx.send(f'Carepackage:\nItem: {item}\nAny Ability: {anyAbility}')
 
 #Code for viewing information of a specific item
-@bot.command(name='viewitem', help="View the rarity, cost, and effects of the specified item.")
-async def viewitem(ctx, *, arg=""):
+@bot.slash_command(description="View the information about the specified item")
+async def viewitem(ctx, item: str, hidden: bool = False):
     file = open("info.json")
     data = json.load(file)
     file.close()
@@ -270,10 +317,11 @@ async def viewitem(ctx, *, arg=""):
         "Mythical": 0xBF40BF,
         "Unique": 0xFFFFFF
         }
-    
-    for item, info in data["items"].items():
-        if arg.lower() == item.lower():
-            name = item
+
+    itemList = []
+    for i, info in data["items"].items():
+        if item.lower() == i.lower():
+            name = i
             rarity = info["rarity"]
             cost = info["cost"]
             if cost == 0:
@@ -286,12 +334,30 @@ async def viewitem(ctx, *, arg=""):
             embed.add_field(name=f'Effect:', value=f'*{effect}*', inline=False)
             await ctx.send(embed=embed)
             return
+        else:
+            itemList.append(i)
         
-    await ctx.send("Item not found")
+    closestItem = find_most_similar_string(item, itemList)
+    response = "Item not found, did you mean __%s__?" % (closestItem)
+    name = closestItem
+    info = data["items"][closestItem]
+    rarity = info["rarity"]
+    cost = info["cost"]
+    if cost == 0:
+        cost = "Cannot Be Bought"
+    else:
+        cost = str(cost) + " coins"
+    effect = info["effect"]
+    embed = disnake.Embed(title=f'{name}', description=f'{rarity}', color=rarityColors[rarity])
+    embed.add_field(name=f'Cost:', value=f'{cost}', inline=False)
+    embed.add_field(name=f'Effect:', value=f'*{effect}*', inline=False)
+    await ctx.send(response, embed=embed, ephemeral=hidden)
+    return
 
 #Code for viewing information of a specific role
-@bot.command(name='viewrole', help="View the information about the specified role")
-async def viewrole(ctx, *, arg=""):
+#@bot.command(name='viewrole', help="View the information about the specified role")
+@bot.slash_command(description="View the information about the specified role")
+async def viewrole(ctx, role: str, hidden: bool = False):
     file = open("info.json")
     data = json.load(file)
     file.close()
@@ -302,9 +368,11 @@ async def viewrole(ctx, *, arg=""):
         "Ball": 0xFFFFFF,
         "Traveller": 0xFFFF00
         }
-    for role, info in data["classes"].items():
-        if arg.lower() == role.lower():
-            name = role
+
+    roleList = []
+    for r, info in data["classes"].items():
+        if role.lower() == r.lower():
+            name = r
             alignment = info["alignment"]
             description = info["description"]
             abilities = info["abilities"]
@@ -328,14 +396,42 @@ async def viewrole(ctx, *, arg=""):
                 embed.add_field(name=f'{perk}', value=f'{info}{extra}', inline=False)
             for achievement, info in achievements.items():
                 embed.add_field(name=f'{achievement}', value=f'{info}', inline=False)
-            await ctx.send(embed=embed)
+            await ctx.send(embed=embed, ephemeral=hidden)
             return
-
-    await ctx.send("Role not found")
+        else:
+            roleList.append(r)
+    closestRole = find_most_similar_string(role, roleList)
+    response = "Role not found, did you mean __%s__?" % (closestRole)
+    info = data["classes"][closestRole]
+    name = closestRole
+    alignment = info["alignment"]
+    description = info["description"]
+    abilities = info["abilities"]
+    perks = info["perks"]
+    achievements = info["achievements"]
+    
+    embed = disnake.Embed(title=f'{name}', description=f'**{alignment}**\n{description}\n\n**Abilities:**', color=alignmentColors[alignment])
+    i = 0
+    for ability, info in abilities.items():
+        extra = ""
+        i += 1
+        if i == len(abilities):
+            extra = "\n\n**Perks:**"
+        embed.add_field(name=f'{ability} [x{info["charges"]}]', value=f'{info["effect"]}{extra}', inline=False)
+    i = 0
+    for perk, info in perks.items():
+        extra = ""
+        i += 1
+        if i == len(perks):
+            extra = "\n\n**Achievements:**"
+        embed.add_field(name=f'{perk}', value=f'{info}{extra}', inline=False)
+    for achievement, info in achievements.items():
+        embed.add_field(name=f'{achievement}', value=f'{info}', inline=False)
+    await ctx.send(response, embed=embed, ephemeral=hidden)
 
 #Code for viewing information of a specific ability
-@bot.command(aliases=['viewability', 'viewaa'], help="View the rarity and effects of the specified ability.")
-async def viewabilityFunc(ctx, *, arg=""):
+@bot.slash_command(description="View the information about the specified ability")
+async def viewability(ctx, ability: str, hidden: bool = False):
     file = open("info.json")
     data = json.load(file)
     file.close()
@@ -347,39 +443,64 @@ async def viewabilityFunc(ctx, *, arg=""):
         "Legendary": 0xFF0000,
         "Not an Any Ability": 0x888888
         }
-    
+
+    abilityList = []
     for role, info in data["classes"].items():
-        for ability, abilityinfo in info["abilities"].items():
-            if arg.lower() == ability.lower():
-                name = ability
+        for a, abilityinfo in info["abilities"].items():
+            if ability.lower() == a.lower():
+                name = a
                 rarity = abilityinfo["rarity"]
                 effect = abilityinfo["effect"]
                 embed = disnake.Embed(title=f'{name}', description=f'{rarity}', color=rarityColors[rarity])
                 embed.add_field(name=f'Effect:', value=f'{effect}', inline=False)
                 await ctx.send(embed=embed)
                 return
+            else:
+                abilityList.append(a)
         
-    await ctx.send("Ability not found")
+    closestAbility = find_most_similar_string(ability, abilityList)
+    response = "Ability not found, did you mean __%s__?" % (closestAbility)
+    
+    for role, info in data["classes"].items():
+        for a, abilityinfo in info["abilities"].items():
+            if closestAbility.lower() == a.lower():
+                name = closestAbility
+                rarity = abilityinfo["rarity"]
+                effect = abilityinfo["effect"]
+                embed = disnake.Embed(title=f'{name}', description=f'{rarity}', color=rarityColors[rarity])
+                embed.add_field(name=f'Effect:', value=f'{effect}', inline=False)
+                await ctx.send(response, embed=embed, ephemeral=hidden)
 
 #Code for viewing information of a specific perk
-@bot.command(name='viewperk', help="View the effects of the specified perk.")
-async def viewperk(ctx, *, arg=""):
+@bot.slash_command(description="View the information about the specified perk")
+async def viewperk(ctx, perk: str, hidden: bool = False):
     file = open("info.json")
     data = json.load(file)
     file.close()
-    
+
+    perkList = []
     for role, info in data["classes"].items():
-        for perk, effect in info["perks"].items():
-            if arg.lower() == perk.lower():
-                embed = disnake.Embed(title=f'{perk}', description=f'{effect}')
+        for p, effect in info["perks"].items():
+            if perk.lower() == p.lower():
+                embed = disnake.Embed(title=f'{p}', description=f'{effect}')
                 await ctx.send(embed=embed)
                 return
+            else:
+                perkList.append(p)
         
-    await ctx.send("Ability not found")
+    closestPerk = find_most_similar_string(perk, perkList)
+    response = "Perk not found, did you mean __%s__?" % (closestPerk)
+
+    for role, info in data["classes"].items():
+        for p, effect in info["perks"].items():
+            if closestPerk.lower() == p.lower():
+                embed = disnake.Embed(title=f'{p}', description=f'{effect}')
+                await ctx.send(response, embed=embed, ephemeral=hidden)
+                return
 
 #Code for viewing information of a specific status
-@bot.command(name='viewstatus', help="View the effects of the specified status.")
-async def viewstatus(ctx, *, arg=""):
+@bot.slash_command(description="View the information about the specified status")
+async def viewstatus(ctx, status: str, hidden: bool = False):
     file = open("info.json")
     data = json.load(file)
     file.close()
@@ -397,14 +518,22 @@ async def viewstatus(ctx, *, arg=""):
         "Despaired": 0x555555, #Dark Gray
         "Blackmailed": 0x000000 #Black
         }
-    
-    for status, info in data["statuses"].items():
-        if arg.lower() == status.lower() or arg.lower() + "ed" == status.lower() or arg.lower() + "d" == status.lower():
-            embed = disnake.Embed(title=f'{status}', description=f'{info}', color=statusColors[status])
+
+    statusList = []
+    for s, info in data["statuses"].items():
+        if status.lower() == s.lower() or status.lower() + "ed" == s.lower() or status.lower() + "d" == s.lower():
+            embed = disnake.Embed(title=f'{s}', description=f'{info}', color=statusColors[s])
             await ctx.send(embed=embed)
             return
+        else:
+            statusList.append(s)
         
-    await ctx.send("Status not found")
+    closestStatus = find_most_similar_string(status, statusList)
+    response = "Perk not found, did you mean __%s__?" % (closestStatus)
+
+    embed = disnake.Embed(title=f'{closestStatus}', description=f'{data["statuses"][closestStatus]}', color=statusColors[s])
+    await ctx.send(response, embed=embed, ephemeral=hidden)
+    return
 
 
 @bot.command(name='itemslist')
@@ -622,9 +751,29 @@ async def playerlist(ctx, arg1="", *arg2):
     else:
         await ctx.send("Argument " + arg1 + " not recognized for player list")
 
+#Vote moment
+@bot.command(help="")
+async def vote(ctx, *args):
+    arg2 = ("set",) + args
+    await inventories(ctx, "vote", *arg2)
+
+@bot.command(help='')
+async def viewvotes(ctx):
+    if (not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"])):
+        await ctx.send("Nice Try")
+        return
+    file = open("inventoryinfo.json")
+    data = json.load(file)
+    file.close()
+    voteStr = ""
+    for k, v in data.items():
+        if "confessional" in k and "vote" in v:
+            voteStr += f'{k[0:-13]}: {str(v["vote"])[1:-1]}\n'
+    await ctx.send(voteStr)
+
 #Code for managing inventories
 @bot.command(aliases=['inventory', 'inv'], help='')
-async def inventories(ctx, arg1=""  , *arg2):
+async def inventories(ctx, arg1="", *arg2):
     #Getting discord roles
     for role in ctx.guild.roles:
         if role.name == "Participant":
@@ -633,12 +782,7 @@ async def inventories(ctx, arg1=""  , *arg2):
         if role.name == "Deceased":
             deceasedRole = role
     
-    channel = disnake.utils.get(ctx.guild.text_channels, name=arg1.lower())
-    if channel == None:
-        channel = ctx.channel
-    else:
-        arg1 = arg2[0]
-        arg2 = arg2[1:]
+    channel = ctx.channel
     allowed = "Bluedetroyer"
     gameMembers = []
     for x in channel.members:
@@ -658,7 +802,7 @@ async def inventories(ctx, arg1=""  , *arg2):
         if channel.name in data:
             await ctx.send("There's already an inventory for that channel. Please delete/forget it if you want to make a new one")
             return
-        newInventory = {"coins": 0, "bonus": 0, "items": [], "aas": {}, "statuses": [], "effects": [], "immunities": []}
+        newInventory = {"coins": 0, "bonus": 0, "items": [], "aas": {}, "statuses": [], "effects": [], "immunities": [], "vote": []}
         inventoryId = await channel.send(inventoryString(newInventory))
         newInventory["id"] = inventoryId.id
         data[channel.name] = newInventory
@@ -686,7 +830,7 @@ async def inventories(ctx, arg1=""  , *arg2):
         file.write(json.dumps(data, indent=4))
         file.close()
     #Editing items/statuses/effects
-    elif arg1.lower() in ("items", "statuses", "effect", "effects", "item", "status", "immunities", "immunity"):
+    elif arg1.lower() in ("items", "statuses", "effect", "effects", "item", "status", "immunities", "immunity", "vote", "votes"):
         if arg1.lower() == "item":
             arg1 = "items"
         if arg1.lower() == "status":
@@ -695,6 +839,8 @@ async def inventories(ctx, arg1=""  , *arg2):
             arg1 = "immunities"
         if arg1.lower() == "effect":
             arg1 = "effects"
+        if arg1.lower() == "votes":
+            arg1 = "vote"
         file = open("inventoryinfo.json")
         data = json.load(file)
         file.close()
@@ -836,6 +982,10 @@ async def inventories(ctx, arg1=""  , *arg2):
 #Code for picking a random role
 @bot.command(name='randomrole', help='You people keep pasting in super long messages to do this please stop')
 async def randomRole(ctx, arg1=""):
+    if arg1.lower() in ("decept", "deceptionist"):
+        await randomRole(ctx, "good")
+        await randomRole(ctx, "neutral")
+        await randomRole(ctx, "evil")
     file = open("info.json")
     data = json.load(file)
     file.close()
@@ -980,7 +1130,6 @@ async def deceptPick(ctx: disnake.ApplicationCommandInteraction):
             disnake.ui.Button(label=neutralRole, style=disnake.ButtonStyle.secondary, custom_id="neutral"),
             disnake.ui.Button(label=evilRole, style=disnake.ButtonStyle.danger, custom_id="evil"),
         ])
-
 
 @bot.listen("on_button_click")
 async def help_listener(ctx: disnake.MessageInteraction):
