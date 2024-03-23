@@ -138,16 +138,16 @@ def itemGen(luckOrRarity):
 
 #Rolls a random any ability based off luck and returns it
 def anyAbilityGen(luckOrRarity):
-    commonAAs = ("Search", "Vibe Check", "Silence", "Gag", "Disable", "Black Cloak", "Curse", "Freeze", "Electrify", "Disrespectful Peek", "Bond", "Follow", "Spy", "Mask", "Allure", "Off The Beaten Path", "Venture", "On The House", "Demon Hunt", "Jokester", "Soul Seeking [Doll]", "Abyssal Blessings")
-    uncommonAAs = ("Chomp", "Safeguard", "Interrogate", "False Result", "Investigate", "Redirect", "Vaccinate", "Cure", "Heal", "Fireball", "Body Examine", "Peek Of The Grave", "Confiscate", "Deduct", "Hidden", "Preserve", "Charisma Chant", "Opening Act", "Protective Prance", "Gentle Holdings [Incubus]",
+    commonAAs = ("Search", "Vibe Check", "Silence", "Gag", "Disable", "Black Cloak", "Curse", "Freeze", "Electrify", "Disrespectful Peek", "Bond", "Follow", "Spy", "Allure", "Off The Beaten Path", "Venture", "On The House", "Demon Hunt", "Jokester", "Soul Seeking [Doll]", "Abyssal Blessings")
+    uncommonAAs = ("Chomp", "Mask", "Safeguard", "Interrogate", "False Result", "Investigate", "Redirect", "Vaccinate", "Cure", "Heal", "Fireball", "Body Examine", "Peek Of The Grave", "Confiscate", "Deduct", "Hidden", "Preserve", "Charisma Chant", "Opening Act", "Protective Prance", "Gentle Holdings [Incubus]",
                      "Protection", "Surveillance", "Solve", "Contract", "Discount", "Serene State", "Body Swap", "Coin Flip", "Forbidden Knowledge", "Restrain", "Luck Up", "Peek Of The Living", "Inheritance Tax", "Silver-Tongue", "Douse [Arsonist]", "Down-Surge [Tinkerer]",
                      "Kick", "Reel", "Invisibility", "Chemistry", "Subtraction", "Inspection Zone", "Ascend", "Purification", "Holy Light", "Wall Breaker", "Bloody Knuckles", "Bend", "Interception", "Corpse Shield", "Cross Eyes [Maso]", "Force Ability [GK]", "Inflate [Banker]", "Soul Seer [Medium]",
                      "Lunch Break [Biker]", "Side-Show [Entertainer]", "Upsurge [Tinkerer]")
-    rareAAs = ("Discover", "Man's Blessing", "Bless", "Bloody Escape", "Last Will", "Payday", "Silver Finger", "Forceful Resignation", "Depressing Ballad", "Luck Transfer", "Soul Swap", "Degrade", "Overclock", "Fishing Trip", "Bury Alive", "Intoxication [Bartender]", "Moonshine", "Steal", "Replay", "Entrapment",
+    rareAAs = ("Opening Speech", "Maddening Whisper", "Discover", "Man's Blessing", "Bless", "Bloody Escape", "Last Will", "Payday", "Silver Finger", "Forceful Resignation", "Depressing Ballad", "Luck Transfer", "Soul Swap", "Degrade", "Overclock", "Fishing Trip", "Bury Alive", "Intoxication [Bartender]", "Moonshine", "Steal", "Replay", "Entrapment",
                "Reaction", "Smoke Grenade", "Blackened Chains", "Isolate", "Imperium", "Lava Wall", "Rewind", "Bone Breaker", "Tear-Out [Hydra]", "Head Slam [Hydra]", "Skinning [Slaughterer]", "Impish Grin [Imp]", "Mischief [Imp]", "Purge [Anarchist]", "Ready Stance [Neph]", "Repulse [Maso]", "Scent Marker [Hunter]", "Spacial Followings [Neph]",
                "Burning Rubber", "Damage Dance", "Encapsulate", "Gaslighted Discussion", "Hammer", "Ignorance Bubble", "Matter Reconstruction", "Sheltered In Ice", "Hair Pulling [Incubus", "Ignite [Arsonist]", "Shadowed Hands [Phantom]", "Twist [Entertainer]")
-    epicAAs = ("Troll", "Shutdown", "Survivalist's Threaten", "Fatality", "Lawful", "Overrule", "Hold-Up", "Hex", "Mentor", "Gas Bomb", "Tagger Bomb", "Clink", "Survival Swap", "Upgrade", "Steel Guard", "Hooked", "Re-Enact", "Reuse", "Last Resort", "Override", "Stick With the Pack", "Erasure", "Broken Blade", "Sunder",
-               "Fire Guard", "Ethereal Healing", "Visceral Roar", "Entire Circus", "Head-Shield [Hydra]", "Brute Force [Neph]", "Iron Will [Neph]", "Submission [Maso]", "Target Fire [Mecha]", "Gathering Trick", "Abyssal Curse [Phantom]", "Assimilate [Tinkerer]", "Charm [Succubus]", "Chemical [Arsonist]", "Embrace [Incubus]", "Inceneration [Arsonist]")
+    epicAAs = ("Subliminal Messaging", "Absolution", "Troll", "Shutdown", "Survivalist's Threaten", "Fatality", "Lawful", "Overrule", "Hold-Up", "Hex", "Mentor", "Gas Bomb", "Tagger Bomb", "Clink", "Survival Swap", "Upgrade", "Steel Guard", "Hooked", "Re-Enact", "Reuse", "Last Resort", "Override", "Stick With the Pack", "Erasure", "Broken Blade", "Sunder",
+               "Fire Guard", "Ethereal Healing", "Visceral Roar", "Entire Circus", "Upsurge [Apex Predator]", "Downsurge [Apex Predator]", "Head-Shield [Hydra]", "Brute Force [Neph]", "Iron Will [Neph]", "Submission [Maso]", "Target Fire [Mecha]", "Gathering Trick", "Abyssal Curse [Phantom]", "Assimilate [Tinkerer]", "Charm [Succubus]", "Chemical [Arsonist]", "Embrace [Incubus]", "Inceneration [Arsonist]")
     legendaryAAs = ("Empower", "Resilient Aura", "Reanimate", "Soul Binding", "Disappear", "Break", "Bait", "Hyperdrive", "Voodoo Doll", "Act Out", "Ban", "Tactical Tune")
     allAAs = (commonAAs, uncommonAAs, rareAAs, epicAAs, legendaryAAs, legendaryAAs)
 
@@ -225,7 +225,6 @@ def inventoryString(inventory):
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connencted to Discord!')
-    
     #with open('betrayal.png', 'rb') as f:
     #    icon = f.read()
     #await guild.edit(icon=icon)
@@ -239,8 +238,8 @@ async def on_member_join(member):
 
 #Code for item rain
 @bot.command(name='item', help="Proper format: '/item [luck]'. If no luck is specified, it defaults to 0.")
-async def itemRain(ctx, arg1="0", arg2="1"):
-    if ctx.guild.name == "Betrayal" and not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"]) and not "bots" in ctx.channel.name and not ctx.author.name == "Bluedetroyer":
+async def itemRain(ctx, arg1="0", arg2="1", arg3=0):
+    if ctx.guild.name == "Betrayal" and not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"]) and not "bots" in ctx.channel.name and not "confessional" in ctx.channel.name and not ctx.author.name == "Bluedetroyer":
         await ctx.send(f'Do this is bots channel')
         return
     arg2 = int(arg2)
@@ -257,6 +256,8 @@ async def itemRain(ctx, arg1="0", arg2="1"):
                 numItems = 2
             else:
                 numItems = 3
+            if arg3 != 0:
+                numItems = 4 - numItems
             itemList = []
             for i in range(numItems):
                 itemList.append(itemGen(arg1))   
@@ -269,7 +270,7 @@ async def itemRain(ctx, arg1="0", arg2="1"):
 #Code for rolling any abilities
 @bot.command(name='aa', help="Proper format: '/aa [luck]'. If no luck is specified, it defaults to 0.")
 async def anyAbility(ctx, arg1="0", arg2="1"):
-    if ctx.guild.name == "Betrayal" and not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"]) and not "bots" in ctx.channel.name:
+    if ctx.guild.name == "Betrayal" and not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"]) and not "bots" in ctx.channel.name and not "confessional" in ctx.channel.name:
         await ctx.send(f'Do this is bots channel')
         return
     arg2 = int(arg2)
@@ -289,7 +290,7 @@ async def anyAbility(ctx, arg1="0", arg2="1"):
 #Code for rolling carepackages
 @bot.command(name='carepackage', help="Proper format: '/carepackage [luck]'. If no luck is specified, it defaults to 0.")
 async def carepackage(ctx, arg1=0, arg2=1):
-    if ctx.guild.name == "Betrayal" and not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"]) and not "bots" in ctx.channel.name:
+    if ctx.guild.name == "Betrayal" and not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"]) and not "bots" in ctx.channel.name and not "confessional" in ctx.channel.name:
         await ctx.send(f'Do this is bots channel')
         return
     arg2 = int(arg2)
@@ -315,7 +316,8 @@ async def viewitem(ctx, item: str, hidden: bool = False):
         "Epic": 0xFF00FF,
         "Legendary": 0xFF0000,
         "Mythical": 0xBF40BF,
-        "Unique": 0xFFFFFF
+        "Unique": 0xFFFFFF,
+        "Special": 0xFAED27
         }
 
     itemList = []
@@ -389,13 +391,8 @@ async def viewrole(ctx, role: str, hidden: bool = False):
                 embed.add_field(name=f'{ability} [x{info["charges"]}]', value=f'{info["effect"]}{extra}', inline=False)
             i = 0
             for perk, info in perks.items():
-                extra = ""
                 i += 1
-                if i == len(perks):
-                    extra = "\n\n**Achievements:**"
-                embed.add_field(name=f'{perk}', value=f'{info}{extra}', inline=False)
-            for achievement, info in achievements.items():
-                embed.add_field(name=f'{achievement}', value=f'{info}', inline=False)
+                embed.add_field(name=f'{perk}', value=f'{info}', inline=False)
             await ctx.send(embed=embed, ephemeral=hidden)
             return
         else:
@@ -420,13 +417,8 @@ async def viewrole(ctx, role: str, hidden: bool = False):
         embed.add_field(name=f'{ability} [x{info["charges"]}]', value=f'{info["effect"]}{extra}', inline=False)
     i = 0
     for perk, info in perks.items():
-        extra = ""
         i += 1
-        if i == len(perks):
-            extra = "\n\n**Achievements:**"
-        embed.add_field(name=f'{perk}', value=f'{info}{extra}', inline=False)
-    for achievement, info in achievements.items():
-        embed.add_field(name=f'{achievement}', value=f'{info}', inline=False)
+        embed.add_field(name=f'{perk}', value=f'{info}', inline=False)
     await ctx.send(response, embed=embed, ephemeral=hidden)
 
 #Code for viewing information of a specific ability
@@ -571,10 +563,10 @@ async def playerlist(ctx, arg1="", *arg2):
         return
     #Getting discord roles
     for role in ctx.guild.roles:
-        if role.name == "Participant":
+        if role.name == "Player":
             participantRole = role
     for role in ctx.guild.roles:
-        if role.name == "Deceased":
+        if role.name == "Dead":
             deceasedRole = role
     for role in ctx.guild.roles:
         if role.name == "True Deceased":
@@ -584,7 +576,7 @@ async def playerlist(ctx, arg1="", *arg2):
         playerStartIndex = arg2.index("Players") + 1
         master = ""
         if "Master" in arg2:
-            master = arg2[arg2.index("Master") + 1] + " " + arg2[arg2.index("Master") + 2]
+            master = arg2[arg2.index("Master") + 1]
         mode = ""
         if "Mode" in arg2:
             mode = arg2[arg2.index("Mode") + 1]
@@ -892,6 +884,35 @@ async def inventories(ctx, arg1="", *arg2):
         file = open("inventoryinfo.json", "w")
         file.write(json.dumps(data, indent=4))
         file.close()
+    #Checks if the inventory has the proper amount of coins then removes those coins and adds the item to the inventory
+    elif arg1.lower() == "buy":
+        file = open("inventoryinfo.json")
+        data = json.load(file)
+        file.close()
+        inventory = data[channel.name]
+        message = await channel.fetch_message(inventory["id"])
+        file = open("info.json")
+        items = json.load(file)
+        file.close()
+        purchase  = " ".join(arg2)
+        for i, info in items["items"].items():
+            if purchase.lower() == i.lower():
+                name = i
+                cost = info["cost"]
+                if cost == 0:
+                    response = "Item cannot be purchased."
+                elif inventory["coins"] < cost:
+                    response = "Not enough coins."
+                else:
+                    inventory["coins"] -= cost
+                    inventory["items"].append(name)
+                    response = f'{name} purchased for {cost} coins'
+        await message.edit(content=inventoryString(inventory))
+        await ctx.send(response)
+        file = open("inventoryinfo.json", "w")
+        file.write(json.dumps(data, indent=4))
+        file.close()
+        
     #Deletes the inventory message from the channel and removes it from the json file
     elif arg1.lower() == "delete":
         file = open("inventoryinfo.json")
@@ -1038,6 +1059,21 @@ async def clearRoles(ctx):
         print("Channels done")
 
 #Random Stuff
+@bot.command(name='roll', help='[num]d[sides]')
+async def roll(ctx, arg):
+    numDice = int(arg.split("d")[0])
+    diceSides = int(arg.split("d")[1])
+    string = "Roll(s): "
+    count = 0
+    for i in range(numDice):
+        value = random.randint(1, diceSides)
+        string += str(value)
+        count += value
+        if i != numDice-1:
+            string += ", "
+    string += f'\nResult: {count}'
+
+    await ctx.send(string)
 
 @bot.command(name='die', help='Perish')
 async def death(ctx):
@@ -1078,6 +1114,19 @@ async def change(ctx, arg1):
         for member in bot.guilds[1].members:
             if member.name == "Bluedetroyer":
                 await member.edit(nick=arg1)
+
+@bot.command(name='takethat')
+async def editmes(ctx):
+    for guild in bot.guilds:
+        if guild.name ==  "Betrayaled":
+            for channel in guild.text_channels:
+                if channel.name == "sign-ups":
+                    async for message in channel.history(limit=20):
+                        if message.author.name == "Betrayal Bot":
+                            await message.edit(content="Items:\nDepower")
+                            
+                
+    
 
 @bot.command(name='mario')
 async def spamMario(ctx, arg1=10):
@@ -1120,7 +1169,7 @@ async def deceptPick(ctx: disnake.ApplicationCommandInteraction):
             goodRoles.append(k)
         elif v["alignment"] == "Neutral":
             neutralRoles.append(k)
-        else:
+        elif v["alignment"] == "Evil":
             evilRoles.append(k)
     goodRole = random.choice(goodRoles)
     neutralRole = random.choice(neutralRoles)
