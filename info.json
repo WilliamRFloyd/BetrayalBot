@@ -127,7 +127,7 @@
         "Vortex Liquid": {
             "rarity": "Uncommon",
             "cost": 1000,
-            "effect": "Makes you immune for a random upcoming Elimination phase."
+            "effect": "Gives you 1/X chance of being immune to elimination, rolls on day start and use until triggered. X = Living participants."
         },
         "Iron Ball": {
             "rarity": "Uncommon",
@@ -202,7 +202,7 @@
         "Doggo": {
             "rarity": "Rare",
             "cost": 2000,
-            "effect": "Gives you a pet doggo which gives you useless information. The more you feed it, the more useful it becomes. Can be released which gives 500 coins on release."
+            "effect": "Gives you a pet doggo which gives you useless information once a day. The more you feed it, the more useful it becomes [X+1/11 chance of useful info, X being dog treats given]. Can be released which gives 500 coins on release."
         },
         "Light Eye": {
             "rarity": "Rare",
@@ -312,7 +312,7 @@
         "Polymorph": {
             "rarity": "Legendary",
             "cost": 0,
-            "effect": "Transform into a random role which isn't currently in the game."
+            "effect": "Transform into a random role which isn't currently in the game. In addition, you gain the eternal enmity of Sh99er."
         },
         "Platinum Crown": {
             "rarity": "Legendary",
@@ -362,7 +362,7 @@
         "Doggo v2": {
             "rarity": "Mythical",
             "cost": 0,
-            "effect": "This mythical doggo will tell you accurate information twice a day!"
+            "effect": "This mythical doggo will tell you accurate information to 2 questions a day!"
         },
         "Magic Triangle": {
             "rarity": "Mythical",
@@ -398,11 +398,6 @@
             "rarity": "Unique",
             "cost": 0,
             "effect": "Someone receives this from their Care Package, increasing their Luck value by 4 when holding. You may pass this item to someone else and have to pass it to someone else when you die. If you're killed, the killer gets the item."
-        },
-        "Voodoo Doll": {
-            "rarity": "Unique",
-            "cost": 0,
-            "effect": "While this item is in your in your inventory, anything that happens to you will also happen to the player this is a doll of, aside from receiving votes and being eliminated."
         }
     },
 
@@ -554,7 +549,7 @@
                     "effect": "You're given 2 possible roles that the person you select could be, one is a random false role and the other is their actual role."
                 },
                 "Solve": {
-                    "charges": 2,
+                    "charges": 0,
                     "rarity": "Uncommon",
                     "effect": "Figure out any piece of information of your choice about a player. Gain a charge for this every even day if you are Detective."
                 }
@@ -617,7 +612,7 @@
                 }
             },
             "perks": {
-                "Confidence": "Once you've shot someone not your alignment, you become immune to negative status effects.",
+                "Confidence": "Once you've killed someone not your alignment, you become immune to negative status effects.",
                 "Ignorant": "Cannot be redirected to another target when you attack somebody.",
                 "Justice's Gift": "If you kill someone in the opposite alignment, you will obtain an Unreliable Wish and any AAs, items and money they had."
             },
@@ -682,7 +677,7 @@
                 "Head-Shield": {
                     "charges": 0,
                     "rarity": "Epic",
-                    "effect": "Select as many players as things you are immune to. If 0, pick 1. Negative actions on them will fail to work, the person using it will keep the charge but be unable to vote or act for 6h. Neutral visits will inform you and the target what occured and who did it. Lasts 8h. Can stack. You can bypass this. You can only gain max 2 charges of this per day."
+                    "effect": "Select as many players as things you are immune to. If 0, pick 1. Negative actions on them will fail to work, the person using it will keep the charge but be unable to vote or act for 6h. Neutral visits will inform you and the target what occured and who did it. Lasts 8h. Can stack. You can bypass this. Gains max 2 within a day from perk."
                 },
                 "Visceral Roar": {
                     "charges": 0,
@@ -694,7 +689,7 @@
                 "Regenerative": "If inflicted with a negative status, gain immunity to it after its cured/worn off. If attacked and survived, blocked, or redirected, develop immunity to that interaction - all immunities develop on day end.",
                 "Multi-Headed Stare-Down": "If you perform multiple actions, you can have them all register as a single visit, even to multiple people. Your action will register as the most convenient type.",
                 "Rejuvenative Aura": "Allies that get cured of a status will develop immunity to it. You may turn this off/on, and may pick which allies gain this.",
-                "Head Growing": "Each time you [or ally] gain an immunity, and/or a new day starts, gain a base ability charge [Max 5 per day from immunities]."
+                "Head Growing": "Each time you/ally gain an immunity, and/or a new day starts, gain a base ability charge [Max 5 per day from immunities]. Multiple immunities in 1 from VR use do not give multiple charges."
              },
              "achievements": {
                 "Master Hydra": "Obtain all Hydra achievements."
@@ -794,7 +789,7 @@
             },
             "perks": {
                 "Enhanced Learning": "Each time your base abilities are successfully used, gain 1 luck and 5% coins.",
-                "Lock On": "Redirection on you fail, and simply inflict the redirector with the ability/item as well."
+                "Lock On": "Redirections will work on you, but also inflict your original target and redirection users with the ability/item as well."
             },
             "achievements": {
                 "Master Mecha": "Obtain all Mecha achievements.",
@@ -815,7 +810,7 @@
                 "Preserve": {
                     "charges": 2,
                     "rarity": "Uncommon",
-                    "effect": "If someone died, within 24 hours of the death you can use this on them to make them their body survive for 24 more hours. If they have heal, ethereal heal, break, saving grace, protection or blessed within that time they will come back to life, if not, you take any money they have on them."
+                    "effect": "If someone died, within 24 hours of the death you can use this on them to make them their body survive for 24 more hours. If they have heal, ethereal heal, break, saving grace, protection, holy light, or bless used on them within that time they will come back to life, if not, you take any money they have on them."
                 },
                 "Soul Seer": {
                     "charges": "inf",
@@ -889,7 +884,7 @@
             "perks": {
                 "Cleansing Aura": "Negative statuses on yourself and allies are degraded to not be as effective.",
                 "Angelic": "Positives inflicted by you on others will reward you with 200 coins. Positives inflicted on you will reward the inflictor with 100 coins, provided its not you.",
-                "Golden Thread": "If you are killed, your death is delayed by 24 hours. Any sort of death protection within this state will stop the death from occurring. Elimination death is not included, unless it was via soul-bind."
+                "Golden Thread": "If you are killed from an attack, your death is delayed for 24 hours, multiple attacks will all strike at the 24h mark. Elimination does not count towards this, except Soul-Bound or Finale. These attacks are treated like a visit and effect at the 24h mark, but have no origin."
             },
             "achievements": {
                 "Master Seraph": "Obtain all Seraph achievements.",
@@ -915,7 +910,7 @@
                 "Saving Grace": {
                     "charges": 3,
                     "rarity": "Not an Any Ability",
-                    "effect": "Select someone, saving them from elimination and negative effects for the next 24 hours. If they are not the most voted at elimination, gain a regret. If you de-activate this, you gain a non-negative removing version to use."
+                    "effect": "Select someone, saving them from elimination and negative effects for the next 24 hours. If they are not struck by elimination, gain a regret, else, lose a regret. If you de-activate this, you gain a non-negative removing version to use."
                 },
                 "Body Shield": {
                     "charges": 1,
@@ -1018,7 +1013,7 @@
             "Empower": {
                 "charges": 1,
                 "rarity": "Legendary",
-                "effect": "Empower somebody, giving them Empowered. Removes any other status effect they have apart from Cursed. If you empower yourself, you cannot use empower again."
+                "effect": "Empower somebody, giving them Empowered. Removes any other status effect they have apart from Cursed. If you empower yourself, you cannot use empower again. Empower cannot be used with empower charges, unless you are Wizard."
             },
             "Fireball": {
                 "charges": 1,
@@ -1282,7 +1277,8 @@
             "perks": {
             "Perfection": "You're already perfect, you cant use Upgrade on yourself. Hyperdrive on yourself will give 1/2 charges when applying then to aas, and 1/3 to base abilities. Your self-hyper runs off a different timer than other hypers given to you.",
             "Tinkering": "You can upgrade any Common items you obtain once per item type, and any Uncommon items you obtain once.",
-            "Robotic Nature": "You're immune to Paralysed, Frozen, Burned, Despaired, Blackmailed and Drunk."
+            "Robotic Nature": "You're immune to Paralysed, Frozen, Burned, Despaired, Blackmailed and Drunk.",
+            "Cybernetic Link": "Upgrades done by you become Degrades when you are killed/eliminated. If an upgraded player no longer has charges in the upgraded ability / lost the perk - their inventory is capped at 2 and loses any immunities they currently have. While there's a living player that you've upgraded or hyperdrived, you can only die to eliminations."
             },
             "achievements": {
             "Master Cyborg": "Obtain all Cyborg achievements.",
@@ -1344,7 +1340,7 @@
             "Death Curse": {
                 "charges": 1,
                 "rarity": "Not an Any Ability",
-                "effect": "Curse somebody, giving them a special Cursed which can only be cured by the Bless. Someone inflicted with this curse will have their perks and abilities disabled unless you die."
+                "effect": "Curse somebody, giving them a special Cursed which can only be cured by Bless. Someone inflicted with this curse will have their perks and abilities disabled unless you die."
             },
             "Disappear": {
                 "charges": 1,
@@ -1354,7 +1350,7 @@
             },
             "perks": {
             "Ghosts Blood": "Immune to Cursed.",
-            "Secret Spirit": "You can still use your items and abilities when you're eliminated. You still gain AA's and items from power drops/item rains.",
+            "Secret Spirit": "You can still use your items and abilities when you're dead. You still gain AA's and items from power drops/item rains. You act as if you were permanently Preserved while dead.",
             "Confusion": "If you're investigated, the investigator will receive a random result instead."
             },
             "achievements": {
@@ -1398,7 +1394,7 @@
             }
         },
         "Incubus": {
-            "alignment": "Neutral",
+            "alignment": "Neutral (Removed)",
             "description": "Charm magic isn't needed so much when your way with words bends the mind of mortals alone.",
             "abilities": {
             "Demonic Embrace": {
@@ -1435,6 +1431,45 @@
             "Master Incubus": "Obtain all Incubus achievements."
             }
         },
+        "Leech": {
+            "alignment": "Neutral",
+            "description": "You're a leech idk what to tell you.",
+            "abilities": {
+            "Siphoning ": {
+                "charges": 3,
+                "rarity": "Not an Any Ability",
+                "effect": "Upon use, pull a random status/effect off of your host. You gain 2 charges if your host dies."
+            },
+            "Prying Eyes": {
+                "charges": 1,
+                "rarity": "Not an Any Ability",
+                "effect": "Upon use, see what effects/statuses are on your host. Your next Siphoning charge will let you choose what you pull, provided you don't change host. Gain 1 charge if your host dies."
+            },
+            "Absolution": {
+                "charges": 1,
+                "rarity": "Epic",
+                "effect": "Remove a status/effect from yourself. Gain a charge each time you use Prying Eyes."
+            },
+            "Match-Up": {
+                "charges": 1,
+                "rarity": "Not an Any Ability",
+                "effect": "Force yourself onto a different host, transferring all negative statuses from yourself to your previous host. Useable through statuses/effects that prevent action."
+            },
+            "Wriggling Alone": {
+                "charges": 1,
+                "rarity": "Not an Any Ability",
+                "effect": "Abandon your host."
+            }
+            },
+            "perks": {
+            "Attachment": "Select a player as your host, you may change target at each day's start. You will know what action types they perform.",
+            "Mood Altering": "Your host cannot vote for you. If your host is voted at all, you also get 1 vote against you. For every 3rd vote, you also get voted once more.",
+            "Immunity System Breeching": "You may see and copy 1 immunity from your host upon picking them"
+            },
+            "achievements": {
+            "Master Incubus": "Obtain all Incubus achievements."
+            }
+        },
         "Masochist": {
             "alignment": "Neutral",
             "description": "You love attention, especially the kind to cause you torment. Votes on you gives you pleasure, among other things",
@@ -1457,7 +1492,7 @@
             "Cross Eyes": {
                 "charges": 0,
                 "rarity": "Uncommon",
-                "effect": "Works for 24 hours on use. If you have a negative status put on you"
+                "effect": "Works for 24 hours on use. If you have a negative status put on you - it fails, gives the user frozen. Gives you 3 stacks per success. Activates with 1 charge at 11 stacks."
             }
             },
             "perks": {
@@ -1542,7 +1577,7 @@
                "Stinging Serenity": "You may change between offensive and defensive states, with a 18 hour delay between changes. You start off in a state of choice.",
                "Stable enough": "\nDefensive: Immune to 3 statuses of choice\nOffensive: Negative Status-inflicting items/AA last twice as long, or are twice as damaging depending on the status",
                "Bloodied": "\nDefensive: Every time an ally dies, your coin bonus increases by 15%\nOffensive: Every time someone you have harmed dies, gain 10% of their coins",
-               "Iron-body": "\nDefensive: Lethal attacks will rebound and kill an ally instead\nOffensive: Lethal attacks will rebound 2 fold onto the attacker"
+               "Iron-body": "\nDefensive: Lethal attacks will rebound and kill an ally instead\nOffensive: You will block lethal attacks against you and strike back 2 fold onto the attacker"
             },
             "achievements": {
                "Master Nephilim": "Obtain 3 Nephilim achievements.",
@@ -1663,7 +1698,7 @@
             }
         },
         "Tinkerer": {
-            "alignment": "Neutral",
+            "alignment": "Neutral (Removed)",
             "description": "Alteration of everything and anything to get a step ahead the others, even power itself.",
             "abilities": {
                "Override": {
@@ -1723,6 +1758,71 @@
                "MVP Teammate": "Use bond on 3 different allies."
             }
         },
+        "Apex Predator": {
+            "alignment": "Neutral",
+            "description": "You improvise. You adapt. You overcome.",
+            "abilities": {
+                "Apex": {
+                    "charges": 1,
+                    "rarity": "Not an Any Ability",
+                    "effect": "Gain one AA of each rarity of your choice. These AAs will have no charges, and the epic and legendary AAs cannot be energized or empowered, nor can the AAs created with these."
+                },
+                "Upsurge": {
+                    "charges": 2,
+                    "rarity": "Epic",
+                    "effect": "Merge 2 AA's of the same rarity into one of choice from the rarity above. Will have a charge if both used AA's had one."
+                 },
+                "Downsurge": {
+                    "charges": 3,
+                    "rarity": "Epic",
+                    "effect": "Break down an AA into 2 of choice from the rarity below. Both will have a charge if broken down one did. Else, one of them will."
+                },
+                "Power Grasp": {
+                    "charges": 4,
+                    "rarity": "Not an Any Ability",
+                    "effect": "Copy a perk from one of the AAs in your inventory. The perk lasts for 24hrs and you cannot copy the same role twice."
+                }
+            },
+            "perks": {
+                "Constantly Evolving": "Every time you use an AA you may copy one status immunity from that role, if you don't instead earn 100 coins.",
+                "Remove Weakness": "At both item rains and power drops you may permanently remove an AA with a charge or spend a charge on your RC to gain an additional random AA."
+            },
+            "achievements": {
+                "Master Apex Predator": "Obtain all Apex Predator achievements"
+            }
+        },
+        "Vizier": {
+            "alignment": "Neutral (Removed)",
+            "description": "Relax, sire. Leave everything... to me. (No I didn't take this from BotC and you can't prove otherwise)",
+            "abilities": {
+               "Opening Speech": {
+                  "charges": 1,
+                  "rarity": "Rare",
+                  "effect": "If Vizier, +1 charge per day. Make a public statement, and state if you think its true or false. Decide if you believe players will vote on it majority being true, or false. If correct: If false, you may make it true. If True, you may make it false. If the statement was opposite to your original belief, then nothing occurs."
+               },
+               "Subliminal Messaging": {
+                    "charges": 3,
+                    "rarity": "Epic",
+                    "effect": "Make a public statement, and select true or false. Decide if you believe players will vote on it majority being true, or false. After votes are in, you will learn if it was true or false. If correct on majority vote: If false, you may make it true. If True, you may make it false. If your guess was also correct, you gain 1VP for an elim. You may decide when this VP is used."
+                },
+                "Maddening Whisper": {
+                    "charges": 2,
+                    "rarity": "Rare",
+                    "effect": "Select someone and tell them a statement, and true or false. Give a timeframe of 24-72h. They must try to make people believe or disbelieve the statement. Throne of Lies logic applies to them and this statement. If successful within the time given, something positive will occur for them, if they fail, something negative will occur for them. The harsher the statement the bigger the reward, the opposite, the bigger the negative."
+                }
+            },
+            "perks": {
+               "Throne of Lies": "Lies you spread, and lies about you, if believed enough, will become true, you may decide to not get an effect from a lie when it occurs.",
+               "Crown of Thorns": "If your death is caused by a lie, you may act from the grave and revive easier, and, the person who said the lie that killed you, will have negative lies about them if believed, become true.",
+               "Blade of Truth": "If something you state that is truth, is thought to be a lie, you may decide on what negatives to inflict upon all who don't believe that fact, or, positive to give yourself/allies/social allies. The more damaging to yourself/allies/social allies the dis-believed truth is, the larger the negative/positive."
+            },
+            "achievements": {
+               "Master Villager": "Obtain all Villager achievements.",
+               "Around the World": "Enter 3 alliances.",
+               "Bonding": "Bond 1 person 4 times.",
+               "MVP Teammate": "Use bond on 3 different allies."
+            }
+        },
         "Wanderer": {
             "alignment": "Neutral",
             "description": "You're a level headed loner, trying to get away from the chaos.",
@@ -1763,7 +1863,7 @@
                "Purge": {
                   "charges": 7,
                   "rarity": "Rare",
-                  "effect": "Choose someone and they will have their vote blocked. If their vote power is personally buffed due to a perk or ability, their vote power will only be decreased by 1. They will be alerted that their vote was blocked by the Anarchist. Gain a charge of this after every elimination phase."
+                  "effect": "Choose someone and they will have their vote blocked. If their vote power is personally buffed due to a perk or ability, their vote power will only be decreased by 1. They will be alerted that their vote was blocked by the Anarchist. If Anarchist, gain a charge of this after every elimination phase."
                },
                "Imperium": {
                   "charges": 1,
@@ -1918,7 +2018,7 @@
                }
             },
             "perks": {
-               "Mob Mentality": "The number of marked players the Cultist has grants different bonuses\n\n2 Marked = Coin bonus 10%\n3 Marked = Alliance receives a private Item Rain\n4 Marked = Given a Cursed Relic (Epic item)\n5 Marked = Survey now works on all marked people and reveals all the marked to the Cultist.\n6 Marked = Gain 50% coin Bonus, and a charge of Forbidden Knowledge\n7 Marked = You can cure a player of all Status effects once per elimination phase (Unlimited)\n8 Marked = You can give a player any negative status effect of choice (basic) once per elimination phase (Unlimited)\n9+ Marked = Gain an extra 5% coin bonus for every marked person from this point onwards.",
+               "Mob Mentality": "The number of marked players the Cultist has grants different bonuses\n\n2 Marked = Coin bonus 10%\n3 Marked = Alliance receives a private Item Rain\n4 Marked = Given a Cursed Relic (Epic item)\n5 Marked = Forbidden Knowledge now works on all marked people and reveals all the marked to the Cultist.\n6 Marked = Gain 50% coin Bonus, and a charge of Forbidden Knowledge\n7 Marked = You can cure a player of all Status effects once per elimination phase (Unlimited)\n8 Marked = You can give a player any negative status effect of choice (basic) once per elimination phase (Unlimited)\n9+ Marked = Gain an extra 5% coin bonus for every marked person from this point onwards.",
                "Dark Company": "You are immune to Curse. If a player in the Cultist's alliance is marked then they get Curse Immunity as long as they're in this alliance/marked.",
                "Martyr": "If all players alive are marked then they all receive Cursed. You can see who cursed are voting, but not who is voting who."
             },
@@ -1961,7 +2061,7 @@
                "Body Swap": {
                   "charges": 1,
                   "rarity": "Uncommon",
-                  "effect": "Select 2 people, actions on 1 go to the other, and vise versa, for 48 hours."
+                  "effect": "Select 2 people, visits on 1 go to the other, and vise versa, for 48 hours. Self-visit only actions do not."
                }
             },
             "perks": {
@@ -1992,7 +2092,7 @@
                "Broken Blade": {
                   "charges": 1,
                   "rarity": "Epic",
-                  "effect": "Select someone, destroying all currently-lasting positive abilities on them, and destroy any positive items within their inventory."
+                  "effect": "Select someone, destroy all positive effects on them, and destroy any positive items within their inventory."
                },
                "Wing Tear": {
                   "charges": 0,
@@ -2049,22 +2149,22 @@
             "description": "You love hacking, and you will try to hack as much as possible to survive, it's your only choice. You can really change results of things, you can mess up anyone you want.",
             "abilities": {
                "False Result": {
-                  "charges": 4,
+                  "charges": 6,
                   "rarity": "Uncommon",
                   "effect": "Choose three targets, for the next elimination, if your first target votes your second target, they instead vote your third target."
                },
                "Troll": {
                   "charges": 1,
                   "rarity": "Epic",
-                  "effect": "For the upcoming elimination, you become immune to votes but votes on any of your allies are now doubled. Your allies cannot leave the alliance until after the elimination. Must be used 6h before elim."
+                  "effect": "For the upcoming elimination, you become immune to votes but votes on any of your allies are now doubled. Your allies cannot leave the alliance until after the elimination. Must be used 6h before elim for full effect, else only immunity applies."
                },
                "Silence": {
-                  "charges": 2,
+                  "charges": 3,
                   "rarity": "Common",
                   "effect": "Give a player Blackmailed."
                },
                "Disable": {
-                  "charges": 2,
+                  "charges": 3,
                   "rarity": "Common",
                   "effect": "Give someone Disabled. Removes any other status effects apart from Cursed. This effect is removed from anyone who has it when you die."
                }
@@ -2120,7 +2220,7 @@
             "abilities": {
                "Mask": {
                   "charges": 3,
-                  "rarity": "Common",
+                  "rarity": "Uncommon",
                   "effect": "Select someone, giving them a mask which makes all information about them hidden."
                },
                "Hunt": {
@@ -2259,7 +2359,7 @@
                "Reanimate": {
                   "charges": 1,
                   "rarity": "Legendary",
-                  "effect": "Reanimate a dead player and be able to use any abilities they didn't use."
+                  "effect": "Reanimate a dead player and be able to use any abilities they didn't use. If not OL - Bodies will decay over time, refer to ECO."
                },
                "Discover": {
                   "charges": 1,
@@ -2296,7 +2396,7 @@
                "Abyssal Blessings": {
                   "charges": "inf",
                   "rarity": "Common",
-                  "effect": "Free someone of choice from the Abyssal curse, giving them lucky."
+                  "effect": "Give someone of choice Lucky. If Phantom is using this, only works on abyssal cursed players, alongside freeing them from the curse."
                }
             },
             "perks": {
@@ -2370,7 +2470,7 @@
             "perks": {
                "Freakish Nature": "Your non-aligned allies do not gain any luck in your alliance, you instead have theirs added to yours. This is added before your own lucky/unlucky but after their lucky/unlucky/perk calculations.",
                "Blood Luster": "Killing items cannot kill you when you use them, and can be manipulated by you to a degree.",
-               "Body Count": "Each time you murder someone / cause a murder, gain an immunity of choice, including 1 time elim immunity, along with +30% coin bonuses."
+               "Body Count": "Each time you murder someone / are the main cause of someone dying, gain an immunity of choice immediately, including 1 time elim immunity which lasts till hit. Also gain a 30% coin bonus."
             },
             "achievements": {
                "Master Slaughterer": "Obtain all Slaughterer achievments.",
@@ -2490,7 +2590,7 @@
                 }
             },
             "perks": {
-                "Exectuioner's Blade": "While alive, every elimination is a double elimination, but the 2nd elimination will have candidates put up for you to pick from, based on terms you put up at day start. You do not need to kill someone.",
+                "Executioner's Blade": "While alive, every elimination is a double elimination, but the 2nd elimination will have candidates put up for you to pick from, based on terms you put up at day start. You do not need to kill someone.",
                 "Pen & Blade": "You may not vote, you learn who is voting you. You survive one elimination. You may publicly reveal who voted you upon your death.",
                 "Intimidating Aura": "You may join alliances, not taking up a slot. You increase immunity card chances by 1.25, but you decide who gets it, based on whom in the alliance is top of the previous requirement (top 50% of alliance)."
             },
@@ -2505,12 +2605,12 @@
                 "The Deal":  {
                     "charges": "inf",
                     "rarity": "Not an Any Ability",
-                    "effect": "Players may start trades with you for your items. You may trade what you deem to be of equal value. "
+                    "effect": "Players may start trades with you for your items. You may trade what you deem to be of equal value."
                 },
                 "Swindle":  {
                     "charges": 3,
                     "rarity": "Not an Any Ability",
-                    "effect": "Upon use, the next deal received, you may totally rip the person off. "
+                    "effect": "Upon use, the next deal received, you may totally rip the person off."
                 }
             },
             "perks": {
@@ -2518,6 +2618,40 @@
                 "Many Wares": "You have infinite inventory space. You gain 2 items every day and start with 6 items. Your luck is randomly between 5-15 every time it is rolled.",
                 "Cargo Cart": "You may join multiple alliances not taking a slot. Alliance members have -25% luck but gain 1-2 additional items in item rains, and -50% luck in power drops but gain an additional aa.",
                 "Banker's Jeaolusy": "While alive all shop items cost 10% more. You may make 2 items you have cost 25% more."
+            },
+            "achievements": {
+                "Master Merchant": "Obtain all Merchant achievements."
+            }
+        },
+        "The Reaper of Souls": {
+            "alignment": "Traveller",
+            "description": "An undead harbinger of the graveyard.",
+            "abilities": {
+                "Soul for a Soul":  {
+                    "charges": 1,
+                    "rarity": "Not an Any Ability",
+                    "effect": "Select a living and dead player, if the living player has voted you ever, and the dead has never voted you, the living dies and the dead revives."
+                },
+                "Soul Stasis":  {
+                    "charges": 3,
+                    "rarity": "Not an Any Ability",
+                    "effect": "Select a player, they now register as dead and alive for votes and action against / by them. This ends after the Traveller leaves."
+                },
+                "Danse Macabre":  {
+                    "charges": 1,
+                    "rarity": "Not an Any Ability",
+                    "effect": "For one elimination phase, all players, living and dead, can vote on all voting pools. If there was not an undead revival pool active when this was used, it becomes active."
+                }
+            },
+            "perks": {
+                "Relentless Spirits": "While this Traveller is active, the dead may act on dead as if both players were alive, and statuses and effects work as if they're alive.",
+                "Fetch me their Souls": "While this traveller is alive, every day the dead will have the opportunity to vote on one dead player to send to the Reaper (TD), and every second day they may vote on a dead player to revive alongside the first vote.",
+                "Undead Resilience": "The first time you would die by elimination and by an attack, you will resist it.",
+                "Grim Resolve": "You can only vote if voted, and you vote in all possible voting pools. Your vote power is 3. You will be told if you may vote.",
+                "Life & Death": "Dead may form alliances. Alliances you join may have an additional 2 players, and may invite dead / living to them. Communications are allowed within the alliance. You may join 2 alliances.",
+                "Cold Benevolance": "Infinite inventory, any items and aas this role gains from drops are instead given as rewards to the revived player from the revival voting pool. This role cannot use items or aas gained by drops, but can if they are handed to them.",
+                "Harbringer": "This role is immortal until 5 players die. Perks also activate at 5 players dead.",
+                "Ethereal Presence": "May talk in dead and living chat, ignoring any restrictions present - even after death."
             },
             "achievements": {
                 "Master Merchant": "Obtain all Merchant achievements."
