@@ -10,7 +10,7 @@
         "Disabled": "You can't vote at the Elimination Phases. Permanent until cured.",
         "Blackmailed": "You can't talk for a day and you can't vote at that Elimination Phase. Removes after 24 hours.",
         "Despaired": "You always vote for yourself during an Elimination Phase.",
-        "Lucky": "Your coins bonus is now x1.5 your regular coins bonus and your luck is doubled. Permanent until you gain a new status effect.",
+        "Lucky": "Your coins value is now x1.5 your regular coins value and your luck is doubled. Permanent until you gain a new status effect.",
         "Unlucky": "Your coins bonus is halved and your luck is halved. Permanent until you gain a new status effect."
     },
     "items": {
@@ -122,7 +122,7 @@
         "Lillie's Blood": {
             "rarity": "Uncommon",
             "cost": 1200,
-            "effect": "Makes a person of choice immune to status effects for 2 days. Does not cure any current effects. Status effects on when in use, will not effect the target."
+            "effect": "Makes a person of choice immune to status effects for 2 days. Suppresses current statuses and their timers."
         },
         "Vortex Liquid": {
             "rarity": "Uncommon",
@@ -183,6 +183,11 @@
             "rarity": "Rare",
             "cost": 1000,
             "effect": "Removes the Restrained status effect on use."
+        },
+        "Megaphone": {
+            "rarity": "Rare",
+            "cost": 1200,
+            "effect": "Removes the Blackmailed status effect on use."
         },
         "Magic Mirror": {
             "rarity": "Rare",
@@ -415,7 +420,7 @@
                 "Spy": {
                     "charges": 3,
                     "rarity": "Common",
-                    "effect": "You will know everything that happens to your target and who die it 24 hours from use."
+                    "effect": "You will know everything that happens to your target and who did it 24 hours from use."
                 },
                 "Hidden": {
                     "charges": 2,
@@ -463,7 +468,7 @@
             "perks": {
                 "Face Reader": "If an ally gains information feedback from anything that they use, you will be told the information as well.",
                 "That Much Smarter": "Information items can be upgraded freely by you, or, have 2 uses. Info aas can be upgraded by you as well.",
-                "X-Ray Vision": "Any form of investigation done by you cannot be effected by perks or abilities, assuming the target is vistable."
+                "X-Ray Vision": "Any form of investigation done by you cannot be effected by perks or abilities, assuming the target is visitable."
             },
             "achievements": {
                 "Master Analyst": "Obtain all Analyst achievements.",
@@ -489,7 +494,7 @@
                 "Lunch Break": {
                     "charges": 1,
                     "rarity": "Uncommon",
-                    "effect": "Disable Rev Up, Rider of the Storm, and all uses of Burning Rubber for 48 hours, to gain 24 hours of death immunity and Elim immunity."
+                    "effect": "Disable Rev Up, Rider of the Storm, and all uses of Burning Rubber for 48 hours, to gain 24 hours of death immunity and elimination immunity."
                 }
             },
             "perks": {
@@ -556,7 +561,7 @@
             },
             "perks": {
                 "Clever": "Immune to Blackmailed, Disabled and Despaired.",
-                "Self-Defence": "If anyone tries to attack you, they will fail and you will give them Blackmailed. Additionally, you find out their name & role."
+                "Self-Defence": "You are protected from attacks. If someone attacks you, you will inflict them with blackmailed and you find out their name & role."
             },
             "achievements": {
                 "Master Detective": "Obtain all Detective achievements.",
@@ -1041,14 +1046,14 @@
             "description": "You are a monster that thrives off sticking around in cold environments, you decided to help the person who helped you from a fateful encounter.",
             "abilities": {
             "Encapsulate": {
-                "charges": 2,
+                "charges": 3,
                 "rarity": "Rare",
-                "effect": "Target a player, inflict them with Frozen. While Frozen, they are unable to be visited by anyone outside of their alliance and you. However, they be visited by anyone to cure Frozen."
+                "effect": "Target a player, inflict them with Frozen, bypassing immunities. If they are immune, you will learn and may choose to bypass it. While Frozen, they are unable to be visited by anyone outside of their alliance and you. However, they be visited by anyone to cure Frozen."
             },
             "Sheltered in Ice": {
                 "charges": 2,
                 "rarity": "Rare",
-                "effect": "Inflict Frozen on every ally in your alliance, while frozen they are immune to negatives. If they are immune, you will learn and choose to bypass it. You may choose to unfreeze them at any time."
+                "effect": "Inflict Frozen on every ally in your alliance, while frozen they are immune to negatives. If they are immune, you will learn and may choose to bypass it. You may choose to unfreeze them at any time."
             },
             "Nomadic Tribute": {
                 "charges": 1,
@@ -1340,7 +1345,7 @@
             "Death Curse": {
                 "charges": 1,
                 "rarity": "Not an Any Ability",
-                "effect": "Curse somebody, giving them a special Cursed which can only be cured by Bless. Someone inflicted with this curse will have their perks and abilities disabled unless you die."
+                "effect": "Curse somebody, giving them a special Cursed which can only be cured by the Bless. Someone inflicted with this curse will have their perks and abilities disabled unless you die."
             },
             "Disappear": {
                 "charges": 1,
@@ -1349,9 +1354,9 @@
             }
             },
             "perks": {
-            "Ghosts Blood": "Immune to Cursed.",
-            "Secret Spirit": "You can still use your items and abilities when you're dead. You still gain AA's and items from power drops/item rains. You act as if you were permanently Preserved while dead.",
-            "Confusion": "If you're investigated, the investigator will receive a random result instead."
+                "Ghost's Blood": "Immune to Cursed.",
+                "Secret Spirit": "You can still use your items and abilities when you're eliminated. You still gain AA's and items from power drops/item rains.",
+                "Confusion": "If you're investigated, the investigator will receive a random result instead."
             },
             "achievements": {
             "Master Ghost": "Obtain all Ghost achievements.",
@@ -1636,8 +1641,8 @@
                },
                "Surveillance": {
                   "charges": 3,
-                  "rarity": "Uncommon",
-                  "effect": "Protect your alliance from outside visitors for 24 hours."
+                  "rarity": "Rare",
+                  "effect": "Blocks outside visits to your alliance for 24 hours."
                },
                "Steel Guard": {
                   "charges": 0,
@@ -1759,7 +1764,7 @@
             }
         },
         "Apex Predator": {
-            "alignment": "Neutral",
+            "alignment": "Neutral (Removed)",
             "description": "You improvise. You adapt. You overcome.",
             "abilities": {
                 "Apex": {
@@ -1847,7 +1852,7 @@
                "Lonesome": "When not in an alliance, gain 35% coin boost and +3 luck.",
                "Calming Silence": "When not in an alliance, you gain +1 luck every 2 days. You have access to this luck only when alone.",
                "Observant": "Observant - When not in an alliance or in an alliance of 2 - You will know whats used on you.",
-               "Wolf": "When not in alliance or in an alliance of 2, lethal attacks on you will fail and kill the attacker, if they are immune to attacks, you learn their role and destroy their inventory."
+               "Wolf": "When not in alliance or in an alliance of 2, you are protected from attacks and will attack anyone who attacks you. If they are immune to attacks, you learn their role and destroy their inventory."
             },
             "achievements": {
                "Master Wanderer": "Obtain all Wanderer achievements.",
@@ -2004,7 +2009,7 @@
                "Mark of the Fallen": {
                   "charges": 1,
                   "rarity": "Not an Any Ability",
-                  "effect": "The targeted player becomes marked. Any action marked people do to someone else (except voting) passes along the mark. This is not known to the target. It can be spread indefinitely. (You cannot pick yourself)"
+                  "effect": "The targeted player becomes marked. Any action marked people do to someone else passes along the mark. This is not known to the target. It can be spread indefinitely. (You cannot pick yourself)"
                },
                "Forbidden Knowledge": {
                   "charges": 3,
@@ -2119,7 +2124,7 @@
                "Restrain": {
                   "charges": 2,
                   "rarity": "Uncommon",
-                  "effect": "Restrain someone, giving them Restrained. Removes any other status effect they have apart from Cursed. Will be removed on your death. If Gatekeeper"
+                  "effect": "Restrain someone, giving them Restrained. Removes any other status effect they have apart from Cursed. Will be removed on your death. If Gatekeeper - You will know your prisoners role."
                },
                "Force Ability": {
                   "charges": 7,
@@ -2220,7 +2225,7 @@
             "abilities": {
                "Mask": {
                   "charges": 3,
-                  "rarity": "Uncommon",
+                  "rarity": "Rare",
                   "effect": "Select someone, giving them a mask which makes all information about them hidden."
                },
                "Hunt": {
@@ -2545,34 +2550,6 @@
                "Hexed": "Have someone use an item twice due to your Hex.",
                "Play Time": "Transfer 3 effects due to Voodoo Doll."
             }
-        },
-        "Ball": {
-            "alignment": "Ball",
-            "description": "Let's get rolling, let's get going, once it's rolling, you can't stop it-",
-            "abilities": {
-                "Rolling": {
-                    "charges": "inf",
-                    "rarity": "Rare",
-                    "effect": "Send a notification to the game that a ball is rolling. Gain immunity to a status of choice, and +1 vote power at the next elimination. 12 hour cooldown."
-                },
-                "Bouncing ": {
-                    "charges": 1,
-                    "rarity": "Not an Any Ability",
-                    "effect": "It will be publically announced that *you* are the ball, however 12 hours from using this ability, you gain permanent death immunity."
-                },
-                "Speed Up": {
-                    "charges": "inf",
-                    "rarity": "Epic",
-                    "effect": "Activates once you have used bouncing, +1 vote power permanently. 24 hour cool down."
-                }
-            },
-            "perks": {
-                "Obviously a Ball": "You cannot obtain investigation immunity in any way.",
-                "Uncontrolable": "Once you have used bouncing, your actions cannot be redirected or blocked in any way."
-            },
-            "achievements": {
-                "Master Ball": "Obtain all Ball achievements."
-             }
         },
         "Executioner": {
             "alignment": "Traveller",
