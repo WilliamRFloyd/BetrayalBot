@@ -462,7 +462,7 @@
                 "Inspection Zone": {
                     "charges": 1,
                     "rarity": "Uncommon",
-                    "effect": "Upon use, you will know everything to effect you within the next 24 hours, and who did it. If someone tries to attack you, you will dodge it. If someone tries to inflict you with a negative status, it will reflect back onto them."
+                    "effect": "Upon use, you will know everything to effect you within the next 24 hours, and who did it.You evade lethal effects (excluding scarlet/curses). If someone tries to inflict you with a negative status, it will reflect back onto them."
                 }
             },
             "perks": {
@@ -524,7 +524,7 @@
                 "Lava Wall": {
                     "charges": 2,
                     "rarity": "Rare",
-                    "effect": "When used, if someone in your alliance is visited within the next 24 hours, burns the visitor and destroys their lowest tier item. The visitor fails if already burning, but still has an item destroyed."
+                    "effect": "When used, if someone in your alliance is visited within the next 24 hours, burns the visitor and destroys their lowest tier item. The visitor fails if already burning, but still has an item destroyed. You may choose if this effects alliance members too."
                 }
             },
             "perks": {
@@ -722,7 +722,8 @@
             },
             "perks": {
                 "Justice": "If both people eliminated during the Lawful trial are not your alignment then you gain a random Epic-Mythical tier item.",
-                "Dystopia": "If both of the people eliminated are your alignment during the Lawful trial then your abilities and alignment AA's are disabled, and you get Despaired."
+                "Dystopia": "If both of the people eliminated are your alignment during the Lawful trial then your abilities and alignment AA's are disabled, and you get Despaired.",
+                "Golden Gavel": "If you vote on the eliminated player, gain +1 luck. If successful in a row, gain +1 luck per streak days."
             },
             "achievements": {
                 "Master Judge": "Obtain all Judge achievements.",
@@ -772,9 +773,9 @@
             "description": "You are a defensive robotic machine that takes pleasure in military and undercover procedures.",
             "abilities": {
                 "Entrapment": {
-                    "charges": 2,
+                    "charges": 0,
                     "rarity": "Rare",
-                    "effect": "Select someone, if they attempt to harm you within the next 18 hours, evade it and inflict the harm back on them, along with gaining a charge/item of whatever they used."
+                    "effect": "Select someone, if they attempt to harm you within the next 18 hours, evade it, re-inflict entrapment on them and inflict the harm back on them, along with gaining a charge/item of whatever they used. This can loop."
                 },
                 "Target Fire": {
                     "charges": 1,
@@ -782,7 +783,7 @@
                     "effect": "Select 2 people, if one harms the other within the next 36 hours, both get hit by it 3 fold. This only works on 6 Point Bombs once."
                 },
                 "Smoke Grenade": {
-                    "charges": 2,
+                    "charges": 0,
                     "rarity": "Rare",
                     "effect": "Select someone, if they attempt to harm anyone within your alliance within the next 24 hours, cause it to fail, and give them drunk 3 stack, burned and cursed."
                 },
@@ -794,7 +795,8 @@
             },
             "perks": {
                 "Enhanced Learning": "Each time your base abilities are successfully used, gain 1 luck and 5% coins.",
-                "Lock On": "Redirections will work on you, but also inflict your original target and redirection users with the ability/item as well."
+                "Lock On": "Redirections will work on you, but also inflict your original target and redirection users with the ability/item as well.",
+                "Loadout Change": "At any point, you may choose to add a charge to Entrapment or Smoke Grenade. You have 5 charges. This cannot be copied."
             },
             "achievements": {
                 "Master Mecha": "Obtain all Mecha achievements.",
@@ -1164,7 +1166,7 @@
             "Charisma Chant": {
                 "charges": 3,
                 "rarity": "Not an Any Ability",
-                "effect": "Select a player, their luck goes up by +2 and +50% until a luck event occurs. Any statuses on them that are negative will be degraded."
+                "effect": "Select a player, their luck goes up by +2 and +50% until a luck event occurs. Any statuses on them that are negative will be degraded. Cannot be self used more than once"
             },
             "Damage Dance": {
                 "charges": 2,
@@ -1179,7 +1181,7 @@
             "Tactical Tune": {
                 "charges": 1,
                 "rarity": "Legendary",
-                "effect": "Upon use, become immune to death, statuses and elimination, lasts 24h. If attacked or eliminated in this time, add 24 hours onto this - loops."
+                "effect": "Upon use, become immune to death, statuses and elimination, lasts 24h. If attacked or eliminated, except for using a scarlet potion, in this time, add 24 hours onto this - loops."
             }
             },
             "perks": {
@@ -1321,7 +1323,7 @@
             "Legion": "You may have 1 additional person in your alliance, if you choose to allow it.",
             "Lead Actor": "You gain 2 luck from Good/Evil, for every good and evil pair in your alliance, gain an additional 2 luck. When you leave an alliance, you may have any form of leave message come up [kicked, dragged out, banned]. You can leave your own abilities.",
             "Top-Hat Tip": "You start the game lucky, you are immune to unlucky. You can see yours and all your allies luck at all times.",
-            "False-Smile": "If someone leaves your alliance, use a free charge of opening act on them automatically, or, you can inflict unlucky, frozen or disabled within 12 hours, frozen and disabled will last 12 hours.",
+            "False-Smile": "If someone leaves your alliance, use a free charge of opening act on them automatically (-10% only), or, you can inflict unlucky, frozen or disabled within 12 hours, frozen and disabled will last 12 hours.",
             "Forced Performance": "If someone uses a negative action on you that tells you it was used, if you correctly say who did it, you may drag them into your alliance at any time."
             },
             "achievements": {
@@ -1345,7 +1347,7 @@
             "Death Curse": {
                 "charges": 1,
                 "rarity": "Not an Any Ability",
-                "effect": "Curse somebody, giving them a special Cursed which can only be cured by the Bless. Someone inflicted with this curse will have their perks and abilities disabled unless you die."
+                "effect": "Curse somebody, giving them a special Cursed which can only be cured by the Bless. Someone inflicted with this curse will have their perks and abilities disabled unless you die. Cannot be moved once inflicted."
             },
             "Disappear": {
                 "charges": 1,
@@ -1399,7 +1401,7 @@
             }
         },
         "Incubus": {
-            "alignment": "Neutral (Removed)",
+            "alignment": "Neutral",
             "description": "Charm magic isn't needed so much when your way with words bends the mind of mortals alone.",
             "abilities": {
             "Demonic Embrace": {
@@ -1883,7 +1885,7 @@
                "Sunder": {
                   "charges": 1,
                   "rarity": "Epic",
-                  "effect": "Split the players into 2 equal groups of your choice. Everyone can only visit, vote and talk to people in that group until the next Elimination. Both groups will vote someone out. If used 12h before elim, occurs immediately, else, occurs at eliminaiton."
+                  "effect": " Split the players into 2 equal groups of your choice. Everyone can only visit, vote and talk to people in that group until the next Elimination. Both groups will vote someone out. If used 12h before elim, occurs immediately, else, occurs at eliminaiton. Empowering this breaks empower, cannot be energized. If anarchist: Can be energized once."
                }
             },
             "perks": {
@@ -2632,6 +2634,34 @@
             },
             "achievements": {
                 "Master Merchant": "Obtain all Merchant achievements."
+            }
+        },
+        "Ball": {
+            "alignment": "Ball",
+            "description":  "Let's get rolling, let's get going, once it's rolling, you can't stop it-",
+            "abilities": {
+                "Rolling": {
+                    "charges": "inf",
+                    "rarity": "Not an Any Ability",
+                    "effect": "Send a notification to the game that a ball is rolling. Gain immunity to a status of choice, and +1 vote power at the next elimination. 12 hour cooldown."
+                },
+                "Bouncing": {
+                    "charges": 1,
+                    "rarity": "Not an Any Ability",
+                    "effect": "It will be publically announced that you are the ball, however 12 hours from using this ability, you gain permanent death immunity."
+                },
+                "Speed Up": {
+                    "charges": "inf",
+                    "rarity": "Not an Any Ability",
+                    "effect": "Activates once you have used bouncing, +1 vote power permanently. 24 hour cool down."
+                }
+            },
+            "perks": {
+                "Obviously a Ball": "You cannot obtain investigation immunity in any way.",
+                "Uncontrollable": "Once you have used bouncing, your actions cannot be redirected or blocked in any way."
+            },
+            "achievements": {
+                "Master Ball": "Obtain all Ball achievements."
             }
         }
     }
