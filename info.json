@@ -415,16 +415,19 @@
                 "Follow": {
                     "charges": 3,
                     "rarity": "Common",
+                    "exclusive": false,
                     "effect": "You will know everything your target does and who to for 24 hours from use. Does not include perk-based actions."
                 },
                 "Spy": {
                     "charges": 3,
                     "rarity": "Common",
+                    "exclusive": false,
                     "effect": "You will know everything that happens to your target and who did it 24 hours from use."
                 },
                 "Hidden": {
                     "charges": 2,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "For 24 hours on use, anything done on you will be reflected back to the user."
                 }
             },
@@ -447,21 +450,25 @@
                 "Chemistry": {
                     "charges": 3,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "Select two people, if they share an alliance, you will be told, and can select another person, this loops."
                 },
                 "Vibe Check": {
                     "charges": 5,
                     "rarity": "Common",
+                    "exclusive": false,
                     "effect": "Select 2 people, you will know if they are the same alignment. You cannot select the same person more than twice."
                 },
                 "Subtraction": {
                     "charges": 3,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "Select someone, view their alliance's items. These items will be shown combined with each other. You also find out about any inventory affecting effects on the player you chose."
                 },
                 "Inspection Zone": {
                     "charges": 1,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "Upon use, you will know everything to effect you within the next 24 hours, and who did it.You evade lethal effects (excluding scarlet/curses). If someone tries to inflict you with a negative status, it will reflect back onto them."
                 }
             },
@@ -484,16 +491,19 @@
                 "Burning Rubber": {
                     "charges": 4,
                     "rarity": "Rare",
+                    "exclusive": false,
                     "effect": "Target somebody, either: Clear all negative statuses on them, and everybody who visits them negatively or neutrally for the next 24 hours will be burned with an 8 hour burn OR burn them with an 8 hour burn, and everybody who visits them positively within the next 24 hours will also burn with an 8 hour burn."
                 },
                 "Stick With the Pack": {
                     "charges": 1,
                     "rarity": "Epic",
+                    "exclusive": false,
                     "effect": "Target an ally, inflicting them with Rev Up permanently. This can't be empowered or energized."
                 },
                 "Lunch Break": {
                     "charges": 1,
                     "rarity": "Uncommon",
+                    "exclusive": true,
                     "effect": "Disable Rev Up, Rider of the Storm, and all uses of Burning Rubber for 48 hours, to gain 24 hours of death immunity and elimination immunity."
                 }
             },
@@ -514,16 +524,19 @@
                 "Fire Guard": {
                     "charges": 2,
                     "rarity": "Epic",
+                    "exclusive": false,
                     "effect": "Select someone, for 24 hours you will know any negative visits to the person, and can decide to reverse each effect, burn the visitor, or do nothing at all. This includes all negatives such as death other than elimination."
                 },
                 "Ethereal Healing": {
                     "charges": 2,
                     "rarity": "Epic",
+                    "exclusive": false,
                     "effect": "Select 2 people, removing all negatives from the first and putting them on the second, and removing all positives from the second onto the first. You can select dead people."
                 },
                 "Lava Wall": {
                     "charges": 2,
                     "rarity": "Rare",
+                    "exclusive": false,
                     "effect": "When used, if someone in your alliance is visited within the next 24 hours, burns the visitor and destroys their lowest tier item. The visitor fails if already burning, but still has an item destroyed. You may choose if this effects alliance members too."
                 }
             },
@@ -546,16 +559,19 @@
                 "Search": {
                     "charges": 5,
                     "rarity": "Common",
+                    "exclusive": false,
                     "effect": "Find out what type of action your target most recently did (investigative, killing, healing etc) and the player they used it on."
                 },
                 "Interrogate": {
                     "charges": 2,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "You're given 2 possible roles that the person you select could be, one is a random false role and the other is their actual role."
                 },
                 "Solve": {
                     "charges": 0,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "Figure out any piece of information of your choice about a player. Gain a charge for this every even day if you are Detective."
                 }
             },
@@ -577,21 +593,25 @@
                 "Reel": {
                     "charges": 2,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "Select a person - steal their most recent item - if they are opposite your alignment, you will see their inventory and can choose what item to steal."
                 },
                 "Fishing Trip": {
                     "charges": 2,
                     "rarity": "Rare",
+                    "exclusive": false,
                     "effect": "You receive a random common item or AA (you choose which). The more times you use Fishing Trip the higher the rarity of item/AA you will get. Upon mythical loop to common."
                 },
                 "Hooked": {
                     "charges": 2,
                     "rarity": "Epic",
+                    "exclusive": false,
                     "effect": "For 24hrs, any items/AAs your target gives or receives, you'll take instead."
                 },
                 "Bait": {
                     "charges": 1,
                     "rarity": "Legendary",
+                    "exclusive": false,
                     "effect": "Select someone: For 24 hours any action (excluding votes) people use on another player (excluding you & the target) will redirect towards the target. If the user or the target dies, this ability stops."
                 }
             },
@@ -613,6 +633,7 @@
                 "Fire": {
                     "charges": 1,
                     "rarity": "Not an Any Ability",
+                    "exclusive": true,
                     "effect": "Shoot a player. If you kill someone who is your alignment, you will commit suicide."
                 }
             },
@@ -635,16 +656,19 @@
                 "Venture": {
                     "charges": 9,
                     "rarity": "Common",
+                    "exclusive": false,
                     "effect": "Find out if a player is good or not."
                 },
                 "Mentor": {
                     "charges": 1,
                     "rarity": "Epic",
+                    "exclusive": false,
                     "effect": "Learn an alliance members role and learn one charge of an ability of theirs of your choice. Fails if your target is not the same alignment as you."
                 },
                 "Protection": {
                     "charges": 3,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "Make an alliance member completely immune to death including eliminations for 24 hours. If Hero, you can gift a charge of this as an AA to others. Cant self pick."
                 }
             },
@@ -667,26 +691,31 @@
                 "Head Slam": {
                     "charges": 0,
                     "rarity": "Rare",
+                    "exclusive": true,
                     "effect": "Select someone, destroy their lowest tier item and inflicting a negative status you are immune to of choice. Must cycle through all immunities before re-inflicting the same again."
                 },
                 "Chomp": {
                     "charges": 0,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "Select someone; they will be unable to perform actions to people other than their current alliance members for 12h. If not in an alliance, they will be unable to join one for 12h. Can stack."
                 },
                 "Tear-Out": {
                     "charges": 0,
                     "rarity": "Rare",
+                    "exclusive": true,
                     "effect": "Select someone, dragging them out of their alliance. Inflict a negative status of choice you are not immune to. Must cycle through all non-immunities before re-inflicting the same again."
                 },
                 "Head-Shield": {
                     "charges": 0,
                     "rarity": "Epic",
+                    "exclusive": true,
                     "effect": "Select as many players as things you are immune to. If 0, pick 1. Negative actions on them will fail to work, the person using it will keep the charge but be unable to vote or act for 6h. Neutral visits will inform you and the target what occured and who did it. Lasts 8h. Can stack. You can bypass this. Gains max 2 within a day from perk."
                 },
                 "Visceral Roar": {
                     "charges": 0,
                     "rarity": "Epic",
+                    "exclusive": false,
                     "effect": "Select someone, they will pick as many negative statuses they want and will gain vote power equal. Will be inflicted with them all post-elim. Selecting immunities will remove immunities."
                 }
             },
@@ -707,16 +736,19 @@
                 "Lawful": {
                     "charges": 1,
                     "rarity": "Epic",
+                    "exclusive": false,
                     "effect": "Changes the day to have two eliminations. Your votes count as 2 for both of them. You become immune to elimination for both. Must be used atleast 12 hours before elimination for full effect. If used past that, double elimination and vote of 2 does not occur, but immunity does."
                 },
                 "Overrule": {
                     "charges": 2,
                     "rarity": "Epic",
+                    "exclusive": false,
                     "effect": "Remove 1 elimination immunities from a player for the upcoming elimination. If none, counts as -1 immunity."
                 },
                 "The Hammer": {
                     "charges": 1,
                     "rarity": "Rare",
+                    "exclusive": false,
                     "effect": "Use this to completely stop the upcoming elimination phase when the time comes."
                 }
             },
@@ -739,21 +771,25 @@
                 "Kick": {
                     "charges": 4,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "1 charge - Kick someone from your alliance. - 2 charges - select someone, you will kick them if they are in any alliances. Kicked players lose 25% of their total coins which is evenly spread throughout your alliance and your personal luck goes up by 1. Kicked people cannot re-join their alliance for 36 hours. Dying will stop any active kicks."
                 },
                 "Contract": {
                     "charges": 2,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "Give an ally +25% coins value. If they are your alignment, gain +25% for yourself too."
                 },
                 "Discount": {
                     "charges": 4,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "Give yourself or an ally a 50% reduced price on every buyable item until you/they buy one. Does not stack to get more reduction."
                 },
                 "Ban": {
                     "charges": 1,
                     "rarity": "Legendary",
+                    "exclusive": false,
                     "effect": "Ban all members from a targets alliance if they're in one. They cannot join any alliance nor make one for 36 hours, they cannot be in an alliance with any of the members they got banned from for 72 hours. If you die the ban goes off."
                 }
             },
@@ -775,21 +811,25 @@
                 "Entrapment": {
                     "charges": 0,
                     "rarity": "Rare",
+                    "exclusive": false,
                     "effect": "Select someone, if they attempt to harm you within the next 18 hours, evade it, re-inflict entrapment on them and inflict the harm back on them, along with gaining a charge/item of whatever they used. This can loop."
                 },
                 "Target Fire": {
                     "charges": 1,
                     "rarity": "Epic",
+                    "exclusive": true,
                     "effect": "Select 2 people, if one harms the other within the next 36 hours, both get hit by it 3 fold. This only works on 6 Point Bombs once."
                 },
                 "Smoke Grenade": {
                     "charges": 0,
                     "rarity": "Rare",
+                    "exclusive": false,
                     "effect": "Select someone, if they attempt to harm anyone within your alliance within the next 24 hours, cause it to fail, and give them drunk 3 stack, burned and cursed."
                 },
                 "Last Resort": {
                     "charges": 1,
                     "rarity": "Epic",
+                    "exclusive": false,
                     "effect": "Select someone, they cannot be eliminated at next elimination. If saved from elimination, all voters on the target will become paralyzed."
                 }
             },
@@ -812,16 +852,19 @@
                 "Bury Alive": {
                     "charges": 2,
                     "rarity": "Rare",
+                    "exclusive": false,
                     "effect": "Bury someone for 24 hours, making them count as dead and finding out their role. They cannot act outside of what they could do when dead, except talk. Abilities that work on dead players will now work on your targets."
                 },
                 "Preserve": {
                     "charges": 2,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "If someone died, within 24 hours of the death you can use this on them to make them their body survive for 24 more hours. If they have heal, ethereal heal, break, saving grace, protection, holy light, or bless used on them within that time they will come back to life, if not, you take any money they have on them."
                 },
                 "Soul Seer": {
                     "charges": "inf",
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "Select a player, upon their death, you can see their role, their items, money and their last actions. You gain a charge upon the selected player dying. If used on yourself and you die, you may continue to make chats with the living."
                 }
             },
@@ -844,16 +887,19 @@
                 "Heal": {
                     "charges": 3,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "Heal your target from the next fatal effect that happens to them aside from being eliminated."
                 },
                 "Vaccinate": {
                     "charges": 3,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "Your target becomes immune to a status effect of your choice."
                 },
                 "Cure": {
                     "charges": 3,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "Cures your target of any status effect[s] of your choice."
                 }
             },
@@ -875,16 +921,19 @@
                 "Purification": {
                     "charges": 2,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "Select someone, all negative statues on them are inflicted back on the original users."
                 },
                 "Ascend": {
                     "charges": 2,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "Soar into the air, and see who visits yourself and allies for the next 12 hours. You will avoid negatives while this is active."
                 },
                 "Holy Light": {
                     "charges": 2,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": " Select someone, returning any positives lost within the previous 18 hours. If they hadn't lost any positives, the next positive performed by them and done to them is 2 fold."
                 }
             },
@@ -907,21 +956,25 @@
                 "Emotional Surge": {
                     "charges": 1,
                     "rarity": "Not an Any Ability",
+                    "exclusive": true,
                     "effect": "Inflict someone of choice with statuses that you have lost immunity to."
                 },
                 "Final Swing": {
                     "charges": 1,
                     "rarity": "Not an Any Ability",
+                    "exclusive": true,
                     "effect": "Cannot be empowered or energized. While having less than or equal to 3 regrets, you can disable someone's perks and abilities until you die. If you have 4 or more, you can disable someone's perks or abilities until you die. Using this will add 3 regrets."
                 },
                 "Saving Grace": {
                     "charges": 3,
                     "rarity": "Not an Any Ability",
+                    "exclusive": true,
                     "effect": "Select someone, saving them from elimination and negative effects for the next 24 hours. If they are not struck by elimination, gain a regret, else, lose a regret. If you de-activate this, you gain a non-negative removing version to use."
                 },
                 "Body Shield": {
                     "charges": 1,
                     "rarity": "Not an Any Ability",
+                    "exclusive": true,
                     "effect": "Select someone, if they are attacked, they survive, however, you lose an active perk of choice; but also lose 3 regrets. Cannot remove Hourglass of life or be self-used unless reflected/redirected."
                 }
             },
@@ -947,16 +1000,19 @@
             "Double Time": {
                 "charges": 1,
                 "rarity": "Not an Any Ability",
+                "exclusive": true,
                 "effect": "Everyone in your alliance will have their next ability happen twice, or if it involves time, either twice as fast or twice as long (refer to ECO). Double time won't work on double time."
             },
             "Rewind": {
                 "charges": 2,
                 "rarity": "Rare",
+                "exclusive": false,
                 "effect": "Select someone, any statuses they had and items they used in the past 24 hours, they regain. Cannot use on same person within 24 hours - Global Cooldown"
             },
             "Loop": {
                 "charges": 1,
                 "rarity": "Not an Any Ability",
+                "exclusive": true,
                 "effect": "Select someone - Any negative abilities or item effects that have effected them within the past 24 hours and the next 24 hours, will effect them again, every 24 hours, 3 times."
             }
             },
@@ -978,16 +1034,19 @@
             "Black Cloak": {
                 "charges": 7,
                 "rarity": "Common",
+                "exclusive": false,
                 "effect": "Next time someone visits you, they get redirected to a target of your choice."
             },
             "Deduct": {
                 "charges": "inf",
                 "rarity": "Uncommon",
+                "exclusive": false,
                 "effect": "Find the exact role of a player of your choice, has a 24 hour cooldown after use if you are Undercover."
             },
             "Investigate": {
                 "charges": 3,
                 "rarity": "Uncommon",
+                "exclusive": false,
                 "effect": "Find out who voted your target at the previous elimination and who your target is voting for the upcoming elimination."
             }
             },
@@ -1010,26 +1069,31 @@
             "Freeze": {
                 "charges": 1,
                 "rarity": "Common",
+                "exclusive": false,
                 "effect": "Freeze somebody, giving them a special 4 day, 1/4 thaw chance Frozen. Can choose if it removes any other status effect they have apart from Cursed."
             },
             "Electrify": {
                 "charges": 1,
                 "rarity": "Common",
+                "exclusive": false,
                 "effect": "Electrify somebody, giving them a special Paralysed which stuns for 56 hours. Can choose if it removes any other status effect they have apart from Cursed."
             },
             "Empower": {
                 "charges": 1,
                 "rarity": "Legendary",
+                "exclusive": false,
                 "effect": "Empower somebody, giving them Empowered. Removes any other status effect they have apart from Cursed. If you empower yourself, you cannot use empower again. Empower cannot be used with empower charges, unless you are Wizard."
             },
             "Fireball": {
                 "charges": 1,
                 "rarity": "Uncommon",
+                "exclusive": false,
                 "effect": "Burn somebody, giving them a special Burned which burns every 16 hours. Can choose if it removes any other status effect they have apart from Cursed."
             },
             "Bless": {
                 "charges": 2,
                 "rarity": "Rare",
+                "exclusive": false,
                 "effect": "Bless somebody, removing all curses from them if they have any. It can also revive a dead player if they're preserved."
             }
             },
@@ -1050,16 +1114,19 @@
             "Encapsulate": {
                 "charges": 3,
                 "rarity": "Rare",
+                "exclusive": false,
                 "effect": "Target a player, inflict them with Frozen, bypassing immunities. If they are immune, you will learn and may choose to bypass it. While Frozen, they are unable to be visited by anyone outside of their alliance and you. However, they be visited by anyone to cure Frozen."
             },
             "Sheltered in Ice": {
                 "charges": 2,
                 "rarity": "Rare",
+                "exclusive": false,
                 "effect": "Inflict Frozen on every ally in your alliance, while frozen they are immune to negatives. If they are immune, you will learn and may choose to bypass it. You may choose to unfreeze them at any time."
             },
             "Nomadic Tribute": {
                 "charges": 1,
                 "rarity": "Not an Any Ability",
+                "exclusive": true,
                 "effect": "Anyone currently frozen will secretly vote anyone of your choice for the next elimination, if they thaw after this ability is used. Their vote will be returned to normal."
             }
             },
@@ -1080,6 +1147,7 @@
             "Absorption": {
                 "charges": 1,
                 "rarity": "Not an Any Ability",
+                "exclusive": true,
                 "effect": "Select a player. Upon their death you may see their abilities and perks and pick one of each. You will be given the ability and perk, and you will also regain a charge of Absorption after doing so. This cannot gain charges outside of its base conditions, and cannot be copied."
             }
             },
@@ -1097,16 +1165,19 @@
             "Man's Blessing": {
                 "charges": 1,
                 "rarity": "Rare",
+                "exclusive": false,
                 "effect": "The first vote on a selected player has 1 less power and remains permanent until you change it. This can stack and go across multiple voters."
             },
             "Decode": {
                 "charges": 2,
                 "rarity": "Not an Any Ability",
+                "exclusive": true,
                 "effect": "Reverse the effects of Mans Blessing, making the first vote on them increase by 1 instead or reverse the effects of Fatality, making any votes on your allies and yourself not counting."
             },
             "Fatality": {
                 "charges": 1,
                 "rarity": "Epic",
+                "exclusive": false,
                 "effect": "For one elimination, all votes on any of your allies count as an increased power of 1."
             }
             },
@@ -1129,21 +1200,25 @@
             "Inheritance Tax": {
                 "charges": 1,
                 "rarity": "Uncommon",
+                "exclusive": false,
                 "effect": "You take all money from a dead player."
             },
             "Last Will": {
                 "charges": 4,
                 "rarity": "Rare",
+                "exclusive": false,
                 "effect": "If you receive the most votes for the upcoming elimination, everyone who voted you has their coin count reduced to 0. This applies even if rebounded / immune."
             },
             "Payday": {
                 "charges": 1,
                 "rarity": "Rare",
+                "exclusive": false,
                 "effect": "Everyone currently alive must pay up 200 coins to you or become Restrained for 3 days."
             },
             "Inflate": {
                 "charges": 1,
                 "rarity": "Uncommon",
+                "exclusive": false,
                 "effect": "Increases an items price by 1000 coins."
             }
             },
@@ -1165,22 +1240,26 @@
             "abilities": {
             "Charisma Chant": {
                 "charges": 3,
-                "rarity": "Not an Any Ability",
+                "rarity": "Uncommon",
+                "exclusive": false,
                 "effect": "Select a player, their luck goes up by +2 and +50% until a luck event occurs. Any statuses on them that are negative will be degraded. Cannot be self used more than once"
             },
             "Damage Dance": {
                 "charges": 2,
-                "rarity": "Not an Any Ability",
+                "rarity": "Rare",
+                "exclusive": false,
                 "effect": "Select a player, their next offensive ability / item use will be 2-fold"
             },
-            "Protection Prance": {
+            "Protective Prance": {
                 "charges": 2,
-                "rarity": "Not an Any Ability",
+                "rarity": "Uncommon",
+                "exclusive": false,
                 "effect": "Select a player, the next negative on them will be blocked."
             },
             "Tactical Tune": {
                 "charges": 1,
                 "rarity": "Legendary",
+                "exclusive": false,
                 "effect": "Upon use, become immune to death, statuses and elimination, lasts 24h. If attacked or eliminated, except for using a scarlet potion, in this time, add 24 hours onto this - loops."
             }
             },
@@ -1200,22 +1279,25 @@
             "Sticky Bomb": {
                 "charges": 1,
                 "rarity": "Not an Any Ability",
+                "exclusive": true,
                 "effect": "Put a sticky bomb on a player without them knowing. When the holder is visited, the visitor gets the bomb. Detonates after 48 hours."
             },
             "Gas Bomb": {
                 "charges": 1,
                 "rarity": "Epic",
+                "exclusive": false,
                 "effect": "Gas a player. Them and any visitors get Paralysed, Disabled, and Blackmailed for a 48 hour period. Gas goes away after 72 hours. Self-visits will not gas you."
             },
             "Tagger Bomb": {
                 "charges": 1,
                 "rarity": "Epic",
+                "exclusive": false,
                 "effect": "Tag a player. Every time the tagged player visits someone they also get tagged. You can see tagged peoples visits."
             }
             },
             "perks": {
             "Bomber's Mask": "Allows you to track the locations of your bombs, including 6 Point Bombs when held.",
-            "Cautious Nature": "When going to use an ability or item on someone, you will know if an ability is active on or around them",
+            "Cautious Nature": "When going to use an ability or item on someone, you will know if an ability/effect/perk is active on or around them.",
             "Resistant Vest": "Immune to any effects of a bomb and any fatal item effects."
             },
             "achievements": {
@@ -1232,16 +1314,19 @@
             "Bend": {
                 "charges": 2,
                 "rarity": "Uncommon",
+                "exclusive": false,
                 "effect": "Change someone's alignment to an alignment of your choice. They will be informed of this. If Cheater: Gain a charge of this every day."
             },
             "Interception": {
                 "charges": 5,
                 "rarity": "Uncommon",
+                "exclusive": false,
                 "effect": "Target a person, receive the next feedback that they would receive from an ability/item."
             },
             "Break": {
                 "charges": 1,
                 "rarity": "Legendary",
+                "exclusive": false,
                 "effect": "For 24 hours, if whoever you select dies, they will come back to life at the end of this time."
             }
             },
@@ -1263,21 +1348,25 @@
             "Upgrade": {
                 "charges": 3,
                 "rarity": "Epic",
+                "exclusive": false,
                 "effect": "Select someone, they can now upgrade a perk or ability. Max once per ability or perk."
             },
             "Overclock": {
                 "charges": 3,
                 "rarity": "Rare",
+                "exclusive": false,
                 "effect": "Select someone, they can now upgrade an item of choice. Max once per item."
             },
             "Hyperdrive": {
                 "charges": 1,
                 "rarity": "Legendary",
+                "exclusive": false,
                 "effect": "Select someone, they gain a new charge for an ability of choice, once every 4 days."
             },
             "Degrade": {
                 "charges": 1,
                 "rarity": "Rare",
+                "exclusive": false,
                 "effect": "Select someone, you learn their role and see their abilities and perks, you can degrade an ability or perk of choice."
             }
             },
@@ -1301,21 +1390,25 @@
             "Opening act": {
                 "charges": 4,
                 "rarity": "Uncommon",
+                "exclusive": false,
                 "effect": "Select someone, if they join or make an alliance within the next 48 hours, you will know. They will have -10% or +10% immunity card chances, you decide. Does not stack if multiple in same alliance."
             },
             "Side-Show": {
                 "charges": 3,
                 "rarity": "Uncommon",
+                "exclusive": true,
                 "effect": "Select someone, forcing yourself into their alliance, as if someone invited you. You can be in 2 alliances at once using this method. If you use this when in 2, you will have to leave 1, you pick."
             },
             "The Twist": {
                 "charges": 2,
                 "rarity": "Uncommon",
+                "exclusive": true,
                 "effect": "Select 2 players, their alliances will be merged for 24 hours. If in same alliance, the alliance is instead split equally. People may not leave for the duration of this ability."
             },
             "Finale": {
                 "charges": 1,
                 "rarity": "Not an Any Ability",
+                "exclusive": true,
                 "effect": "Select someone, their alliance must vote within their alliance chat a person to die. Draws will kill all not in the draw. An alliance of 2 will have draws kill both instead. People may not use abilities until someone is voted, counts as an elimination kill. People may not leave for the duration of this ability. If you pick someone alone, you will be blackmailed and despaired."
             }
             },
@@ -1337,21 +1430,25 @@
             "Invisibility": {
                 "charges": 4,
                 "rarity": "Uncommon",
+                "exclusive": false,
                 "effect": "Go invisible which allows nobody to visit you for 24 hours."
             },
             "Curse": {
                 "charges": 4,
                 "rarity": "Common",
+                "exclusive": false,
                 "effect": "Curse somebody, giving them Cursed. Removes any other status effects they have."
             },
             "Death Curse": {
                 "charges": 1,
                 "rarity": "Not an Any Ability",
+                "exclusive": true,
                 "effect": "Curse somebody, giving them a special Cursed which can only be cured by the Bless. Someone inflicted with this curse will have their perks and abilities disabled unless you die. Cannot be moved once inflicted."
             },
             "Disappear": {
                 "charges": 1,
                 "rarity": "Legendary",
+                "exclusive": true,
                 "effect": "Vanish for up to two days, making nothing happen to you. You're also immune to votes. You may reappear at any time once you vanish."
             }
             },
@@ -1374,16 +1471,19 @@
             "Bloody Knuckles": {
                 "charges": 2,
                 "rarity": "Uncommon",
+                "exclusive": false,
                 "effect": "Target somebody, you learn their status immunities. Choose a status immunity to remove from them permanently. If the target has no immunities they leave a blood trail which tracks their next visit for you even through Shatter. (who they visited and the nature of the visit)"
             },
             "Wall Breaker": {
                 "charges": 2,
                 "rarity": "Uncommon",
+                "exclusive": false,
                 "effect": "Target somebody, if they're in an alliance you publicly reveal the alliance name and members. If they aren't in an alliance this does nothing and you gain a charge back but they're aware Goliath tried to break in."
             },
             "Dimensional Shatter": {
                 "charges": 0,
                 "rarity": "Not an Any Ability",
+                "exclusive": true,
                 "effect": "Gain a charge of this ability only after Rage has activated four times. For 24 hours all visits are untraceable, any deaths are not revealed but still happen. Whoever is eliminated at the end of the day dies and doesn't get their last words. In the case of a draw, everybody involved dies. All investigation abilities reveal nothing."
             }
             },
@@ -1407,22 +1507,26 @@
             "Demonic Embrace": {
                 "charges": "inf",
                 "rarity": "Epic",
+                "exclusive": true,
                 "effect": "Pick someone once every 24h. They will be told they have been embraced by an Incubus. embraced targets will have x2 vote power when voting with you or an embraced person and you also have x2 vote power when voting with embraced, as long as Sinister smile isnt on."
             },
             "Sinister Smile": {
                 "charges": "inf",
                 "rarity": "Not an Any Ability",
+                "exclusive": true,
                 "effect": "Embraced targets only have their vote work when voting with you, or against you. You gain 2/6 vote power per living embraced and 1/6 per dead embraced, your vote rounds up. You can switch this on or off, embraced will not know."
             },
             "Hair Pulling": {
                 "charges": 3,
                 "rarity": "Rare",
+                "exclusive": true,
                 "effect": "Force all embraced to vote with you."
             },
             "Gentle Holdings": {
                 "charges": 3,
                 "rarity": "Uncommon",
-                "effect": "Only works on embraced targets. Give them elim immunity and +1 vote power for next elimination."
+                "exclusive": true,
+                "effect": "Only works on embraced targets. Give them elim immunity and +1 vote power for next elimination. Can be cancelled"
             }
             },
             "perks": {
@@ -1445,26 +1549,37 @@
             "Siphoning ": {
                 "charges": 3,
                 "rarity": "Not an Any Ability",
+                "exclusive": true,
                 "effect": "Upon use, pull a random status/effect off of your host. You gain 2 charges if your host dies."
             },
             "Prying Eyes": {
                 "charges": 1,
                 "rarity": "Not an Any Ability",
+                "exclusive": true,
                 "effect": "Upon use, see what effects/statuses are on your host. Your next Siphoning charge will let you choose what you pull, provided you don't change host. Gain 1 charge if your host dies."
+            },
+            "Digestion": {
+                "charges": 1,
+                "rarity":"Rare",
+                "exclusive": false,
+                "effect": "View what AAs your host has. Steal an AA of choice, if it has no charge, also destroy a random addition AA on them. If not leech: view what AAs an alliance member has."
             },
             "Absolution": {
                 "charges": 1,
                 "rarity": "Epic",
+                "exclusive": false,
                 "effect": "Remove a status/effect from yourself. Gain a charge each time you use Prying Eyes."
             },
-            "Match-Up": {
+            "Shedding": {
                 "charges": 1,
                 "rarity": "Not an Any Ability",
+                "exclusive": true,
                 "effect": "Force yourself onto a different host, transferring all negative statuses from yourself to your previous host. Useable through statuses/effects that prevent action."
             },
             "Wriggling Alone": {
                 "charges": 1,
                 "rarity": "Not an Any Ability",
+                "exclusive": true,
                 "effect": "Abandon your host."
             }
             },
@@ -1484,21 +1599,25 @@
             "Allure": {
                 "charges": 5,
                 "rarity": "Common",
+                "exclusive": false,
                 "effect": "Make someone vote you during elimination."
             },
             "Repulse": {
                 "charges": 0,
                 "rarity": "Rare",
+                "exclusive": true,
                 "effect": "Make any votes on you reflected back to the voter, but still gain a stack. Activates with 2 charges at 5 stacks."
             },
             "Submission": {
                 "charges": 0,
                 "rarity": "Epic",
+                "exclusive": true,
                 "effect": "All votes don't work on you apart from giving you charge. Every vote you receive now counts towards your vote. Activates with 1 charge at 8 stacks."
             },
             "Cross Eyes": {
                 "charges": 0,
                 "rarity": "Uncommon",
+                "exclusive": true,
                 "effect": "Works for 24 hours on use. If you have a negative status put on you - it fails, gives the user frozen. Gives you 3 stacks per success. Activates with 1 charge at 11 stacks."
             }
             },
@@ -1525,21 +1644,25 @@
             "Re-enact": {
                 "charges": 3,
                 "rarity": "Epic",
+                "exclusive": false,
                 "effect": "Select someone, you copy and gain a charge of their next ability they use."
             },
             "Replay": {
                 "charges": 1,
                 "rarity": "Rare",
+                "exclusive": false,
                 "effect": "Select someone, any votes they gain - you gain that as your vote power for next elimination. Can be used on yourself at half vote power."
             },
             "Reaction": {
                 "charges": 3,
                 "rarity": "Rare",
+                "exclusive": false,
                 "effect": "The next action done to you also effects the person doing it to you."
             },
             "Reuse": {
                 "charges": 3,
                 "rarity": "Epic",
+                "exclusive": false,
                 "effect": "Select a person, gain a copy of the next item they use. Items that are Mythical or higher, can be copied max twice."
             }
             },
@@ -1562,21 +1685,25 @@
                "Spacial Followings": {
                   "charges": 2,
                   "rarity": "Rare",
+                  "exclusive": true,
                   "effect": "Defensive: When used, for 24 hours, you will disarm anyone of their items used against you or an ally and claim them for yourself, you will know who you disarmed. Offensive: Select someone, breaking their arms, preventing item use and passing for 24 hours and inflicting paralysis."
                },
                "Ready-Stance": {
                   "charges": 2,
                   "rarity": "Rare",
+                  "exclusive": true,
                   "effect": "Defensive: Upon use, anything used on you in the next 24 hours you will know about, you can choose to stop the effect entirely, inflict it on an ally, or take it. Offensive: Select someone, anything negative that happens to you in the next 12 hours, also happens to them, if they try to do a negative onto you, disable, restrain and blackmail them, preventing the action. You will be told who does what to you during this, and for every negative action done to you, the timer increases by 2 hours."
                },
                "Brute Force": {
                   "charges": 1,
                   "rarity": "Epic",
+                  "exclusive": true,
                   "effect": "Offensive only: Bind someone's alliance, causing them only to target each other for the next 24 hours, including votes. If not in an alliance, break their arms preventing item use and passing for 24h, and prevent them from joining an alliance for 24h."
                },
                "Iron Will": {
                   "charges": 1,
                   "rarity": "Epic",
+                  "exclusive": true,
                   "effect": "Defensive only: If killed or eliminated within the next 24 hours, survive it, gaining immunity to all negative statuses for the next 3 days."
                }
             },
@@ -1603,21 +1730,25 @@
                 "Body Examine": {
                     "charges": 4,
                     "rarity": "Uncommon",
+                    "exclusive": false,
                     "effect": "Find the role of a player who has died."
                  },
                "Act Out": {
                   "charges": 1,
                   "rarity": "Legendary",
+                  "exclusive": false,
                   "effect": "Choose a perk and an ability to gain from somebody who is dead. Max 2 times per person. If not path: Max 1 perk at a time, unable to gain multiple. Can choose to not get a perk when using it."
                },
                "Disrespectful Peek": {
                   "charges": 6,
                   "rarity": "Common",
+                  "exclusive": false,
                   "effect": "Check what items a dead player has."
                },
                "Confiscate": {
                   "charges": 3,
                   "rarity": "Uncommon",
+                  "exclusive": false,
                   "effect": "Take all the items from a player who has died for yourself."
                }
             },
@@ -1639,21 +1770,25 @@
                "Safeguard": {
                   "charges": 3,
                   "rarity": "Uncommon",
+                  "exclusive": false,
                   "effect": "Protect somebody from the next elimination. Cannot be yourself. Whoever you protect won't be notified."
                },
                "Surveillance": {
                   "charges": 3,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Blocks outside visits to your alliance for 24 hours."
                },
                "Steel Guard": {
                   "charges": 0,
                   "rarity": "Epic",
+                  "exclusive": false,
                   "effect": "Protect your alliance from the next elimination. Can be used solo."
                },
                "Silver Finger": {
                   "charges": 1,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Your vote counts as 2 for the next elimination and 2 votes will be nullified against you."
                }
             },
@@ -1674,17 +1809,20 @@
             "abilities": {
                "Charm": {
                   "charges": "inf",
-                  "rarity": "Not an Any Ability",
+                  "rarity": "Epic",
+                  "exclusive": true,
                   "effect": "Pick someone to charm, they can no longer vote you however they know who you are and your vote doubles if a charmed votes the same player as you. 48 hour cooldown."
                },
                "Gag": {
                   "charges": 3,
                   "rarity": "Common",
+                  "exclusive": false,
                   "effect": "Gag a player, giving them blackmailed. Refer to perks if charmed player."
                },
                "Contract Break": {
                   "charges": "inf",
                   "rarity": "Not an Any Ability",
+                  "exclusive": true,
                   "effect": "Pick a charmed person to free from charm and gain a charge for Gag. 48 hour cooldown."
                }
             },
@@ -1751,11 +1889,12 @@
                "Bond": {
                   "charges": 4,
                   "rarity": "Common",
+                  "exclusive": false,
                   "effect": "Bond with a player of choice, giving them +30% coin bonus. Cannot be used on the same person again within 12 hours. Can stack."
                }
             },
             "perks": {
-               "Loveable": "You can be in up to three alliances.",
+               "Loveable": "You can be in up to three alliances. Gain 2 luck for neutral allies and +5% coins per ally.",
                "Jack of All Trades": "Gain an additional Any Ability from events and items that usually give Any Abilities."
             },
             "achievements": {
@@ -1837,16 +1976,19 @@
                "Serene State": {
                   "charges": 3,
                   "rarity": "Uncommon",
+                  "exclusive": false,
                   "effect": "When activated, the next action on you will fail, you know what it was, and who did it."
                },
                "Forceful Resignation": {
                   "charges": 2,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Select someone, if in alliance, they are removed from the alliance and cannot re-join an alliance for 24 hours. If not in alliance, they become paralysed and blackmailed."
                },
                "Off The Beaten Path": {
                   "charges": 3,
                   "rarity": "Common",
+                  "exclusive": false,
                   "effect": "Select someone, you swap coin bonuses for next coin phase. You also swap luck if yours is lower. Luck is swapped until luck influencing event occurs."
                }
             },
@@ -1870,21 +2012,25 @@
                "Purge": {
                   "charges": 7,
                   "rarity": "Rare",
+                  "exclusive": true,
                   "effect": "Choose someone and they will have their vote blocked. If their vote power is personally buffed due to a perk or ability, their vote power will only be decreased by 1. They will be alerted that their vote was blocked by the Anarchist. If Anarchist, gain a charge of this after every elimination phase."
                },
                "Imperium": {
                   "charges": 1,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Select someone, they may cast three votes for the upcoming Elimination. Must all be for different people."
                },
                "Isolate": {
                   "charges": 1,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Isolate someone for until the upcoming Elimination, making them unable to do anything (including vote) but also not able to be visited or voted."
                },
                "Sunder": {
                   "charges": 1,
                   "rarity": "Epic",
+                  "exclusive": false,
                   "effect": " Split the players into 2 equal groups of your choice. Everyone can only visit, vote and talk to people in that group until the next Elimination. Both groups will vote someone out. If used 12h before elim, occurs immediately, else, occurs at eliminaiton. Empowering this breaks empower, cannot be energized. If anarchist: Can be energized once."
                }
             },
@@ -1905,21 +2051,25 @@
                "Douse": {
                   "charges": "inf",
                   "rarity": "Uncommon",
+                  "exclusive": true,
                   "effect": "Every 24 hours, you may douse someone, not notifying the person you douse. Using this on a doused will remove the douse, but give you +1 luck."
                },
                "Incineration": {
                   "charges": 2,
                   "rarity": "Epic",
+                  "exclusive": true,
                   "effect": "Upon use, burn all doused players, destroying all of their items, and giving them burned."
                },
                "Ignite": {
                   "charges": 3,
                   "rarity": "Rare",
+                  "exclusive": true,
                   "effect": "Select a doused player, burning them and destroying their highest tier item, and remove doused on them. Alternatively, give burned to all doused."
                },
                "Chemical Burning": {
                   "charges": 1,
                   "rarity": "Epic",
+                  "exclusive": true,
                   "effect": "Select someone, giving a special burned, which burns ability charges instead of items. Can be cured using 2 lots of burn removal items/abilities. Can only select doused targets, removes doused on them."
                }
             },
@@ -1941,21 +2091,25 @@
                "On the House": {
                   "charges": "inf",
                   "rarity": "Common",
+                  "exclusive": false,
                   "effect": "Pick someone giving them Drunk. If Bartender - Has a 24 hour cooldown."
                },
                "Intoxication": {
                   "charges": 2,
                   "rarity": "Rare",
+                  "exclusive": true,
                   "effect": "Upon activation, select a person, them and all people currently with Drunk will gain an extra stack of Drunk as well as Blackmailed, Disabled and Paralysed for 24hrs."
                },
                "Clink": {
                   "charges": 1,
                   "rarity": "Epic",
+                  "exclusive": false,
                   "effect": "Select a person, their entire inventory will become Iron Balls."
                },
                "Moonshine": {
                   "charges": 1,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Select a person, remove any other status effects aside from Cursed that they currently have and they will become 100% Drunk for 24 hours"
                }
             },
@@ -1978,16 +2132,19 @@
                "Private Show": {
                   "charges": 3,
                   "rarity": "Not an Any Ability",
+                  "exclusive": true,
                   "effect": "Select someone - Any actions they attempt to do for the next 12 hours will fail, they will not be informed unless its a feedback action."
                },
                "Public Display": {
                   "charges": 1,
                   "rarity": "Not an Any Ability",
+                  "exclusive": true,
                   "effect": "Select someone - Any actions themselves or their alliance attempt to do for the next 24 hours will fail, they will not be informed unless its a feedback action."
                },
                "Revealing Attraction": {
                   "charges": 2,
                   "rarity": "Not an Any Ability",
+                  "exclusive": true,
                   "effect": "Select someone - If they use any positive actions or send items / money for the next 24 hours, you receive it instead. This does not include self-use positives."
                }
             },
@@ -2011,16 +2168,19 @@
                "Mark of the Fallen": {
                   "charges": 1,
                   "rarity": "Not an Any Ability",
+                  "exclusive": true,
                   "effect": "The targeted player becomes marked. Any action marked people do to someone else passes along the mark. This is not known to the target. It can be spread indefinitely. (You cannot pick yourself)"
                },
                "Forbidden Knowledge": {
                   "charges": 3,
                   "rarity": "Uncommon",
+                  "exclusive": false,
                   "effect": "See all actions performed on all members of your alliance for that elimination phase. Only reveals the type of actions performed."
                },
                "Sacrifice": {
                   "charges": "1",
                   "rarity": "Not an Any Ability",
+                  "exclusive": true,
                   "effect": "You can only target Marked people with this. Whoever is chosen by you will be marked for death, they have 48 hrs to pass it onto someone else by visiting them. People will be notified when they are marked for death. The timer increases by 6 hours every time the Mark of Death is passed on. (You cannot pick yourself)"
                }
             },
@@ -2043,31 +2203,37 @@
                "Soul Seeking": {
                   "charges": "inf",
                   "rarity": "Common",
+                  "exclusive": true,
                   "effect": "Check someone - finding out their luck, coins and statuses. Starts with 2 charges. Gains a charge each time you get a status and every 24 hours."
                },
                "Soul Swap": {
                   "charges": 3,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Swap statuses between 2 players of choice."
                },
                "Coin Flip": {
                   "charges": 2,
                   "rarity": "Uncommon",
+                  "exclusive": false,
                   "effect": "Select 2 people, swapping coin bonuses for 48 hours."
                },
                "Luck Transfer": {
                   "charges": 2,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Permanently swap 2 people's luck. If you use it on yourself, you will only swap if yours is lower."
                },
                "Survival Swap": {
                   "charges": 1,
                   "rarity": "Epic",
+                  "exclusive": false,
                   "effect": "You swap immunities between 2 players permanently."
                },
                "Body Swap": {
                   "charges": 1,
                   "rarity": "Uncommon",
+                  "exclusive": false,
                   "effect": "Select 2 people, visits on 1 go to the other, and vise versa, for 48 hours. Self-visit only actions do not."
                }
             },
@@ -2089,21 +2255,25 @@
                "Blackened Chains": {
                   "charges": 5,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Select someone, the next negative that happens to you, happens to them 2 fold."
                },
                "Erasure": {
                   "charges": 1,
                   "rarity": "Epic",
+                  "exclusive": false,
                   "effect": "Select someone, and remove a positive perk of choice from them if they have visited you or an ally within the last 48 hours. They gain it back upon your death. Cannot be used on the same person more than once per game. Empowering this cancels your empower."
                },
                "Broken Blade": {
                   "charges": 1,
                   "rarity": "Epic",
+                  "exclusive": false,
                   "effect": "Select someone, destroy all positive effects on them, and destroy any positive items within their inventory."
                },
                "Wing Tear": {
                   "charges": 0,
                   "rarity": "Not an Any Ability",
+                  "exclusive": true,
                   "effect": "Gain a charge after surviving a majority vote or attack. Select someone, upon dying, drag them to death with you. You can use your abilities, coins & items when dead, along with their abilities, coins and items too. Suicides do not give charges. This cannot gain charges out of its main condition, other than empower - which breaks on use."
                }
             },
@@ -2126,16 +2296,19 @@
                "Restrain": {
                   "charges": 2,
                   "rarity": "Uncommon",
+                  "exclusive": false,
                   "effect": "Restrain someone, giving them Restrained. Removes any other status effect they have apart from Cursed. Will be removed on your death. If Gatekeeper - You will know your prisoners role."
                },
                "Force Ability": {
                   "charges": 7,
                   "rarity": "Uncommon",
+                  "exclusive": true,
                   "effect": "Force your prisoner to use any of their abilities on any player."
                },
                "Release": {
                   "charges": 2,
                   "rarity": "Not an Any Ability",
+                  "exclusive": true,
                   "effect": "Select someone, removing Restrained from them."
                }
             },
@@ -2158,21 +2331,25 @@
                "False Result": {
                   "charges": 6,
                   "rarity": "Uncommon",
+                  "exclusive": false,
                   "effect": "Choose three targets, for the next elimination, if your first target votes your second target, they instead vote your third target."
                },
                "Troll": {
                   "charges": 1,
                   "rarity": "Epic",
+                  "exclusive": false,
                   "effect": "For the upcoming elimination, you become immune to votes but votes on any of your allies are now doubled. Your allies cannot leave the alliance until after the elimination. Must be used 6h before elim for full effect, else only immunity applies."
                },
                "Silence": {
                   "charges": 3,
                   "rarity": "Common",
+                  "exclusive": false,
                   "effect": "Give a player Blackmailed."
                },
                "Disable": {
                   "charges": 3,
                   "rarity": "Common",
+                  "exclusive": false,
                   "effect": "Give someone Disabled. Removes any other status effects apart from Cursed. This effect is removed from anyone who has it when you die."
                }
             },
@@ -2193,21 +2370,25 @@
                "Ruthless Murder": {
                   "charges": 1,
                   "rarity": "Not an Any Ability",
+                  "exclusive": true,
                   "effect": "Reveal your role and shoot someone of your choice. If you kill someone with the same alignment as you, you will be Despaired and cannot use any of your own abilities. This uses up Armed Friend as well."
                },
-               "Hold-up": {
+               "Hold-Up": {
                   "charges": 2,
                   "rarity": "Epic",
+                  "exclusive": false,
                   "effect": "Threaten to kill someone, they can either accept death, give you all their money or all of their items. The target cannot act until decision is made. Cannot select the same target within 12h. "
                },
                "Armed Friend": {
                   "charges": 1,
                   "rarity": "Not an Any Ability",
+                  "exclusive": true,
                   "effect": "You give somebody Ruthless Murder but you cannot use it after."
                },
                "Bloody Escape": {
                   "charges": 1,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Choose a person to hide behind permanently. If you're attacked, they will attack your target instead. The person you hide behind will appear as Highwayman if investigated."
                }
             },
@@ -2228,16 +2409,19 @@
                "Mask": {
                   "charges": 3,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Select someone, giving them a mask which makes all information about them hidden."
                },
                "Hunt": {
                   "charges": 1,
                   "rarity": "Not an Any Ability",
+                  "exclusive": true,
                   "effect": "Guess someone's role. If nobody alive has investigated them and found their exact role, their role is revealed to everyone and you kill them. If hunt fails, you become Blackmailed."
                },
                "Scent Marker": {
                   "charges": 1,
                   "rarity": "Rare",
+                  "exclusive": true,
                   "effect": "Mark someone with a special scent, when they die, you gain a Stack for Thrill of the Hunt and gain another charge for Scent Marker."
                }
             },
@@ -2258,21 +2442,25 @@
                "Mischief": {
                   "charges": 3,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Reverse someone's coin percentage for 48 hours. If you are Imp, gain a charge for every 2 times you use Luck Up."
                },
                "Luck Up": {
                   "charges": 2,
                   "rarity": "Uncommon",
+                  "exclusive": false,
                   "effect": "Select someone giving them lucky, if they have lucky, give them unlucky and restrained. If you are Imp, gain a charge of this every time someone you have visited before dies."
                },
                "Gathering Trick": {
                   "charges": 1,
                   "rarity": "Epic",
+                  "exclusive": false,
                   "effect": "Select someone, steal all coin percentages and positive statuses from them and their alliance members for next coin phase. You get half the coin bonus % stolen."
                },
                "Impish Grin": {
                   "charges": 2,
                   "rarity": "Rare",
+                  "exclusive": true,
                   "effect": "Select someone, doubling their current coin bonus until next coin phase. Cannot self select."
                }
             },
@@ -2297,16 +2485,19 @@
                "Jokester": {
                   "charges": 2,
                   "rarity": "Common",
+                  "exclusive": false,
                   "effect": "Give someone Despaired, removing all other status effects other than cursed. Lasts until you die."
                },
                "Depressing Ballad": {
                   "charges": 1,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Select a target, everyone within their alliance will be inflicted with Paralyzed and Despaired for 24 hours."
                },
                "Entire Circus": {
                   "charges": 1,
                   "rarity": "Epic",
+                  "exclusive": false,
                   "effect": "Everyone who has visited you or a current ally during the game will have their vote count as 0 if it's placed on you, and you will give them Blackmailed upon the elimination phase ending."
                }
             },
@@ -2329,16 +2520,19 @@
                "Peek of the Grave": {
                   "charges": 0,
                   "rarity": "Uncommon",
+                  "exclusive": false,
                   "effect": "Find the exact role of a player who is dead. If Juggernaut - Gain an extra use for Peek of the Living when used."
                },
                "Peek of the Living": {
                   "charges": 1,
                   "rarity": "Uncommon",
+                  "exclusive": false,
                   "effect": "Find the exact role of a player. If Juggernaut -  When the player you investigated dies, you gain an extra use for Peek of the Grave."
                },
                "Resilient Aura": {
                   "charges": 1,
                   "rarity": "Legendary",
+                  "exclusive": false,
                   "effect": "If you are voted to be eliminated next elimination, a player of your choice instead will be eliminated. You stay anonymous during this. If successful, you become immune to the next Elimination too."
                }
             },
@@ -2361,16 +2555,19 @@
                "Demon Hunt": {
                   "charges": 9,
                   "rarity": "Common",
+                  "exclusive": false,
                   "effect": "Find out if a player is evil or not."
                },
                "Reanimate": {
                   "charges": 1,
                   "rarity": "Legendary",
+                  "exclusive": false,
                   "effect": "Reanimate a dead player and be able to use any abilities they didn't use. If not OL - Bodies will decay over time, refer to ECO."
                },
                "Discover": {
                   "charges": 1,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Find the exact role of a player ignoring everything."
                }
             },
@@ -2393,17 +2590,26 @@
                "Abyssal Curse": {
                   "charges": "inf",
                   "rarity": "Epic",
+                  "exclusive": true,
                   "effect": "Select someone, gain a use of this every day. The person will suffer the longer the curse is on them. Refer to perks."
                },
                "Shadowed Hands": {
                   "charges": 1,
                   "rarity": "Rare",
+                  "exclusive": true,
                   "effect": "Speed up all Abyssal effected by a day. Gain a charge if someone dies once past/at 6 days."
                },
                "Abyssal Blessings": {
                   "charges": "inf",
                   "rarity": "Common",
+                  "exclusive": false,
                   "effect": "Give someone of choice Lucky. If Phantom is using this, only works on abyssal cursed players, alongside freeing them from the curse."
+               },
+               "Shadowed Guard": {
+                "charges": 1,
+                "rarity": "Rare",
+                "exclusive": true,
+                "effect": "Upon use, if attacked (not suicide) within the next 24h, survive it, and your most recent Abyssal curse target is attacked at the end of this time, as if they were the original target of the attacker. Gain a charge each time an Abyssal Curse target dies to non-elim. "
                }
             },
             "perks": {
@@ -2426,16 +2632,19 @@
                "Gaslighted Discussion": {
                   "charges": 3,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Select someone, inflicting despair and disable, but also giving elimination immunity. Next elimination they will have x2 votes against them."
                },
                "Silver-Tongue": {
                   "charges": 3,
                   "rarity": "Uncommon",
+                  "exclusive": false,
                   "effect": "Select someone, inflicting despair and disable."
                },
                "Ignorance Bubble": {
                   "charges": 1,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Your alliance blocks votes from outside of the alliance. Everyone in your alliance other than you has votes on them worth x5."
                }
             },
@@ -2456,21 +2665,25 @@
                "Double Edged": {
                   "charges": 1,
                   "rarity": "Not an Any Ability",
+                  "exclusive": true,
                   "effect": "Select 2 people, both will be forced into a public duel, much like that of an excal duel. The first 2 rounds cannot get external help effects. You claim the coins, items and AAs of whoever dies, potentially both. If Slaughterer - if you enter the duel yourself, your opponent will have external help do nothing for them."
                },
                "Skinning": {
                   "charges": 2,
                   "rarity": "Rare",
+                  "exclusive": true,
                   "effect": "Select someone, stripping them of all their AA's, you gain a random one."
                },
                "Bone Breaker": {
                   "charges": 1,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "Smash someone up, giving unlucky, burning, paralysing, disable, frozen, despairing and restraining them. The permanent effects are removed when you die."
                },
                "Corpse Shield": {
                   "charges": 1,
                   "rarity": "Uncommon",
+                  "exclusive": false,
                   "effect": "Pick someone, once they die, they will take any hits from lethal actions for you for 1 hit. Upon target hit, regain a charge if you are Slaughterer."
                }
             },
@@ -2493,21 +2706,25 @@
                "Steal": {
                   "charges": 3,
                   "rarity": "Rare",
+                  "exclusive": false,
                   "effect": "If player you chose has any items, you will take them all."
                },
                "Shutdown": {
                   "charges": 1,
                   "rarity": "Epic",
+                  "exclusive": false,
                   "effect": "Target a player, blackmail them and prevent their alliance from voting at the next elimination."
                },
                "Redirect": {
                   "charges": 3,
                   "rarity": "Uncommon",
+                  "exclusive": false,
                   "effect": "Redirect a player to visit a player of your choice next time they visit somebody. They will not be informed."
                },
                "Survivalists Threaten": {
                   "charges": 1,
                   "rarity": "Epic",
+                  "exclusive": false,
                   "effect": "Prevent two players from voting two players of your choice for the next elimination. Can prevent players from voting yourself."
                }
             },
@@ -2529,16 +2746,19 @@
                "Soul Binding": {
                   "charges": 1,
                   "rarity": "Legendary",
+                  "exclusive": false,
                   "effect": "Choose 2 players. Those players are now connected, and if one of them dies the other does too. All status ailments/effects and buffs are shared as well. Link is broken when you die."
                },
                "Voodoo Doll": {
                   "charges": 1,
                   "rarity": "Legendary",
+                  "exclusive": false,
                   "effect": "Make a Voodoo Doll of someone, anything that happens to you will also happen to them, aside from receiving votes and being eliminated. This Voodoo Doll becomes an item in your inventory and whoever holds the item has this power."
                },
                "Hex": {
                   "charges": 1,
                   "rarity": "Epic",
+                  "exclusive": false,
                   "effect": "Whoever is affected by the Hex, can use their next item twice. You cannot loop this ability via empower giving items."
                }
             },
