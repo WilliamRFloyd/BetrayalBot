@@ -140,15 +140,15 @@ def itemGen(luckOrRarity):
 def anyAbilityGen(luckOrRarity):
     commonAAs = ("Search", "Vibe Check", "Silence", "Gag", "Disable", "Black Cloak", "Curse", "Freeze", "Electrify", "Disrespectful Peek", "Bond", "Follow", "Spy", "Allure", "Off The Beaten Path", "Venture", "On The House", "Demon Hunt", "Jokester", "Soul Seeking [Doll]", "Abyssal Blessings")
     uncommonAAs = ("Chomp", "Safeguard", "Interrogate", "False Result", "Investigate", "Redirect", "Vaccinate", "Cure", "Heal", "Fireball", "Body Examine", "Peek Of The Grave", "Confiscate", "Deduct", "Hidden", "Preserve", "Charisma Chant", "Opening Act", "Protective Prance", "Gentle Holdings [Incubus]",
-                     "Protection", "Solve", "Contract", "Discount", "Serene State", "Body Swap", "Coin Flip", "Forbidden Knowledge", "Restrain", "Luck Up", "Peek Of The Living", "Inheritance Tax", "Silver-Tongue", "Douse [Arsonist]", "Down-Surge [Tinkerer]",
+                     "Protection", "Solve", "Contract", "Discount", "Serene State", "Body Swap", "Coin Flip", "Forbidden Knowledge", "Restrain", "Luck Up", "Peek Of The Living", "Inheritance Tax", "Silver-Tongue", "Douse [Arsonist]",
                      "Kick", "Reel", "Invisibility", "Chemistry", "Subtraction", "Inspection Zone", "Ascend", "Purification", "Holy Light", "Wall Breaker", "Bloody Knuckles", "Bend", "Interception", "Corpse Shield", "Cross Eyes [Maso]", "Force Ability [GK]", "Inflate [Banker]", "Soul Seer [Medium]",
-                     "Lunch Break [Biker]", "Side-Show [Entertainer]", "Upsurge [Tinkerer]")
-    rareAAs = ("Discover", "Surveillance", "Mask", "Man's Blessing", "Bless", "Bloody Escape", "Last Will", "Payday", "Silver Finger", "Forceful Resignation", "Depressing Ballad", "Luck Transfer", "Soul Swap", "Degrade", "Overclock", "Fishing Trip", "Bury Alive", "Intoxication [Bartender]", "Moonshine", "Steal", "Replay", "Entrapment",
-               "Reaction", "Smoke Grenade", "Blackened Chains", "Isolate", "Imperium", "Lava Wall", "Rewind", "Bone Breaker", "Tear-Out [Hydra]", "Head Slam [Hydra]", "Skinning [Slaughterer]", "Impish Grin [Imp]", "Mischief [Imp]", "Purge [Anarchist]", "Ready Stance [Neph]", "Repulse [Maso]", "Scent Marker [Hunter]", "Spacial Followings [Neph]",
-               "Burning Rubber", "Damage Dance", "Encapsulate", "Gaslighted Discussion", "Hammer", "Ignorance Bubble", "Sheltered In Ice", "Hair Pulling [Incubus", "Ignite [Arsonist]", "Shadowed Hands [Phantom]", "Twist [Entertainer]")
-    epicAAs = ("Subliminal Messaging", "Absolution", "Troll", "Shutdown", "Survivalist's Threaten", "Fatality", "Lawful", "Overrule", "Hold-Up", "Hex", "Mentor", "Gas Bomb", "Tagger Bomb", "Clink", "Survival Swap", "Upgrade", "Steel Guard", "Hooked", "Re-Enact", "Reuse", "Last Resort", "Override", "Stick With the Pack", "Erasure", "Broken Blade", "Sunder",
-               "Fire Guard", "Ethereal Healing", "Visceral Roar", "Entire Circus", "Upsurge [Apex Predator]", "Downsurge [Apex Predator]", "Head-Shield [Hydra]", "Brute Force [Neph]", "Iron Will [Neph]", "Submission [Maso]", "Target Fire [Mecha]", "Gathering Trick", "Abyssal Curse [Phantom]", "Assimilate [Tinkerer]", "Charm [Succubus]", "Chemical [Arsonist]", "Embrace [Incubus]", "Inceneration [Arsonist]")
-    legendaryAAs = ("Empower", "Resilient Aura", "Reanimate", "Soul Binding", "Break", "Bait", "Hyperdrive", "Voodoo Doll", "Act Out", "Ban", "Tactical Tune")
+                     "Lunch Break [Biker]", "Surveillance", "Side-Show [Entertainer]")
+    rareAAs = ("Discover", "Mask", "Man's Blessing", "Bless", "Bloody Escape", "Last Will", "Payday", "Silver Finger", "Forceful Resignation", "Depressing Ballad", "Luck Transfer", "Soul Swap", "Degrade", "Overclock", "Fishing Trip", "Bury Alive", "Intoxication [Bartender]", "Moonshine", "Steal", "Replay", "Entrapment",
+               "Reaction", "Smoke Grenade", "Blackened Chains", "Isolate", "Imperium", "Lava Wall", "Rewind", "Bone Breaker", "Tear-Out [Hydra]", "Head Slam [Hydra]", "Skinning [Slaughterer]", "Impish Grin [Imp]", "Mischief", "Purge [Anarchist]", "Ready Stance [Neph]", "Repulse [Maso]", "Scent Marker [Hunter]", "Spacial Followings [Neph]",
+               "Burning Rubber", "Damage Dance", "Encapsulate", "Gaslighted Discussion", "Hammer", "Ignorance Bubble", "Sheltered In Ice", "Hair Pulling [Incubus", "Ignite [Arsonist]", "Shadowed Hands [Phantom]", "Twist [Entertainer]", "Shadowed Guard [Phantom]")
+    epicAAs = ("Absolution", "Troll", "Shutdown", "Survivalist's Threaten", "Fatality", "Lawful", "Overrule", "Hold-Up", "Hex", "Mentor", "Gas Bomb", "Tagger Bomb", "Clink", "Survival Swap", "Upgrade", "Steel Guard", "Hooked", "Re-Enact", "Reuse", "Last Resort", "Override", "Stick With the Pack", "Erasure", "Broken Blade", "Sunder",
+               "Fire Guard", "Ethereal Healing", "Visceral Roar", "Entire Circus", "Head-Shield [Hydra]", "Brute Force [Neph]", "Iron Will [Neph]", "Submission [Maso]", "Target Fire [Mecha]", "Gathering Trick", "Abyssal Curse [Phantom]", "Charm [Succubus]", "Chemical [Arsonist]", "Embrace [Incubus]", "Inceneration [Arsonist]")
+    legendaryAAs = ("Empower", "Resilient Aura", "Reanimate", "Soul Binding", "Break", "Bait", "Hyperdrive", "Voodoo Doll", "Act Out", "Ban", "Tactical Tune", "Disappear [Ghost]")
     allAAs = (commonAAs, uncommonAAs, rareAAs, epicAAs, legendaryAAs, legendaryAAs)
 
     if type(luckOrRarity) is int:
@@ -228,6 +228,7 @@ async def on_ready():
     #with open('betrayal.png', 'rb') as f:
     #    icon = f.read()
     #await guild.edit(icon=icon)
+    print(bot.guilds[1].name)
 
 #Code that runs upon someone joining the server
 @bot.event
@@ -235,7 +236,6 @@ async def on_member_join(member):
     pass
 
 #Things actually relavant to betrayal
-
 #Code for item rain
 @bot.command(name='item', help="Proper format: '/item [luck]'. If no luck is specified, it defaults to 0.")
 async def itemRain(ctx, arg1="0", arg2="1", arg3=0):
@@ -288,20 +288,22 @@ async def anyAbility(ctx, arg1="0", arg2="1"):
             await ctx.send(f'Any Ability: {anyAbility}')
 
 #Code for rolling carepackages
+#@bot.slash_command(description="Generate a carepackage with the appropriate luck")
 @bot.command(name='carepackage', help="Proper format: '/carepackage [luck]'. If no luck is specified, it defaults to 0.")
-async def carepackage(ctx, arg1=0, arg2=1):
+async def carepackage(ctx, arg1 = "0", arg2 = "1"):
+    arg1 = int(arg1)
+    arg2 = int(arg2)
     if ctx.guild.name == "Betrayal" and not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"]) and not "bots" in ctx.channel.name and not "confessional" in ctx.channel.name:
         await ctx.send(f'Do this is bots channel')
         return
-    arg2 = int(arg2)
     if arg2 > 50:
         await ctx.send(f'Capped at 50')
         arg2 = 50
-    arg1 = int(arg1)
     for i in range(arg2):
         item = itemGen(arg1)
         anyAbility = anyAbilityGen(arg1)
         await ctx.send(f'Carepackage:\nItem: {item}\nAny Ability: {anyAbility}')
+    return
 
 #Code for viewing information of a specific item
 @bot.slash_command(description="View the information about the specified item")
@@ -387,10 +389,15 @@ async def viewrole(ctx, role: str, hidden: bool = False):
             i = 0
             for ability, info in abilities.items():
                 extra = ""
+                aamarker = ""
                 i += 1
+                if not info["exclusive"]:
+                    aamarker = "*"
+                elif info["rarity"] != "Not an Any Ability":
+                    aamarker = "^"
                 if i == len(abilities):
                     extra = "\n\n**Perks:**"
-                embed.add_field(name=f'{ability} [x{info["charges"]}]', value=f'{info["effect"]}{extra}', inline=False)
+                embed.add_field(name=f'{ability} [x{info["charges"]}]{aamarker}', value=f'{info["effect"]}{extra}', inline=False)
             i = 0
             for perk, info in perks.items():
                 i += 1
@@ -444,8 +451,11 @@ async def viewability(ctx, ability: str, hidden: bool = False):
             if ability.lower() == a.lower():
                 name = a
                 rarity = abilityinfo["rarity"]
+                abilityColor = rarityColors[rarity]
+                if rarity != "Not an Any Ability" and abilityinfo["exclusive"]:
+                    rarity += " (Role Exclusive)"
                 effect = abilityinfo["effect"]
-                embed = disnake.Embed(title=f'{name}', description=f'{rarity}', color=rarityColors[rarity])
+                embed = disnake.Embed(title=f'{name}', description=f'{rarity}', color=abilityColor)
                 embed.add_field(name=f'Effect:', value=f'{effect}', inline=False)
                 await ctx.send(embed=embed)
                 return
@@ -460,8 +470,11 @@ async def viewability(ctx, ability: str, hidden: bool = False):
             if closestAbility.lower() == a.lower():
                 name = closestAbility
                 rarity = abilityinfo["rarity"]
+                abilityColor = rarityColors[rarity]
+                if rarity != "Not an Any Ability" and abilityinfo["exclusive"]:
+                    rarity += " (Role Exclusive)"
                 effect = abilityinfo["effect"]
-                embed = disnake.Embed(title=f'{name}', description=f'{rarity}', color=rarityColors[rarity])
+                embed = disnake.Embed(title=f'{name}', description=f'{rarity}', color=abilityColor)
                 embed.add_field(name=f'Effect:', value=f'{effect}', inline=False)
                 await ctx.send(response, embed=embed, ephemeral=hidden)
 
@@ -555,6 +568,42 @@ async def itemembed(ctx):
                     cost = str(info["cost"]) + " coins"
                 embed.add_field(name=f'{item} - [{cost}]', value=f'*{info["effect"]}*', inline=False)
         await ctx.send(embed=embed)
+
+@bot.command(name='aalist')
+async def aalist(ctx):
+    commonAAs = ("Search", "Vibe Check", "Silence", "Gag", "Disable", "Black Cloak", "Curse", "Freeze", "Electrify", "Disrespectful Peek", "Bond", "Follow", "Spy", "Allure", "Off The Beaten Path", "Venture", "On The House", "Demon Hunt", "Jokester", "Soul Seeking [Doll]", "Abyssal Blessings")
+    uncommonAAs = ("Chomp", "Safeguard", "Interrogate", "False Result", "Investigate", "Redirect", "Vaccinate", "Cure", "Heal", "Fireball", "Body Examine", "Peek Of The Grave", "Confiscate", "Deduct", "Hidden", "Preserve", "Charisma Chant", "Opening Act", "Protective Prance", "Gentle Holdings [Incubus]",
+                     "Protection", "Solve", "Contract", "Discount", "Serene State", "Body Swap", "Coin Flip", "Forbidden Knowledge", "Restrain", "Luck Up", "Peek Of The Living", "Inheritance Tax", "Silver-Tongue", "Douse [Arsonist]",
+                     "Kick", "Reel", "Invisibility", "Chemistry", "Subtraction", "Inspection Zone", "Ascend", "Purification", "Holy Light", "Wall Breaker", "Bloody Knuckles", "Bend", "Interception", "Corpse Shield", "Cross Eyes [Maso]", "Force Ability [GK]", "Inflate [Banker]", "Soul Seer [Medium]",
+                     "Lunch Break [Biker]", "Surveillance", "Side-Show [Entertainer]")
+    rareAAs = ("Discover", "Mask", "Man's Blessing", "Bless", "Bloody Escape", "Last Will", "Payday", "Silver Finger", "Forceful Resignation", "Depressing Ballad", "Luck Transfer", "Soul Swap", "Degrade", "Overclock", "Fishing Trip", "Bury Alive", "Intoxication [Bartender]", "Moonshine", "Steal", "Replay", "Entrapment",
+               "Reaction", "Smoke Grenade", "Blackened Chains", "Isolate", "Imperium", "Lava Wall", "Rewind", "Bone Breaker", "Tear-Out [Hydra]", "Head Slam [Hydra]", "Skinning [Slaughterer]", "Impish Grin [Imp]", "Mischief", "Purge [Anarchist]", "Ready Stance [Neph]", "Repulse [Maso]", "Scent Marker [Hunter]", "Spacial Followings [Neph]",
+               "Burning Rubber", "Damage Dance", "Encapsulate", "Gaslighted Discussion", "Hammer", "Ignorance Bubble", "Sheltered In Ice", "Hair Pulling [Incubus", "Ignite [Arsonist]", "Shadowed Hands [Phantom]", "Twist [Entertainer]", "Shadowed Guard [Phantom]")
+    epicAAs = ("Absolution", "Troll", "Shutdown", "Survivalist's Threaten", "Fatality", "Lawful", "Overrule", "Hold-Up", "Hex", "Mentor", "Gas Bomb", "Tagger Bomb", "Clink", "Survival Swap", "Upgrade", "Steel Guard", "Hooked", "Re-Enact", "Reuse", "Last Resort", "Override", "Stick With the Pack", "Erasure", "Broken Blade", "Sunder",
+               "Fire Guard", "Ethereal Healing", "Visceral Roar", "Entire Circus", "Head-Shield [Hydra]", "Brute Force [Neph]", "Iron Will [Neph]", "Submission [Maso]", "Target Fire [Mecha]", "Gathering Trick", "Abyssal Curse [Phantom]", "Charm [Succubus]", "Chemical [Arsonist]", "Embrace [Incubus]", "Inceneration [Arsonist]")
+    legendaryAAs = ("Empower", "Resilient Aura", "Reanimate", "Soul Binding", "Break", "Bait", "Hyperdrive", "Voodoo Doll", "Act Out", "Ban", "Tactical Tune", "Disappear [Ghost]")
+    aas = [commonAAs, uncommonAAs, rareAAs, epicAAs, legendaryAAs]
+    title = ["Common", "Uncommon", "Rare", "Epic", "Legendary"]
+    for i in range(len(aas)):
+        message = "```\n"
+        message += title[i] + " AAs\n"
+        nonExclusive = []
+        exclusive = []
+        for aa in aas[i]:
+            if "[" in aa:
+                exclusive.append(aa)
+            else:
+                nonExclusive.append(aa)
+        nonExclusive.sort()
+        exclusive.sort()
+        for aa in nonExclusive:
+            message += aa + "\n"
+        for aa in exclusive:
+            message += aa + "\n"
+
+        message += "```"
+        await ctx.send(message)
+        
 
 #Code for creating and editing player list
 @bot.command(name='playerlist', help="First argument is either create to make the player list with the game number & specified players, kill to show deceased next to specified players, revive to show particpant next to specified players, and truekill to show true deceased next to specfied players, then a list of player(s)")
@@ -752,7 +801,7 @@ async def vote(ctx, *args):
     await inventories(ctx, "vote", *arg2)
 
 @bot.command(help='')
-async def viewvotes(ctx):
+async def viewvotes(ctx, arg1="alive"):
     if (not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"])):
         await ctx.send("Nice Try")
         return
@@ -762,8 +811,32 @@ async def viewvotes(ctx):
     voteStr = ""
     for k, v in data.items():
         if "confessional" in k and "vote" in v:
-            voteStr += f'{k[0:-13]}: {str(v["vote"])[1:-1]}\n'
+            for channel in ctx.guild.channels:
+                if channel.name == k:
+                    if arg1 == "alive" and channel.category.name == "Confessionals":
+                        voteStr += f'{k[0:-13]}: {str(v["vote"])[1:-1]}\n'
     await ctx.send(voteStr)
+
+@bot.command(help='')
+async def clearvotes(ctx, arg1="alive"):
+    if (not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"])):
+        await ctx.send("Nice Try")
+        return
+    file = open("inventoryinfo.json")
+    data = json.load(file)
+    file.close()
+    voteStr = ""
+    for k, v in data.items():
+        if "confessional" in k and "vote" in v:
+            for channel in ctx.guild.channels:
+                if channel.name == k:
+                    if arg1 == "alive" and channel.category.name == "Confessionals":
+                        v["vote"] = []
+
+    file = open("inventoryinfo.json", "w")
+    file.write(json.dumps(data, indent=4))
+    file.close()
+    await ctx.send("Votes cleared")
 
 #Code for managing inventories
 @bot.command(aliases=['inventory', 'inv'], help='')
