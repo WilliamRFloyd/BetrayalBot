@@ -138,18 +138,21 @@ def itemGen(luckOrRarity):
 
 #Rolls a random any ability based off luck and returns it
 def anyAbilityGen(luckOrRarity):
-    commonAAs = ("Search", "Vibe Check", "Silence", "Gag", "Disable", "Black Cloak", "Curse", "Freeze", "Electrify", "Disrespectful Peek", "Bond", "Follow", "Spy", "Allure", "Off The Beaten Path", "Venture", "On The House", "Demon Hunt", "Jokester", "Soul Seeking [Doll]", "Abyssal Blessings")
-    uncommonAAs = ("Chomp", "Safeguard", "Interrogate", "False Result", "Investigate", "Redirect", "Vaccinate", "Cure", "Heal", "Fireball", "Body Examine", "Peek Of The Grave", "Confiscate", "Deduct", "Hidden", "Preserve", "Charisma Chant", "Opening Act", "Protective Prance", "Gentle Holdings [Incubus]",
-                     "Protection", "Solve", "Contract", "Discount", "Serene State", "Body Swap", "Coin Flip", "Forbidden Knowledge", "Restrain", "Luck Up", "Peek Of The Living", "Inheritance Tax", "Silver-Tongue", "Douse [Arsonist]",
-                     "Kick", "Reel", "Invisibility", "Chemistry", "Subtraction", "Inspection Zone", "Ascend", "Purification", "Holy Light", "Wall Breaker", "Bloody Knuckles", "Bend", "Interception", "Corpse Shield", "Cross Eyes [Maso]", "Force Ability [GK]", "Inflate [Banker]", "Soul Seer [Medium]",
-                     "Lunch Break [Biker]", "Surveillance", "Side-Show [Entertainer]")
-    rareAAs = ("Discover", "Mask", "Man's Blessing", "Bless", "Bloody Escape", "Last Will", "Payday", "Silver Finger", "Forceful Resignation", "Depressing Ballad", "Luck Transfer", "Soul Swap", "Degrade", "Overclock", "Fishing Trip", "Bury Alive", "Intoxication [Bartender]", "Moonshine", "Steal", "Replay", "Entrapment",
-               "Reaction", "Smoke Grenade", "Blackened Chains", "Isolate", "Imperium", "Lava Wall", "Rewind", "Bone Breaker", "Tear-Out [Hydra]", "Head Slam [Hydra]", "Skinning [Slaughterer]", "Impish Grin [Imp]", "Mischief", "Purge [Anarchist]", "Ready Stance [Neph]", "Repulse [Maso]", "Scent Marker [Hunter]", "Spacial Followings [Neph]",
-               "Burning Rubber", "Damage Dance", "Encapsulate", "Gaslighted Discussion", "Hammer", "Ignorance Bubble", "Sheltered In Ice", "Hair Pulling [Incubus", "Ignite [Arsonist]", "Shadowed Hands [Phantom]", "Twist [Entertainer]", "Shadowed Guard [Phantom]")
-    epicAAs = ("Absolution", "Troll", "Shutdown", "Survivalist's Threaten", "Fatality", "Lawful", "Overrule", "Hold-Up", "Hex", "Mentor", "Gas Bomb", "Tagger Bomb", "Clink", "Survival Swap", "Upgrade", "Steel Guard", "Hooked", "Re-Enact", "Reuse", "Last Resort", "Override", "Stick With the Pack", "Erasure", "Broken Blade", "Sunder",
-               "Fire Guard", "Ethereal Healing", "Visceral Roar", "Entire Circus", "Head-Shield [Hydra]", "Brute Force [Neph]", "Iron Will [Neph]", "Submission [Maso]", "Target Fire [Mecha]", "Gathering Trick", "Abyssal Curse [Phantom]", "Charm [Succubus]", "Chemical [Arsonist]", "Embrace [Incubus]", "Inceneration [Arsonist]")
-    legendaryAAs = ("Empower", "Resilient Aura", "Reanimate", "Soul Binding", "Break", "Bait", "Hyperdrive", "Voodoo Doll", "Act Out", "Ban", "Tactical Tune", "Disappear [Ghost]")
-    allAAs = (commonAAs, uncommonAAs, rareAAs, epicAAs, legendaryAAs, legendaryAAs)
+    file = open("info.json")
+    data = json.load(file)
+    file.close()
+    #Legendary listed twice as for aas legendaries can roll on a legendary or mythical result
+    rarities = ("Common", "Uncommon", "Rare", "Epic", "Legendary", "Legendary")
+    allAAs = []
+    for rarity in rarities:
+        rarityAbilities = []
+        for x, y in data["abilities"].items():
+            if y["rarity"] == rarity:
+                abilityName = x
+                if y["exclusive"]:
+                    abilityName += f' [{y["role"]}]'
+                rarityAbilities.append(abilityName)
+            allAAs.append(rarityAbilities)
 
     if type(luckOrRarity) is int:
         return random.choice(allAAs[getLuck(luckOrRarity)])
@@ -236,6 +239,38 @@ async def on_member_join(member):
     pass
 
 #Things actually relavant to betrayal
+#Checks
+@bot.slash_command(description="List all objects of the category that don't have the attribute filled out in the info file")
+async def listmissing(ctx, obj_type: str, attribute: str):
+    file = open("info.json")
+    data = json.load(file)
+    file.close()
+
+    if obj_type not in data.keys():
+        await ctx.send("Object type not found")
+        return
+
+    objList = []
+    for obj, info in data[obj_type].items():
+        if attribute not in info.keys():
+            await ctx.send("Attribute not found")
+            return
+        if not info[attribute]:
+            objList.append(obj)
+    objString = "\n".join(objList)
+
+    start = 0
+    while start < len(objString):
+        end = start + 2000
+        if end >= len(objString):
+            await ctx.send(objString[start:])
+            break
+        while objString[end] != "\n":
+            end -= 1
+        await ctx.send(objString[start:end])
+        start = end + 1
+    return
+
 #Code for item rain
 @bot.command(name='item', help="Proper format: '/item [luck]'. If no luck is specified, it defaults to 0.")
 async def itemRain(ctx, arg1="0", arg2="1", arg3=0):
@@ -307,7 +342,7 @@ async def carepackage(ctx, arg1 = "0", arg2 = "1"):
 
 #Code for viewing information of a specific item
 @bot.slash_command(description="View the information about the specified item")
-async def viewitem(ctx, item: str, hidden: bool = False):
+async def viewitem(ctx, item: str, additional_info: bool = False, hidden: bool = False):
     file = open("info.json")
     data = json.load(file)
     file.close()
@@ -322,27 +357,20 @@ async def viewitem(ctx, item: str, hidden: bool = False):
         "Special": 0xFAED27
         }
 
+    response = ""
     itemList = []
+    closestItem = ""
     for i, info in data["items"].items():
         if item.lower() == i.lower():
-            name = i
-            rarity = info["rarity"]
-            cost = info["cost"]
-            if cost == 0:
-                cost = "Cannot Be Bought"
-            else:
-                cost = str(cost) + " coins"
-            effect = info["effect"]
-            embed = disnake.Embed(title=f'{name}', description=f'{rarity}', color=rarityColors[rarity])
-            embed.add_field(name=f'Cost:', value=f'{cost}', inline=False)
-            embed.add_field(name=f'Effect:', value=f'*{effect}*', inline=False)
-            await ctx.send(embed=embed)
-            return
+            closestItem = i
+            break
         else:
             itemList.append(i)
-        
-    closestItem = find_most_similar_string(item, itemList)
-    response = "Item not found, did you mean __%s__?" % (closestItem)
+
+    if closestItem == "":
+        closestItem = find_most_similar_string(item, itemList)
+        response = f'Item not found, did you mean __{closestItem}__?'
+    
     name = closestItem
     info = data["items"][closestItem]
     rarity = info["rarity"]
@@ -355,6 +383,27 @@ async def viewitem(ctx, item: str, hidden: bool = False):
     embed = disnake.Embed(title=f'{name}', description=f'{rarity}', color=rarityColors[rarity])
     embed.add_field(name=f'Cost:', value=f'{cost}', inline=False)
     embed.add_field(name=f'Effect:', value=f'*{effect}*', inline=False)
+    if additional_info:
+        upgradeStr = f''
+        upgrades = info["upgrades"]
+        if "Cannot be burnt" not in effect:
+            upgrades.append(f'{effect} Cannot be burnt.')
+        if "Cannot be stolen" not in effect:
+            upgrades.append(f'{effect} Cannot be stolen.')
+        for upgrade in upgrades:
+            upgradeStr += f'\n*{upgrade}*'
+        embed.add_field(name=f'Upgrades:', value=f'{upgradeStr}', inline=False)
+        targeting = info["targeting"]
+        if targeting == "":
+            targeting = "Unspecified"
+        embed.add_field(name=f'Targeting:', value=f'{targeting}', inline=False)
+        actionTypes = ", ".join(info["actionTypes"])
+        if actionTypes == "":
+            actionTypes = "Not Applicable"
+        embed.add_field(name=f'Action Types:', value=f'{actionTypes}', inline=False)
+        additionalInfo = info["additionalInfo"]
+        if additionalInfo != "":
+            embed.add_field(name=f'Additional Information:', value=f'{additionalInfo}', inline=False)
     await ctx.send(response, embed=embed, ephemeral=hidden)
     return
 
@@ -374,65 +423,50 @@ async def viewrole(ctx, role: str, hidden: bool = False):
         "Traveller": 0xFFFF00
         }
 
+    response = ""
     roleList = []
-    for r, info in data["classes"].items():
+    closestRole = ""
+    for r, info in data["roles"].items():
         if role.lower() == r.lower():
-            name = r
-            alignment = info["alignment"]
-            description = info["description"]
-            abilities = info["abilities"]
-            perks = info["perks"]
-            achievements = info["achievements"]
-
-            
-            embed = disnake.Embed(title=f'{name}', description=f'**{alignment}**\n{description}\n\n**Abilities:**', color=alignmentColors[alignment])
-            i = 0
-            for ability, info in abilities.items():
-                extra = ""
-                aamarker = ""
-                i += 1
-                if not info["exclusive"]:
-                    aamarker = "*"
-                elif info["rarity"] != "Not an Any Ability":
-                    aamarker = "^"
-                if i == len(abilities):
-                    extra = "\n\n**Perks:**"
-                embed.add_field(name=f'{ability} [x{info["charges"]}]{aamarker}', value=f'{info["effect"]}{extra}', inline=False)
-            i = 0
-            for perk, info in perks.items():
-                i += 1
-                embed.add_field(name=f'{perk}', value=f'{info}', inline=False)
-            await ctx.send(embed=embed, ephemeral=hidden)
-            return
+            closestRole = r
+            break
         else:
             roleList.append(r)
-    closestRole = find_most_similar_string(role, roleList)
-    response = "Role not found, did you mean __%s__?" % (closestRole)
-    info = data["classes"][closestRole]
+            
+    if closestRole == "":
+        closestRole = find_most_similar_string(role, roleList)
+        response = f'Item not found, did you mean __{closestRole}__?'
+        
+    info = data["roles"][closestRole]
     name = closestRole
     alignment = info["alignment"]
     description = info["description"]
     abilities = info["abilities"]
     perks = info["perks"]
-    achievements = info["achievements"]
     
     embed = disnake.Embed(title=f'{name}', description=f'**{alignment}**\n{description}\n\n**Abilities:**', color=alignmentColors[alignment])
     i = 0
-    for ability, info in abilities.items():
+    for ability, charges in abilities.items():
+        aInfo = data["abilities"][ability]
         extra = ""
+        aamarker = ""
         i += 1
+        if not aInfo["exclusive"]:
+            aamarker = "*"
+        elif aInfo["rarity"] != "Not an Any Ability":
+            aamarker = "^"
         if i == len(abilities):
             extra = "\n\n**Perks:**"
-        embed.add_field(name=f'{ability} [x{info["charges"]}]', value=f'{info["effect"]}{extra}', inline=False)
+        embed.add_field(name=f'{ability} [x{charges}]{aamarker}', value=f'{aInfo["effect"]}{extra}', inline=False)
     i = 0
-    for perk, info in perks.items():
+    for perk in perks:
         i += 1
-        embed.add_field(name=f'{perk}', value=f'{info}', inline=False)
+        embed.add_field(name=f'{perk}', value=f'{data["perks"][perk]["effect"]}', inline=False)
     await ctx.send(response, embed=embed, ephemeral=hidden)
 
 #Code for viewing information of a specific ability
 @bot.slash_command(description="View the information about the specified ability")
-async def viewability(ctx, ability: str, hidden: bool = False):
+async def viewability(ctx, ability: str, additional_info: bool = False, hidden: bool = False):
     file = open("info.json")
     data = json.load(file)
     file.close()
@@ -445,65 +479,102 @@ async def viewability(ctx, ability: str, hidden: bool = False):
         "Not an Any Ability": 0x888888
         }
 
+    response = ""
     abilityList = []
-    for role, info in data["classes"].items():
-        for a, abilityinfo in info["abilities"].items():
-            if ability.lower() == a.lower():
-                name = a
-                rarity = abilityinfo["rarity"]
-                abilityColor = rarityColors[rarity]
-                if rarity != "Not an Any Ability" and abilityinfo["exclusive"]:
-                    rarity += " (Role Exclusive)"
-                effect = abilityinfo["effect"]
-                embed = disnake.Embed(title=f'{name}', description=f'{rarity}', color=abilityColor)
-                embed.add_field(name=f'Effect:', value=f'{effect}', inline=False)
-                await ctx.send(embed=embed)
-                return
-            else:
-                abilityList.append(a)
-        
-    closestAbility = find_most_similar_string(ability, abilityList)
-    response = "Ability not found, did you mean __%s__?" % (closestAbility)
+    closestAbility = ""
+    for a, info in data["abilities"].items():
+        if ability.lower() == a.lower():
+            closestAbility = a
+            break
+        else:
+            abilityList.append(a)
+
+    if closestAbility == "":
+        closestAbility = find_most_similar_string(ability, abilityList)
+        response = f'Ability not found, did you mean __{closestAbility}__?'
+
     
-    for role, info in data["classes"].items():
-        for a, abilityinfo in info["abilities"].items():
-            if closestAbility.lower() == a.lower():
-                name = closestAbility
-                rarity = abilityinfo["rarity"]
-                abilityColor = rarityColors[rarity]
-                if rarity != "Not an Any Ability" and abilityinfo["exclusive"]:
-                    rarity += " (Role Exclusive)"
-                effect = abilityinfo["effect"]
-                embed = disnake.Embed(title=f'{name}', description=f'{rarity}', color=abilityColor)
-                embed.add_field(name=f'Effect:', value=f'{effect}', inline=False)
-                await ctx.send(response, embed=embed, ephemeral=hidden)
+    abilityInfo = data["abilities"][closestAbility]
+    name = closestAbility
+    rarity = abilityInfo["rarity"]
+    abilityColor = rarityColors[rarity]
+    if rarity != "Not an Any Ability" and abilityInfo["exclusive"]:
+        rarity += " (Role Exclusive)"
+    effect = abilityInfo["effect"]
+    embed = disnake.Embed(title=f'{name}', description=f'{rarity}', color=abilityColor)
+    embed.add_field(name=f'Effect:', value=f'{effect}', inline=False)
+    if additional_info:
+        embed.add_field(name=f'From Role:', value=f'{abilityInfo["role"]}', inline=False)
+        
+        upgradeStr = f''
+        upgrades = abilityInfo["upgrades"]
+        for upgrade in upgrades:
+            upgradeStr += f'\n*{upgrade}*'
+        embed.add_field(name=f'Upgrades:', value=f'{upgradeStr}', inline=False)
+
+        degradeStr = f''
+        degrades = abilityInfo["degrades"]
+        for degrade in degrades:
+            degradeStr += f'\n{degrade}'
+        embed.add_field(name=f'Degrades:', value=f'{degradeStr}', inline=False)
+        
+        targeting = abilityInfo["targeting"]
+        if targeting == "":
+            targeting = "Unspecified"
+        embed.add_field(name=f'Targeting:', value=f'{targeting}', inline=False)
+        
+        actionTypes = ", ".join(abilityInfo["actionTypes"])
+        if actionTypes == "":
+            actionTypes = "Not Applicable"
+        embed.add_field(name=f'Action Types:', value=f'{actionTypes}', inline=False)
+        additionalInfo = abilityInfo["additionalInfo"]
+        if additionalInfo != "":
+            embed.add_field(name=f'Additional Information:', value=f'{additionalInfo}', inline=False)
+    await ctx.send(response, embed=embed, ephemeral=hidden)
 
 #Code for viewing information of a specific perk
 @bot.slash_command(description="View the information about the specified perk")
-async def viewperk(ctx, perk: str, hidden: bool = False):
+async def viewperk(ctx, perk: str, additional_info: bool = False, hidden: bool = False):
     file = open("info.json")
     data = json.load(file)
     file.close()
 
+    response = ""
     perkList = []
-    for role, info in data["classes"].items():
-        for p, effect in info["perks"].items():
-            if perk.lower() == p.lower():
-                embed = disnake.Embed(title=f'{p}', description=f'{effect}')
-                await ctx.send(embed=embed)
-                return
-            else:
-                perkList.append(p)
-        
-    closestPerk = find_most_similar_string(perk, perkList)
-    response = "Perk not found, did you mean __%s__?" % (closestPerk)
+    closestPerk = ""
+    for p, effect in data["perks"].items():
+        if perk.lower() == p.lower():
+            closestPerk = p
+            break
+        else:
+            perkList.append(p)
+    
+    if closestPerk == "":
+        closestPerk = find_most_similar_string(perk, perkList)
+        response = f'Perk not found, did you mean __{closestPerk}__?'
 
-    for role, info in data["classes"].items():
-        for p, effect in info["perks"].items():
-            if closestPerk.lower() == p.lower():
-                embed = disnake.Embed(title=f'{p}', description=f'{effect}')
-                await ctx.send(response, embed=embed, ephemeral=hidden)
-                return
+    info = data["perks"][closestPerk]
+    embed = disnake.Embed(title=f'{closestPerk}', description=f'{info["effect"]}')
+    if additional_info:
+        embed.add_field(name=f'From Role:', value=f'{info["role"]}', inline=False)
+        
+        upgradeStr = f''
+        upgrades = info["upgrades"]
+        for upgrade in upgrades:
+            upgradeStr += f'\n{upgrade}'
+        embed.add_field(name=f'Upgrades:', value=f'{upgradeStr}', inline=False)
+
+        degradeStr = f''
+        degrades = info["degrades"]
+        for degrade in degrades:
+            degradeStr += f'\n{degrade}'
+        embed.add_field(name=f'Degrades:', value=f'{degradeStr}', inline=False)
+        
+        additionalInfo = info["additionalInfo"]
+        if additionalInfo != "":
+            embed.add_field(name=f'Additional Information:', value=f'{additionalInfo}', inline=False)
+    await ctx.send(response, embed=embed, ephemeral=hidden)
+    return
 
 #Code for viewing information of a specific status
 @bot.slash_command(description="View the information about the specified status")
@@ -526,19 +597,21 @@ async def viewstatus(ctx, status: str, hidden: bool = False):
         "Blackmailed": 0x000000 #Black
         }
 
+    response = ""
     statusList = []
+    closestStatus = ""
     for s, info in data["statuses"].items():
         if status.lower() == s.lower() or status.lower() + "ed" == s.lower() or status.lower() + "d" == s.lower():
-            embed = disnake.Embed(title=f'{s}', description=f'{info}', color=statusColors[s])
-            await ctx.send(embed=embed)
-            return
+            closestStatus = s
+            break
         else:
             statusList.append(s)
-        
-    closestStatus = find_most_similar_string(status, statusList)
-    response = "Perk not found, did you mean __%s__?" % (closestStatus)
 
-    embed = disnake.Embed(title=f'{closestStatus}', description=f'{data["statuses"][closestStatus]}', color=statusColors[s])
+    if closestStatus == "":
+        closestStatus = find_most_similar_string(status, statusList)
+        response = f'Perk not found, did you mean __{closestStatus}__?'
+
+    embed = disnake.Embed(title=f'{closestStatus}', description=f'{data["statuses"][closestStatus]["effect"]}', color=statusColors[s])
     await ctx.send(response, embed=embed, ephemeral=hidden)
     return
 
@@ -571,29 +644,23 @@ async def itemembed(ctx):
 
 @bot.command(name='aalist')
 async def aalist(ctx):
-    commonAAs = ("Search", "Vibe Check", "Silence", "Gag", "Disable", "Black Cloak", "Curse", "Freeze", "Electrify", "Disrespectful Peek", "Bond", "Follow", "Spy", "Allure", "Off The Beaten Path", "Venture", "On The House", "Demon Hunt", "Jokester", "Soul Seeking [Doll]", "Abyssal Blessings")
-    uncommonAAs = ("Chomp", "Safeguard", "Interrogate", "False Result", "Investigate", "Redirect", "Vaccinate", "Cure", "Heal", "Fireball", "Body Examine", "Peek Of The Grave", "Confiscate", "Deduct", "Hidden", "Preserve", "Charisma Chant", "Opening Act", "Protective Prance", "Gentle Holdings [Incubus]",
-                     "Protection", "Solve", "Contract", "Discount", "Serene State", "Body Swap", "Coin Flip", "Forbidden Knowledge", "Restrain", "Luck Up", "Peek Of The Living", "Inheritance Tax", "Silver-Tongue", "Douse [Arsonist]",
-                     "Kick", "Reel", "Invisibility", "Chemistry", "Subtraction", "Inspection Zone", "Ascend", "Purification", "Holy Light", "Wall Breaker", "Bloody Knuckles", "Bend", "Interception", "Corpse Shield", "Cross Eyes [Maso]", "Force Ability [GK]", "Inflate [Banker]", "Soul Seer [Medium]",
-                     "Lunch Break [Biker]", "Surveillance", "Side-Show [Entertainer]")
-    rareAAs = ("Discover", "Mask", "Man's Blessing", "Bless", "Bloody Escape", "Last Will", "Payday", "Silver Finger", "Forceful Resignation", "Depressing Ballad", "Luck Transfer", "Soul Swap", "Degrade", "Overclock", "Fishing Trip", "Bury Alive", "Intoxication [Bartender]", "Moonshine", "Steal", "Replay", "Entrapment",
-               "Reaction", "Smoke Grenade", "Blackened Chains", "Isolate", "Imperium", "Lava Wall", "Rewind", "Bone Breaker", "Tear-Out [Hydra]", "Head Slam [Hydra]", "Skinning [Slaughterer]", "Impish Grin [Imp]", "Mischief", "Purge [Anarchist]", "Ready Stance [Neph]", "Repulse [Maso]", "Scent Marker [Hunter]", "Spacial Followings [Neph]",
-               "Burning Rubber", "Damage Dance", "Encapsulate", "Gaslighted Discussion", "Hammer", "Ignorance Bubble", "Sheltered In Ice", "Hair Pulling [Incubus", "Ignite [Arsonist]", "Shadowed Hands [Phantom]", "Twist [Entertainer]", "Shadowed Guard [Phantom]")
-    epicAAs = ("Absolution", "Troll", "Shutdown", "Survivalist's Threaten", "Fatality", "Lawful", "Overrule", "Hold-Up", "Hex", "Mentor", "Gas Bomb", "Tagger Bomb", "Clink", "Survival Swap", "Upgrade", "Steel Guard", "Hooked", "Re-Enact", "Reuse", "Last Resort", "Override", "Stick With the Pack", "Erasure", "Broken Blade", "Sunder",
-               "Fire Guard", "Ethereal Healing", "Visceral Roar", "Entire Circus", "Head-Shield [Hydra]", "Brute Force [Neph]", "Iron Will [Neph]", "Submission [Maso]", "Target Fire [Mecha]", "Gathering Trick", "Abyssal Curse [Phantom]", "Charm [Succubus]", "Chemical [Arsonist]", "Embrace [Incubus]", "Inceneration [Arsonist]")
-    legendaryAAs = ("Empower", "Resilient Aura", "Reanimate", "Soul Binding", "Break", "Bait", "Hyperdrive", "Voodoo Doll", "Act Out", "Ban", "Tactical Tune", "Disappear [Ghost]")
-    aas = [commonAAs, uncommonAAs, rareAAs, epicAAs, legendaryAAs]
+    file = open("info.json")
+    data = json.load(file)
+    file.close()
+    
     title = ["Common", "Uncommon", "Rare", "Epic", "Legendary"]
-    for i in range(len(aas)):
+    for i in range(len(title)):
+        rarity = title[i]
         message = "```\n"
-        message += title[i] + " AAs\n"
+        message += rarity + " AAs\n"
         nonExclusive = []
         exclusive = []
-        for aa in aas[i]:
-            if "[" in aa:
-                exclusive.append(aa)
-            else:
-                nonExclusive.append(aa)
+        for ability, aInfo in data["abilities"].items():
+            if not aInfo["removed"] and aInfo["rarity"] == rarity:
+                if aInfo["exclusive"]:
+                    exclusive.append(f'{ability} [{aInfo["role"]}]')
+                else:
+                    nonExclusive.append(ability)
         nonExclusive.sort()
         exclusive.sort()
         for aa in nonExclusive:
@@ -1086,7 +1153,7 @@ async def randomRole(ctx, arg1=""):
     data = json.load(file)
     file.close()
     roleList = []
-    for roleName, info in data["classes"].items():
+    for roleName, info in data["roles"].items():
         if arg1 != "" and info["alignment"].lower() != arg1.lower():
             continue
         roleList.append(roleName)
@@ -1234,8 +1301,8 @@ async def spamMario(ctx, arg1=10):
 @bot.command(name='removeto')
 async def removeTimeOut(ctx):
         for member in bot.guilds[1].members:
-            if member.name == 'The Lukundo':
-                time = datetime.datetime(year=2023, month=4, day = 1, hour = 15, minute = 25, second=30)
+            if member.name == 'duncandont':
+                time = datetime.datetime(year=2025, month=7, day = 12, hour = 18, minute = 37, second=30)
                 await member.timeout(until=time)
 
 @bot.command(name='button')
@@ -1256,7 +1323,7 @@ async def deceptPick(ctx: disnake.ApplicationCommandInteraction):
     file = open("info.json")
     data = json.load(file)
     file.close()
-    data = data["classes"]
+    data = data["roles"]
     goodRoles = []
     neutralRoles = []
     evilRoles = []
