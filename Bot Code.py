@@ -19,7 +19,7 @@ intents.members = True
 token = os.getenv('DISCORD_TOKEN')
 bot = commands.Bot(command_prefix='/', intents=intents, case_insensitive=True)
 
-#Nerd Stuff idk
+#Find levenshtein distance between two strings (number of single character edits between them)
 def levenshtein_distance(s, t):
     m, n = len(s), len(t)
     d = [[0] * (n + 1) for _ in range(m + 1)]
