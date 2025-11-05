@@ -19,7 +19,7 @@ intents.members = True
 token = os.getenv('DISCORD_TOKEN')
 bot = commands.Bot(command_prefix='/', intents=intents, case_insensitive=True)
 
-#Find levenshtein distance between two strings (number of single character edits between them)
+#Nerd Stuff idk
 def levenshtein_distance(s, t):
     m, n = len(s), len(t)
     d = [[0] * (n + 1) for _ in range(m + 1)]
@@ -147,12 +147,13 @@ def anyAbilityGen(luckOrRarity):
     for rarity in rarities:
         rarityAbilities = []
         for x, y in data["abilities"].items():
-            if y["rarity"] == rarity:
+            if y["rarity"] == rarity and not y["removed"]:
                 abilityName = x
                 if y["exclusive"]:
                     abilityName += f' [{y["role"]}]'
                 rarityAbilities.append(abilityName)
-            allAAs.append(rarityAbilities)
+        allAAs.append(rarityAbilities)
+    
 
     if type(luckOrRarity) is int:
         return random.choice(allAAs[getLuck(luckOrRarity)])
@@ -270,6 +271,24 @@ async def listmissing(ctx, obj_type: str, attribute: str):
         await ctx.send(objString[start:end])
         start = end + 1
     return
+
+#Checking if luck gen is working correctly
+@bot.command(name='itemcheck')
+async def itemCheck(ctx, arg1):
+    print("test")
+    file = open("info.json")
+    data = json.load(file)
+    file.close()
+    arg1 = int(arg1)
+    numChecks = 10000
+    countDict = {}
+    for i in range(numChecks):
+        item = itemGen(arg1)
+        rarity = data["items"][item]["rarity"]
+        countDict[rarity] = countDict.get(rarity, 0) + 1
+    print(f'Count Dict {countDict}')
+    await ctx.send(str(countDict))
+        
 
 #Code for item rain
 @bot.command(name='item', help="Proper format: '/item [luck]'. If no luck is specified, it defaults to 0.")
@@ -503,8 +522,9 @@ async def viewability(ctx, ability: str, additional_info: bool = False, hidden: 
     effect = abilityInfo["effect"]
     embed = disnake.Embed(title=f'{name}', description=f'{rarity}', color=abilityColor)
     embed.add_field(name=f'Effect:', value=f'{effect}', inline=False)
+    embed.add_field(name=f'From Role:', value=f'{abilityInfo["role"]}', inline=False)
     if additional_info:
-        embed.add_field(name=f'From Role:', value=f'{abilityInfo["role"]}', inline=False)
+        
         
         upgradeStr = f''
         upgrades = abilityInfo["upgrades"]
@@ -554,9 +574,11 @@ async def viewperk(ctx, perk: str, additional_info: bool = False, hidden: bool =
         response = f'Perk not found, did you mean __{closestPerk}__?'
 
     info = data["perks"][closestPerk]
+    
     embed = disnake.Embed(title=f'{closestPerk}', description=f'{info["effect"]}')
+    embed.add_field(name=f'From Role:', value=f'{info["role"]}', inline=False)
     if additional_info:
-        embed.add_field(name=f'From Role:', value=f'{info["role"]}', inline=False)
+        
         
         upgradeStr = f''
         upgrades = info["upgrades"]
@@ -867,22 +889,35 @@ async def vote(ctx, *args):
     arg2 = ("set",) + args
     await inventories(ctx, "vote", *arg2)
 
-@bot.command(help='')
-async def viewvotes(ctx, arg1="alive"):
+
+@bot.slash_command(description="Lists the contents of the specified section of each player's inventories.", guild_ids=[490904847701245952, 379383629010436096])
+@commands.default_member_permissions(administrator=True)
+async def view(
+    ctx,
+    section: str = commands.Param(choices={"Items": "items", "AAs": "aas", "Statuses": "statuses", "Effects": "effects", "Immunities": "immunities", "Votes": "vote"}),
+    search_for: str = "",
+    alive_only: bool = True):
     if (not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"])):
         await ctx.send("Nice Try")
         return
     file = open("inventoryinfo.json")
     data = json.load(file)
     file.close()
-    voteStr = ""
+    listStr = f'{section.capitalize()}\n'
     for k, v in data.items():
-        if "confessional" in k and "vote" in v:
+        if "confessional" in k and section in v:
             for channel in ctx.guild.channels:
                 if channel.name == k:
-                    if arg1 == "alive" and channel.category.name == "Confessionals":
-                        voteStr += f'{k[0:-13]}: {str(v["vote"])[1:-1]}\n'
-    await ctx.send(voteStr)
+                    if channel.category.name == "Confessionals" or (channel.category.name == "Dead confessionals" and not alive_only):
+                        listStr += f'{k[0:-13]}: '
+                        strAddition = ""
+                        for item in v[section]:
+                            if search_for.lower() in item.lower():
+                                if strAddition != "":
+                                    strAddition += ", "
+                                strAddition += item
+                        listStr += strAddition + "\n" 
+    await ctx.send(listStr)
 
 @bot.command(help='')
 async def clearvotes(ctx, arg1="alive"):
@@ -892,7 +927,6 @@ async def clearvotes(ctx, arg1="alive"):
     file = open("inventoryinfo.json")
     data = json.load(file)
     file.close()
-    voteStr = ""
     for k, v in data.items():
         if "confessional" in k and "vote" in v:
             for channel in ctx.guild.channels:
@@ -904,6 +938,17 @@ async def clearvotes(ctx, arg1="alive"):
     file.write(json.dumps(data, indent=4))
     file.close()
     await ctx.send("Votes cleared")
+
+@bot.command(help='')
+async def clearinvs(ctx, arg1="alive"):
+    if (not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"])):
+        await ctx.send("Nice Try")
+        return
+    
+    file = open("inventoryinfo.json", "w")
+    file.write(json.dumps({}, indent=4))
+    file.close()
+    await ctx.send("Inventories cleared")
 
 #Code for managing inventories
 @bot.command(aliases=['inventory', 'inv'], help='')
@@ -952,7 +997,10 @@ async def inventories(ctx, arg1="", *arg2):
         file.close()
         inventory = data[channel.name]
         message = await channel.fetch_message(inventory["id"])
-        amount = int(arg2[1])
+        if arg1.lower() == "bonus":
+            amount = float(arg2[1])
+        else:
+            amount = int(arg2[1])
         if arg2[0].lower() in ("remove", "subtract", "delete"):
             amount *= -1
         if arg2[0].lower() in ("remove", "subtract", "delete", "add"):
@@ -1159,46 +1207,83 @@ async def randomRole(ctx, arg1=""):
         roleList.append(roleName)
     await ctx.send(random.choice(roleList))
 
+#Stuff related to the group chat server
 #Channel Creation for 1-1 chats
-@bot.command(name='genchats')
-async def generateChats(ctx, arg1="20"):
-    if (not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"]) and ctx.author.name != "bluedetroyer"):
-        await ctx.send("no")
-        return
-    numPlayers = int(arg1)
-    for i in range(1, numPlayers + 1):
-        await ctx.guild.create_role(name=str(i))
+@bot.slash_command(description="Creates roles and 1-1 chats for the specified number of players.")
+@commands.default_member_permissions(administrator=True)
+async def genchats(ctx, num_players: int):
+    await ctx.send("Setting up chats/roles", ephemeral=True)
+    guildRoleNames = [x.name for x in ctx.guild.roles]
+    guildCategoryNames = [x.name for x in ctx.guild.categories]
 
-    await ctx.guild.create_role(name="Host")
-    await ctx.guild.create_role(name="Spectator")
-    
-    for i in range(1, numPlayers):
-        currentCategory = await ctx.guild.create_category(name=f'{i}')
-        for j in range(i+1, numPlayers + 1):
+    if "Host" not in guildRoleNames:
+        await ctx.guild.create_role(name="Host", permissions=disnake.Permissions(administrator=True))
+    if "Spectator" not in guildRoleNames:
+        await ctx.guild.create_role(name="Spectator")
+    if "Participant" not in guildRoleNames:
+        await ctx.guild.create_role(name="Participant")
+    if "Dead" not in guildRoleNames:
+        await ctx.guild.create_role(name="Dead")
+
+    for i in range(1, num_players + 1):
+        roleName = str(i)
+        if roleName not in guildRoleNames:
+            await ctx.guild.create_role(name=roleName)
+
+    categoryName = "Confessionals"
+    if categoryName in guildCategoryNames:
+        currentCategory = disnake.utils.find(lambda c: c.name == categoryName, ctx.guild.categories)
+    else:
+        currentCategory = await ctx.guild.create_category(name=categoryName)
+    for i in range(1, num_players + 1):
+        channelName = str(i)
+        categoryChannelNames = [x.name for x in currentCategory.channels]
+        if channelName not in categoryChannelNames:
             overwrites = {
                 ctx.guild.default_role: disnake.PermissionOverwrite(read_messages=False),
                 disnake.utils.find(lambda r: r.name == str(i), ctx.guild.roles): disnake.PermissionOverwrite(read_messages=True),
-                disnake.utils.find(lambda r: r.name == str(j), ctx.guild.roles): disnake.PermissionOverwrite(read_messages=True),
                 disnake.utils.find(lambda r: r.name == "Host", ctx.guild.roles): disnake.PermissionOverwrite(read_messages=True),
-                disnake.utils.find(lambda r: r.name == "Spectator", ctx.guild.roles): disnake.PermissionOverwrite(read_messages=True, send_messages=False)
+                disnake.utils.find(lambda r: r.name == "Spectator", ctx.guild.roles): disnake.PermissionOverwrite(read_messages=True)
             }
-            channel = await ctx.guild.create_text_channel(f'{i}-{j}', overwrites=overwrites, category=currentCategory)
-
+            channel = await ctx.guild.create_text_channel(f'{i}', overwrites=overwrites, category=currentCategory)
+    
+    for i in range(1, num_players):
+        categoryName = str(i)
+        if categoryName in guildCategoryNames:
+            currentCategory = disnake.utils.find(lambda c: c.name == categoryName, ctx.guild.categories)
+        else:
+            currentCategory = await ctx.guild.create_category(name=categoryName)
+        for j in range(i+1, num_players + 1):
+            categoryChannelNames = [x.name for x in currentCategory.channels]
+            channelName = f'{i}-{j}'
+            if channelName not in categoryChannelNames:
+                overwrites = {
+                    ctx.guild.default_role: disnake.PermissionOverwrite(read_messages=False),
+                    disnake.utils.find(lambda r: r.name == str(i), ctx.guild.roles): disnake.PermissionOverwrite(read_messages=True),
+                    disnake.utils.find(lambda r: r.name == str(j), ctx.guild.roles): disnake.PermissionOverwrite(read_messages=True),
+                    disnake.utils.find(lambda r: r.name == "Host", ctx.guild.roles): disnake.PermissionOverwrite(read_messages=True),
+                    disnake.utils.find(lambda r: r.name == "Spectator", ctx.guild.roles): disnake.PermissionOverwrite(read_messages=True)
+                }
+                channel = await ctx.guild.create_text_channel(f'{i}-{j}', overwrites=overwrites, category=currentCategory)
+    
+#Empties out GC Server (For testing)
 @bot.command(name='clearroles')
 async def clearRoles(ctx):
     if ctx.guild.name == "Test Channel Creation" or ctx.guild.name == "Betrayal 38":
         for role in ctx.guild.roles:
-            if role.name.isdigit() or role.name in ["Host", "Spectator"]:
+            if role.name.isdigit() or role.name in ["Host", "Spectator", "Participant", "Dead"]:
                 await role.delete()
         print("Roles done")
         for category in ctx.guild.categories:
-            if category.name.isdigit():
+            if category.name.isdigit() or category.name == "Confessionals":
                 await category.delete()
         print("Categories done")
         for channel in ctx.guild.text_channels:
-            if "-" in channel.name:
+            if "-" in channel.name or channel.name.isdigit():
                 await channel.delete()
         print("Channels done")
+
+
 
 #Random Stuff
 @bot.command(name='roll', help='[num]d[sides]')
@@ -1267,6 +1352,7 @@ async def stealKidney(ctx, arg1):
 async def sendMessage(ctx, arg1, arg2):
     if ctx.author.name == 'bluedetroyer':
         guildChannels = bot.guilds[1].channels
+        #lostRole = disnake.utils.find(lambda r: r.name == "Lost", ctx.guild.roles)
         for channel in guildChannels:
             if channel.name == arg1:
                 await channel.send(arg2)
@@ -1302,7 +1388,7 @@ async def spamMario(ctx, arg1=10):
 async def removeTimeOut(ctx):
         for member in bot.guilds[1].members:
             if member.name == 'duncandont':
-                time = datetime.datetime(year=2025, month=7, day = 12, hour = 18, minute = 37, second=30)
+                time = datetime.datetime(year=2025, month=8, day = 27, hour = 12, minute = 20, second=30)
                 await member.timeout(until=time)
 
 @bot.command(name='button')
@@ -1356,133 +1442,6 @@ async def help_listener(ctx: disnake.MessageInteraction):
         await ctx.send("Button Indeed")
     elif ctx.component.custom_id in ["good", "neutral", "evil"]:
         await ctx.send(ctx.component.label)
-
-# Saving things
-def save_json(filename, data):
-    with open(filename, 'w') as f:
-        json.dump(data, f, indent=4)
-
-def load_json(filename):
-    with open(filename, 'r') as f:
-        return json.load(f)
-
-# Updating the role message
-async def update_role_message(channel):
-    roles_data = load_json("roles.json")
-    if channel.name in roles_data:
-        role_info = roles_data[channel.name]
-        role_details = f"Role: {role_info['role']}\nDescription: {role_info['description']}\nAbilities:\n"
-        for ability, details in role_info["abilities"].items():
-            role_details += f"  {ability}: {details['uses']} uses - {details['description']}\n"
-        role_details += "Perks:\n"
-        for perk, description in role_info["perks"].items():
-            role_details += f"  {perk}: {description}\n"
-        # Fetch the message with the role information and update it
-        # Assume the role message ID is stored in roles_data[channel.name]['message_id']
-        if 'message_id' in role_info:
-            try:
-                message = await channel.fetch_message(role_info['message_id'])
-                await message.edit(content=role_details)
-            except disnake.NotFound:
-                new_message = await channel.send(role_details)
-                roles_data[channel.name]['message_id'] = new_message.id
-                save_json("roles.json", roles_data)
-        else:
-            new_message = await channel.send(role_details)
-            roles_data[channel.name]['message_id'] = new_message.id
-            save_json("roles.json", roles_data)
-
-
-
-
-# Loading the original roles from roleinfo.json
-def load_role_info():
-    if os.path.isfile("roleinfo.json"):
-        with open("roleinfo.json", "r") as file:
-            return json.load(file)
-    else:
-        return {}
-
-# Function to load currently set roles from roles.json
-def load_roles():
-    if os.path.isfile("roles.json"):
-        with open("roles.json", "r") as file:
-            return json.load(file)
-    else:
-        return {}
-
-# Saving the currently set roles in roles.json
-def save_roles(roles_data):
-    with open("roles.json", "w") as file:
-        json.dump(roles_data, file, indent=4)
-
-# Command to set a role for a conf
-@bot.command()
-async def role(ctx, action, *args):
-    channel = ctx.channel
-    role_info = load_role_info()
-    roles_data = load_roles()
-
-    if action == "set":
-        role_name = args[0]
-        role_found = False
-        for role_data in role_info["roles"]:
-            if role_data["role"] == role_name:
-                roles_data[channel.name] = role_data
-                save_roles(roles_data)
-                await ctx.send(f"Role '{role_name}' has been set for this channel.")
-                role_found = True
-                break
-        if not role_found:
-            await ctx.send(f"Role '{role_name}' does not exist.")
-
-    elif action == "ability":
-        sub_action = args[0]
-        ability_name = args[1]
-        amount = int(args[2]) if len(args) > 2 else 0
-
-        if channel.name in roles_data and ability_name in roles_data[channel.name]["abilities"]:
-            if sub_action == "add":
-                roles_data[channel.name]["abilities"][ability_name]["uses"] += amount
-            elif sub_action == "remove":
-                roles_data[channel.name]["abilities"][ability_name]["uses"] -= amount
-
-            save_json("roles.json", roles_data)
-            await ctx.send(f"Ability '{ability_name}' updated. Current uses: {roles_data[channel.name]['abilities'][ability_name]['uses']}")
-            await update_role_message(channel)
-        else:
-            await ctx.send(f"Ability '{ability_name}' not found for the current role.")
-
-    elif action == "send":
-        await update_role_message(channel)
-
-    else:
-        await ctx.send("Not sure what you're trying to do but that's not a command")
-
-async def update_role_message(channel):
-    roles_data = load_json("roles.json")
-    if channel.name in roles_data:
-        role_info = roles_data[channel.name]
-        role_details = f"""```Diff
-{role_info['alignment']}
-{role_info['role']}
-{role_info['description']}
-
-Abilities:"""
-        for ability, details in role_info["abilities"].items():
-            role_details += f"\n\n{ability} [x{details['uses']}] - {details['description']}"
-        role_details += "\n\nPerks:"
-        for perk, description in role_info["perks"].items():
-            role_details += f"\n\n{perk} - {description}"
-        role_details += "\n```"
-        await channel.send(role_details)
-
-# Command to reload roles(only if they aren't working for some odd reason, I doubt we'll need this but its here in case)
-@bot.command()
-async def reload_roles(ctx):
-    roles_data = load_roles()
-    await ctx.send(f"Reloaded roles for {len(roles_data['channels'])} channels.")
-
 
 #Runs bot
 bot.run(token)

@@ -21,7 +21,7 @@
             "degrade": ""
         },
         "Empowered": {
-            "effect": "You can use any one of your abilities for 2 days, even if you ran out of them. When you use an ability, it's a 12 hour cooldown before you can use another. Using a killing ability will make you lose Empowered on use.",
+            "effect": "You can use any one of your abilities for 2 days, even if you ran out of them. When you use an ability, it's a 12 hour cooldown before you can use another (this cooldown applies even if Empower is lost and reapplied). Using a killing ability will make you lose Empowered on use.",
             "upgrade": "",
             "degrade": ""
         },
@@ -618,9 +618,9 @@
             "additionalInfo": ""
         },
         "Seed Gun": {
-            "rarity": "Rare",
-            "cost": 1000,
-            "effect": "Fire a seed you have at someone of choice, reducing target coin % by double what the seed is giving you for 36 hours. Can go under 0%. If held, can buy seeds that can only be used to fire with for 250 coins.",
+            "rarity": "Uncommon",
+            "cost": 800,
+            "effect": "Fire a seed you have at someone of choice, reducing target coin % by double what the seed is giving you for 72 hours. Can go under 0%. If held, can buy seeds that can only be used to fire and start at 10% for 200 coins.",
             "upgrades": [],
             "targeting": "",
             "actionTypes": [],
@@ -874,7 +874,7 @@
         "Doggo v2": {
             "rarity": "Mythical",
             "cost": 0,
-            "effect": "This mythical doggo will tell you accurate information to 2 questions a day!",
+            "effect": "This mythical doggo will tell you accurate information to 2 questions a day! Asking the same question too many times may cause the doggo to bite you, inflicting a status, removing an immunity, or lowering your coin bonus. Alternatively, it may fall asleep, requiring treats to wake it again.",
             "upgrades": [
                 "This mythical doggo will tell you accurate information to 3 questions a day!"
             ],
@@ -894,7 +894,7 @@
         "Angel Wings": {
             "rarity": "Mythical",
             "cost": 0,
-            "effect": "On use, cures you and any of your alliance members of ANY negative status effect if they have them, for every negative status effect you cure, you gain an Unreliable Wish, if you cure at least three which may include yourself, you get an additional Reliable Wish.",
+            "effect": "Upon use and for the next 24h, clear/prevent all negative status effects on you/allies and gain an Unreliable Wish per status cleared that was inflicted with intent to harm. If an ally/yourself has no statuses prevented, you and they gain elim immunity for the upcoming elim. Upon preventing/clearing 3+ or if 2 allies gain immunity, gain a Reliable Wish.",
             "upgrades": [],
             "targeting": "",
             "actionTypes": [],
@@ -1338,7 +1338,7 @@
             "alignment": "Neutral",
             "description": "Put on a show, for public and private audiences!",
             "abilities": {
-                "Opening act": 4,
+                "Opening Act": 4,
                 "Side-Show": 3,
                 "The Twist": 2,
                 "Finale": 1
@@ -1618,7 +1618,7 @@
             "alignment": "Evil",
             "description": "You're completely obsessed with alcohol, all you do is drink and pressure others into drinking a lot.",
             "abilities": {
-                "On the House": "inf",
+                "On the House": 1,
                 "Intoxication": 2,
                 "Clink": 1,
                 "Moonshine": 1
@@ -2072,12 +2072,12 @@
             "rarity": "Epic",
             "exclusive": false,
             "removed": false,
-            "effect": "Select someone, for 24 hours you will know any negative visits to the person, and can decide to reverse each effect, burn the visitor, or do nothing at all. This includes all negatives such as death other than elimination.",
+            "effect": "Select someone, for 24 hours you will know any negative visits to the person (and what they are), and can decide to undo each effect, burn the visitor, or do nothing at all. This includes all negatives such as death other than elimination.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
             "actionTypes": [],
-            "additionalInfo": ""
+            "additionalInfo": "Example of undoing an effect: If somebody shoots a player under fire guard, that player will still die. However, the user of fire guard may then choose to undo that death, reviving the player."
         },
         "Ethereal Healing": {
             "role": "Cerberus",
@@ -2226,7 +2226,7 @@
             "degrades": [],
             "targeting": "",
             "actionTypes": [],
-            "additionalInfo": ""
+            "additionalInfo": "Can copy fake abilities/perks (facade, confusion, etc). May also attempt to blindly take an ability/perk, will succeed if the target's actual role has said ability/perk."
         },
         "Protection": {
             "role": "Hero",
@@ -2394,19 +2394,19 @@
             "degrades": [],
             "targeting": "",
             "actionTypes": [],
-            "additionalInfo": ""
+            "additionalInfo": "If someone attempts to pass you a 6PB, it will automatically explode on them."
         },
         "Target Fire": {
             "role": "Mecha",
             "rarity": "Epic",
             "exclusive": true,
             "removed": false,
-            "effect": "Select 2 people, if one harms the other within the next 36 hours, both get hit by it 3 fold. This only works on 6 Point Bombs once.",
+            "effect": "Select 2 people, if one harms the other within the next 36 hours, both get hit by it 3 fold.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
             "actionTypes": [],
-            "additionalInfo": ""
+            "additionalInfo": "If one attempts to pass the other a 6PB, it will automatically explode on both (thrice)."
         },
         "Smoke Grenade": {
             "role": "Mecha",
@@ -2442,7 +2442,7 @@
             "degrades": [],
             "targeting": "",
             "actionTypes": [],
-            "additionalInfo": ""
+            "additionalInfo": "Can copy fake abilities/perks (facade, confusion, etc). May also attempt to blindly take an ability/perk, will succeed if the target's actual role has said ability/perk."
         },
         "Preserve": {
             "role": "Medium",
@@ -2690,10 +2690,13 @@
             "exclusive": false,
             "removed": false,
             "effect": "Empower somebody, giving them Empowered. Removes any other status effect they have apart from Cursed. If you empower yourself, you cannot use empower again. Empower cannot be used with empower charges, unless you are Wizard.",
-            "upgrades": [],
+            "upgrades": [
+                "Empower somebody, giving them Empowered. Removes any other status effect they have. If you empower yourself, you cannot use empower again. Empower cannot be used with empower charges, unless you are Wizard.",
+                "Empower somebody, giving them Empowered. If you empower yourself, you cannot use empower again. Empower cannot be used with empower charges, unless you are Wizard."
+            ],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Positive", "Status"],
             "additionalInfo": ""
         },
         "Fireball": {
@@ -2766,7 +2769,7 @@
             "degrades": [],
             "targeting": "",
             "actionTypes": [],
-            "additionalInfo": ""
+            "additionalInfo": "Can copy fake abilities/perks (facade, confusion, etc). May also attempt to blindly take an ability/perk, will succeed if the target's actual role has said ability/perk."
         },
         "Man's Blessing": {
             "role": "Backstabber",
@@ -3061,7 +3064,7 @@
             "rarity": "Not an Any Ability",
             "exclusive": true,
             "removed": false,
-            "effect": "Select someone, their alliance must vote within alliance chat a person to die. Draws kill all not in the draw. An alliance of 2 will have draws kill both. People may only use vote/elimination/alliance impacting abilities/items and may not leave for the duration of this ability, counts as an elimination kill. If you pick someone alone, you will be blackmailed & despaired.",
+            "effect": "Select someone, their alliance must vote within alliance chat a person to die. Draws kill all not in the draw. An alliance of 2 will have draws kill both. People may only use vote/elimination/alliance impacting abilities/items and may not leave for the duration of this ability, counts as an elimination kill. If you pick someone alone, you will be blackmailed & despaired. If no one dies due to this ability, gain one-time death/elim immunity.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3210,7 +3213,7 @@
             "degrades": [],
             "targeting": "",
             "actionTypes": [],
-            "additionalInfo": ""
+            "additionalInfo": "Cannot copy fake effects."
         },
         "Prying Eyes": {
             "role": "Leech",
@@ -3301,7 +3304,7 @@
             "rarity": "Epic",
             "exclusive": true,
             "removed": false,
-            "effect": "All votes don't work on you apart from giving you charge. Every vote you receive now counts towards your vote. Activates with 1 charge at 8 stacks.",
+            "effect": "All votes don't work on you apart from giving you stacks. Every vote you receive now counts towards your vote (loops break). Activates with 1 charge at 8 stacks.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3354,7 +3357,7 @@
             "degrades": [],
             "targeting": "",
             "actionTypes": [],
-            "additionalInfo": ""
+            "additionalInfo": "The user of Reaction is the one who uses the action on the orignal user. For instance, if someone uses a Role Scanner on someone with Reaction, the original will get the results for the Reaction user and the Reaction user will get results for the orignal user."
         },
         "Reuse": {
             "role": "Mimic",
@@ -3840,7 +3843,7 @@
             "rarity": "Common",
             "exclusive": false,
             "removed": false,
-            "effect": "Pick someone giving them Drunk. If Bartender - Has a 24 hour cooldown.",
+            "effect": "Pick someone giving them Drunk. If Bartender - Gain a charge every 24 hours. This timer pauses if you have 2+ charges.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3936,7 +3939,7 @@
             "rarity": "Uncommon",
             "exclusive": false,
             "removed": false,
-            "effect": "See all actions performed on all members of your alliance for that elimination phase. Only reveals the type of actions performed.",
+            "effect": "See all actions performed on alliance members from last elim and till upcoming elim. Only reveals the type of actions performed and who did it.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4068,7 +4071,7 @@
             "rarity": "Not an Any Ability",
             "exclusive": true,
             "removed": false,
-            "effect": "Gain a charge after surviving a majority vote or attack. Select someone, upon dying, drag them to death with you. You can use your abilities, coins & items when dead, along with their abilities, coins and items too. Suicides do not give charges. This cannot gain charges out of its main condition, other than empower - which breaks on use.",
+            "effect": "Gain a charge after surviving a majority vote or attack. Select someone, upon dying, drag them to death with you. You can use your abilities, coins & items when dead, along with their abilities, coins and items too. In addition, you act as if permanently preserved. Suicides do not give charges. This cannot gain charges out of its main condition, other than empower - which breaks on use.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4200,7 +4203,7 @@
             "rarity": "Rare",
             "exclusive": false,
             "removed": false,
-            "effect": "Choose a person to hide behind permanently. If you’re attacked, they will attack your target instead. The person you hide behind will appear as Highwayman if investigated.",
+            "effect": "Choose a person to hide behind permanently. If you're attacked, they will attack your target instead. The person you hide behind will appear as Highwayman if investigated.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4248,7 +4251,7 @@
             "rarity": "Rare",
             "exclusive": true,
             "removed": false,
-            "effect": "Reverse someone's coin percentage for 48 hours. If you are Imp, gain a charge for every 2 times you use Luck Up.",
+            "effect": "Reverse someone's coin percentage for 48 hours. The target is not informed until coin phase. If you are Imp, gain a charge for every 2 times you use Luck Up.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4308,7 +4311,7 @@
             "rarity": "Rare",
             "exclusive": false,
             "removed": false,
-            "effect": "Select a target, everyone within their alliance will be inflicted with Paralyzed and Despaired for 24 hours.",
+            "effect": "Select a target, everyone within their alliance will be inflicted with Paralyzed and Despaired.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4428,7 +4431,7 @@
             "rarity": "Common",
             "exclusive": false,
             "removed": false,
-            "effect": "Give someone of choice Lucky. If Phantom is using this, only works on abyssal cursed players, alongside freeing them from the curse.",
+            "effect": "Give someone of choice Lucky. If non-AA use, only works on abyssal cursed players, alongside freeing them from the curse.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4734,6 +4737,18 @@
             "targeting": "",
             "actionTypes": [],
             "additionalInfo": ""
+        },
+        "Check": {
+            "role": "None",
+            "rarity": "Uncommon",
+            "exclusive": false,
+            "removed": true,
+            "effect": "Choose a player, learn if they are dead.",
+            "upgrades": [],
+            "degrades": [],
+            "targeting": "",
+            "actionTypes": [],
+            "additionalInfo": ""
         }
     },
     "perks": {
@@ -4942,7 +4957,7 @@
         },
         "Golden Gavel": {
             "role": "Judge",
-            "effect": "If you vote on the eliminated player, gain +1 luck. If successful in a row, gain +1 luck per streak days.",
+            "effect": "If you vote on the eliminated player, gain +1 luck. If successful in a row, gain +1 luck per streak eliminations.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5054,7 +5069,7 @@
         },
         "Spiritual Remains": {
             "role": "Terminal",
-            "effect": "While without regrets, your vote power is 3.",
+            "effect": "While without regrets, your vote power is 2. This perk does not stack with itself.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5089,10 +5104,10 @@
         },
         "Time Zoned": {
             "role": "Time Traveller",
-            "effect": "If your ability is reflected back onto you, or fails, you can re-use it.",
+            "effect": "If your ability is reflected back onto you, or fails, you can re-use it. This cannot be copied.",
             "upgrades": [],
             "degrades": [],
-            "additionalInfo": ""
+            "additionalInfo": "Includes AAs."
         },
         "Exposed": {
             "role": "Undercover",
@@ -5327,7 +5342,7 @@
         },
         "Secret Spirit": {
             "role": "Ghost",
-            "effect": "You can still use your items and abilities when you're eliminated. You still gain AA's and items from power drops/item rains.",
+            "effect": "You can still use your items and abilities when you're eliminated. You still gain AA's and items from power drops/item rains. In addition, you act as if permanently preserved",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5435,7 +5450,7 @@
             "effect": "You may see and copy 1 immunity from your host upon picking them",
             "upgrades": [],
             "degrades": [],
-            "additionalInfo": ""
+            "additionalInfo": "Can copy fake immunities."
         },
         "Pleasure": {
             "role": "Masochist",
@@ -5467,7 +5482,7 @@
         },
         "Pain Chaser": {
             "role": "Masochist",
-            "effect": "If someone in your alliance has a negative effect happen, you get it instead.",
+            "effect": "If someone in your alliance has a negative status happen, you get it instead.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5908,7 +5923,7 @@
             "effect": "If you are ever in the public vision (abilities, elim, events) and best someone, rob them of half their coins (You can toggle this). If you kill a player who has investigated or harmed you/an ally, take an ability from their RC. Armed Friend can trigger this perk for you.",
             "upgrades": [],
             "degrades": [],
-            "additionalInfo": "For example: If you are placed in a Slaughterer duel, and you win the duel, you would take half of the Slaughterer's coins. If you survive elim, you will take half the coins of whoever died to elim."
+            "additionalInfo": "For example: If you are placed in a Slaughterer duel, and you win the duel, you would take half of the Slaughterer's coins. If you survive elim, you will take half the coins of whoever died to elim. Cannot copy fake abilities (facade, confusion, etc). May attempt to blindly take an ability, will succeed if the target's actual role has said ability."
         },
         "Thrill of the Hunt": {
             "role": "Hunter",
