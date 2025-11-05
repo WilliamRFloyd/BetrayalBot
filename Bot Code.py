@@ -19,7 +19,6 @@ intents.members = True
 token = os.getenv('DISCORD_TOKEN')
 bot = commands.Bot(command_prefix='/', intents=intents, case_insensitive=True)
 
-#Nerd Stuff idk
 def levenshtein_distance(s, t):
     m, n = len(s), len(t)
     d = [[0] * (n + 1) for _ in range(m + 1)]
@@ -694,195 +693,6 @@ async def aalist(ctx):
         await ctx.send(message)
         
 
-#Code for creating and editing player list
-@bot.command(name='playerlist', help="First argument is either create to make the player list with the game number & specified players, kill to show deceased next to specified players, revive to show particpant next to specified players, and truekill to show true deceased next to specfied players, then a list of player(s)")
-async def playerlist(ctx, arg1="", *arg2):
-    #Authorization check
-    if (not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"]) and ctx.author.name != "bluedetroyer"):
-        await ctx.send("You need to be a host to use this command")
-        return
-    #Getting discord roles
-    for role in ctx.guild.roles:
-        if role.name == "Participant":
-            participantRole = role
-    for role in ctx.guild.roles:
-        if role.name == "Deceased":
-            deceasedRole = role
-    for role in ctx.guild.roles:
-        if role.name == "True Dead":
-            trueDeceasedRole = role
-    #Creating a player list
-    if arg1.lower() == "create":
-        playerStartIndex = arg2.index("Players") + 1
-        master = ""
-        if "Master" in arg2:
-            master = arg2[arg2.index("Master") + 1]
-        mode = ""
-        if "Mode" in arg2:
-            mode = arg2[arg2.index("Mode") + 1]
-        hosts = []
-        if "Hosts" in arg2:
-            for i in range(arg2.index("Hosts") + 1, len(arg2)):
-                if arg2[i] in ["Players", "Master", "Mode"]:
-                    break
-                else:
-                    hosts.append(arg2[i])
-        gameNum = arg2[0]
-        playerListStr = f'**Game {gameNum}**\n'
-        if master != "":
-            playerListStr += f'Master: **{master}**\n'
-        if hosts != []:
-            playerListStr += f'Hosts: **{hosts[0]}'
-            for i in range(1, len(hosts)):
-                playerListStr += f'/{hosts[i]}'
-            playerListStr += f'**\n'
-        if mode != "":
-            playerListStr += f'Mode: **{mode}**\n'
-        playerListStr += "```Players:```\n\n"
-        for i in range(playerStartIndex, len(arg2)):
-            player = arg2[i]
-            for member in ctx.guild.members:
-                if member.name == player or member.mention == player or member.mention == "<@" + "!" + player[2:]:
-                    player = member
-                    break
-            playerListStr += f'{participantRole.mention} {member.mention}\n'
-        remaining = len(re.findall(participantRole.mention, playerListStr))
-        playerListStr += f'\n```{remaining} REMAIN```'
-        listId = await ctx.send(playerListStr)
-        listId = listId.id
-        f = open("playerlistid.txt", "w")
-        f.write(str(listId) + " " + ctx.channel.name)
-        f.close()
-    #Adding players to the player list
-    elif arg1.lower() == "add":
-        f = open("playerlistid.txt", "r")
-        line = f.readline()
-        f.close()
-        listId = line.split()[0]
-        channelName = line.split()[1]
-        listId = int(listId)
-        found = False
-        for channel in ctx.guild.text_channels:
-            if channel.name == channelName:
-                async for message in channel.history(limit=100):
-                    if message.id == listId:
-                        playerList = message
-                        found = True
-                        break
-            if found:
-                break
-        content = playerList.content
-        for player in arg2:
-            splitIndex = content.rfind(">") + 2
-            for member in ctx.guild.members:
-                if member.name == player or member.mention == player or member.mention == "<@" + "!" + player[2:]:
-                    player = member
-                    break
-            content = content[:splitIndex] + f'{participantRole.mention} {member.mention}\n' + content[splitIndex:]
-            remaining = len(re.findall(participantRole.mention, content))
-            content = content[:len(content) - len(content.split()[-2]) - 7] + f'{remaining} REMAIN```'
-        remaining = len(re.findall(participantRole.mention, content))
-        content = content[:len(content) - len(content.split()[-2]) - 7] + f'{remaining} REMAIN```'
-        await playerList.edit(content=content)
-    #Setting players to deceased on the player list
-    elif arg1.lower() == "kill":
-        f = open("playerlistid.txt", "r")
-        line = f.readline()
-        f.close()
-        listId = line.split()[0]
-        channelName = line.split()[1]
-        listId = int(listId)
-        found = False
-        for channel in ctx.guild.text_channels:
-            if channel.name == channelName:
-                async for message in channel.history(limit=100):
-                    if message.id == listId:
-                        playerList = message
-                        found = True
-                        break
-            if found:
-                break
-        content = playerList.content
-        for player in arg2:
-            if player in content:
-                playerMention = player
-            else:
-                for member in ctx.guild.members:
-                    if member.name == player or member.mention == player or member.mention == "<@" + "!" + player[2:]:
-                        playerMention = member.mention
-            index = content.find(playerMention)
-            remaining = len(re.findall(participantRole.mention, content))
-            if playerMention in content:
-                content = content[:index-len(participantRole.mention)-1] + deceasedRole.mention + content[index-1:len(content) - len(content.split()[-2]) - 7] + f'{remaining} REMAIN```'
-        remaining = len(re.findall(participantRole.mention, content))
-        content = content[:len(content) - len(content.split()[-2]) - 7] + f'{remaining} REMAIN```'
-        await playerList.edit(content=content)
-    #Setting players to true deceased on the player list
-    elif arg1.lower() == "truekill":
-        f = open("playerlistid.txt", "r")
-        line = f.readline()
-        f.close()
-        listId = line.split()[0]
-        channelName = line.split()[1]
-        listId = int(listId)
-        found = False
-        for channel in ctx.guild.text_channels:
-            if channel.name == channelName:
-                async for message in channel.history(limit=100):
-                    if message.id == listId:
-                        playerList = message
-                        found = True
-                        break
-            if found:
-                break
-        content = playerList.content
-        for player in arg2:
-            for member in ctx.guild.members:
-                if member.name == player or member.mention == player or member.mention == "<@" + "!" + player[2:]:
-                    playerMention = member.mention
-            index = content.find(playerMention)
-            remaining = len(re.findall(participantRole.mention, content))
-            content = content[:index-len(participantRole.mention)-1] + trueDeceasedRole.mention + content[index-1:len(content) - len(content.split()[-2]) - 7] + f'{remaining} REMAIN```'
-        remaining = len(re.findall(participantRole.mention, content))
-        if playerMention in content:
-            content = content[:len(content) - len(content.split()[-2]) - 7] + f'{remaining} REMAIN```'
-        await playerList.edit(content=content)
-    #Setting players to participant on the player list
-    elif arg1.lower() == "revive":
-        f = open("playerlistid.txt", "r")
-        line = f.readline()
-        f.close()
-        listId = line.split()[0]
-        channelName = line.split()[1]
-        listId = int(listId)
-        found = False
-        for channel in ctx.guild.text_channels:
-            if channel.name == channelName:
-                async for message in channel.history(limit=100):
-                    if message.id == listId:
-                        playerList = message
-                        found = True
-                        break
-            if found:
-                break
-        content = playerList.content
-        for player in arg2:
-            for member in ctx.guild.members:
-                if member.name == player or member.mention == player or member.mention == "<@" + "!" + player[2:]:
-                    playerMention = member.mention
-            index = content.find(playerMention)
-            remaining = len(re.findall(participantRole.mention, content))
-            content = content[:index-len(participantRole.mention)-1] + participantRole.mention + content[index-1:len(content) - len(content.split()[-2]) - 7] + f'{remaining} REMAIN```'
-        remaining = len(re.findall(participantRole.mention, content))
-        if playerMention in content:
-            content = content[:len(content) - len(content.split()[-2]) - 7] + f'{remaining} REMAIN```'
-        await playerList.edit(content=content)
-    #Invalid arguments
-    elif arg1 == "":
-        await ctx.send("No argument found")
-    else:
-        await ctx.send("Argument " + arg1 + " not recognized for player list")
-
 #Vote moment
 @bot.command(help="")
 async def vote(ctx, *args):
@@ -1216,14 +1026,13 @@ async def genchats(ctx, num_players: int):
     guildRoleNames = [x.name for x in ctx.guild.roles]
     guildCategoryNames = [x.name for x in ctx.guild.categories]
 
+    basicRoles = ["Spectator", "Partcipant", "Dead"]
+
     if "Host" not in guildRoleNames:
         await ctx.guild.create_role(name="Host", permissions=disnake.Permissions(administrator=True))
-    if "Spectator" not in guildRoleNames:
-        await ctx.guild.create_role(name="Spectator")
-    if "Participant" not in guildRoleNames:
-        await ctx.guild.create_role(name="Participant")
-    if "Dead" not in guildRoleNames:
-        await ctx.guild.create_role(name="Dead")
+    for role in basicRoles:
+        if role not in guildRoleNames:
+            await ctx.guild.create_role(name=basicRoles)
 
     for i in range(1, num_players + 1):
         roleName = str(i)
@@ -1355,35 +1164,9 @@ async def sendMessage(ctx, arg1, arg2):
         #lostRole = disnake.utils.find(lambda r: r.name == "Lost", ctx.guild.roles)
         for channel in guildChannels:
             if channel.name == arg1:
-                await channel.send(arg2)
-
-@bot.command(name='change')
-async def change(ctx, arg1):
-    if ctx.author.name == 'bluedetroyer':
-        for member in bot.guilds[1].members:
-            if member.name == "Bluedetroyer":
-                await member.edit(nick=arg1)
-
-@bot.command(name='takethat')
-async def editmes(ctx):
-    for guild in bot.guilds:
-        if guild.name ==  "Betrayaled":
-            for channel in guild.text_channels:
-                if channel.name == "sign-ups":
-                    async for message in channel.history(limit=20):
-                        if message.author.name == "Betrayal Bot":
-                            await message.edit(content="Items:\nDepower")
-                            
+                await channel.send(arg2)                       
                 
-    
 
-@bot.command(name='mario')
-async def spamMario(ctx, arg1=10):
-    if ctx.author.name == '' or ctx.author.name == "bluedetroyer":
-        for member in bot.guilds[1].members:
-            if member.name == 'Duncan':
-                for i in range(int(arg1)):
-                    await ctx.send(f'{member.mention}')
 @bot.command(name='removeto')
 async def removeTimeOut(ctx):
         for member in bot.guilds[1].members:

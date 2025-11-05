@@ -1,3 +1,9 @@
+#################
 # Private files #
 #################
 .env
+
+####################
+# Game Information #
+####################
+inventoryInfo.json
