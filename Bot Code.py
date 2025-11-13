@@ -16,6 +16,10 @@ from helper_functions import *
 INFO_FILE = "info.json"
 GAME_FILE = "inventoryInfo.json"
 
+#Category name constants
+CONFESSIONALS_CATEGORY = "Confessionals"
+ALLIANCES_CATEGORY = "Alliances"
+
 #Creating connenction to discord
 load_dotenv()
 intents = disnake.Intents.default()
@@ -23,6 +27,12 @@ intents.message_content = True
 intents.members = True
 token = os.getenv('DISCORD_TOKEN')
 bot = commands.Bot(command_prefix='/', intents=intents, case_insensitive=True)
+
+import role_slash_commands
+import luck_slash_commands
+from luck_slash_commands import determine_alliances
+role_slash_commands.setup(bot, INFO_FILE, GAME_FILE)
+luck_slash_commands.setup(bot, INFO_FILE, GAME_FILE, ALLIANCES_CATEGORY, CONFESSIONALS_CATEGORY)
 
 #Rolls a random item based off luck/rarity and returns it
 def itemGen(luckOrRarity):
@@ -46,7 +56,7 @@ def itemGen(luckOrRarity):
         return random.choice(allItems[rarityToNum(luckOrRarity)])
 
 #Rolls a random any ability based off luck and returns it
-def anyAbilityGen(luckOrRarity):
+def anyAbilityGen(luckOrRarity, role=None):
     data = openJson(INFO_FILE)
     #Legendary listed twice as for aas legendaries can roll on a legendary or mythical result
     rarities = ("Common", "Uncommon", "Rare", "Epic", "Legendary", "Legendary")
@@ -57,7 +67,10 @@ def anyAbilityGen(luckOrRarity):
             if y["rarity"] == rarity and not y["removed"]:
                 abilityName = x
                 if y["exclusive"]:
-                    abilityName += f' [{y["role"]}]'
+                    if role == None:
+                        abilityName += f' [{y["role"]}]'
+                    elif role != y["role"]:
+                        continue
                 rarityAbilities.append(abilityName)
         allAAs.append(rarityAbilities)
     
@@ -617,6 +630,7 @@ async def clear_all_invs(ctx):
 
 @all_invs.sub_command(name='create', description="Creates blank inventories for all confessionals without one.")
 async def create_all_invs(ctx):
+    await ctx.response.defer()
     data = openJson(GAME_FILE)
     if "confessionals" in data:
         confData = data["confessionals"]
@@ -634,12 +648,15 @@ async def create_all_invs(ctx):
                 confData[channel.name]["inventory"] = newInventory
 
     writeJson(GAME_FILE, data)
-    await ctx.send("Inventories created.")
+    await ctx.edit_original_response("Inventories created.")
 
 #Code for managing inventories
 @bot.command(aliases=['inventory', 'inv'], help='')
 async def inventories(ctx, arg1="", *arg2):
-    channel = ctx.channel
+    if not isinstance(ctx, disnake.TextChannel):
+        channel = ctx.channel
+    else:
+        channel = ctx
     #Authorization check
     #if (not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host", "Partcipant", "Deceased"])):
     #    await ctx.send("You don't have permession to edit inventories in this channel")
@@ -947,6 +964,7 @@ async def link_confs(ctx):
 
 @link.sub_command(name='view', description="Views current confLinks.")
 async def link_view(ctx):
+    await ctx.response.defer()
     data = openJson(GAME_FILE)
     if "confLinks" not in data or data["confLinks"] == {}:
         await ctx.send("confLinks is empty.")
@@ -955,7 +973,7 @@ async def link_view(ctx):
     for userId, channelName in data["confLinks"].items():
         user = await bot.fetch_user(int(userId))
         message += f'{user.name}: "{channelName}"\n'
-    await ctx.send(message)
+    await ctx.edit_original_response(message)
 
 @link.sub_command(name='add', description="Adds a confLink from the specified user to the specified channel.")
 async def link_add(ctx, user: disnake.User, channel: str):
@@ -985,166 +1003,172 @@ async def link_remove(ctx, user: disnake.User):
     await ctx.send(f'Link removed for user {user.name}.')
 #End of confessional link code
 
-#Code for managing roles
-@bot.slash_command(name='role', description="Manage confessional roles.")
-async def role(ctx):
+#Sending code
+@bot.slash_command(name='send', description="Manage automatic sending of coins, carepackages, items, and aas.")
+@commands.default_member_permissions(administrator=True)
+async def send(ctx):
     pass
 
-@role.sub_command(name='create', description="Creates a role for the confessional this command is sent in.")
-async def role_create(ctx, role_name: str):
-    info = openJson(INFO_FILE)
-    roleInfo = {}
-    roleName = ""
-    for role, rInfo in info["roles"].items():
-        if role_name.lower() == role.lower():
-            roleName = role
-            roleInfo = rInfo
-            break
-    
-    if roleName == "":
-        await ctx.send(f'Role "{role_name}" not found.')
-        return
-    
+@send.sub_command(name="coins", description='Shows a list of how many coins each confessional should get, and shows button to approve it.')
+async def send_coins(ctx):
+    alliances = await determine_alliances(ctx.guild)
+    confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, ctx.guild.categories)
+    aliveConfs = [x.name for x in confCategory.channels]
     data = openJson(GAME_FILE)
-    channel = ctx.channel
-    if "confessionals" not in data:
-        data["confessionals"] = {}
-    if channel.name not in data["confessionals"]:
-        data["confessionals"][channel.name] = {"channelId": channel.id}
-    if "role" in data["confessionals"][channel.name]:
-        await ctx.send("A role already exists for this confessional. Please delete/forget it first if you want to create a new one.")
-        return
+    coinString = "Calculated Coins:\n"
+    for confName, confData in data.get("confessionals", {}).items():
+        if confName not in aliveConfs:
+            continue
+        confCoins = 200
+        confCoins += confData["inventory"]["bonus"] * 2
+        
+        for allianceName, members in alliances.items():
+            if confName in members:
+                numMembers = len(members)
+                if numMembers == 2:
+                    confCoins += 20
+                elif numMembers == 3:
+                    confCoins += 40
+                elif numMembers >= 4:
+                    confCoins += 100
 
-    roleData = {
-        "name": roleName,
-        "alignment": roleInfo["alignment"],
-        "abilities": {},
-        "perks": {},
-        "messageIds": []
-    }
-    for ability in roleInfo["abilities"]:
-        roleData["abilities"][ability] = {"charges": 1, "upgrade": 0}
-    for perk in roleInfo["perks"]:
-        roleData["perks"][perk] = {"copies": 1, "upgrade": 0}
+        if "lucky" in [x.lower() for x in confData["inventory"]["statuses"]]:
+            confCoins *= 1.5
+        if "unlucky" in [x.lower() for x in confData["inventory"]["statuses"]]:
+            confCoins *= .5 
+        confData["calcedCoins"] = int(confCoins)
+        coinString += f'{confName}: {int(confCoins)}\n'
     
-    data["confessionals"][channel.name]["role"] = roleData
-    roleStrings = generateRoleStrings(roleData, info)
-    for roleString in roleStrings:
-        message = await channel.send(roleString)
-        data["confessionals"][channel.name]["role"]["messageIds"].append(message.id)
-
     writeJson(GAME_FILE, data)
-    await ctx.send(f'Role "{roleName}" created for this confessional.')
+    await ctx.send(coinString, components=[
+            disnake.ui.Button(label="Distribute", style=disnake.ButtonStyle.success, custom_id="send_coins"),
+        ])
 
-@role.sub_command(name='forget', description="Forgets the role for the confessional this command is sent in.")
-async def role_forget(ctx):
+@send.sub_command(name="carepackages", description='Shows a list of how what carepackage each confessional should get, and shows button to approve it.')
+async def send_carepackages(ctx):
+    alliances = await determine_alliances(ctx.guild)
+    confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, ctx.guild.categories)
+    aliveConfs = [x.name for x in confCategory.channels]
     data = openJson(GAME_FILE)
-    channel = ctx.channel
-    if "confessionals" not in data or channel.name not in data["confessionals"] or "role" not in data["confessionals"][channel.name]:
-        await ctx.send("No role found for this confessional.")
-        return
+    carepackageString = "Calculated Carepackages:\n"
+    for confName, confData in data.get("confessionals", {}).items():
+        if confName not in aliveConfs:
+            continue
+        luck = confData["luck"]
+        
+        role = None
+        if "role" in confData:
+            role = confData["role"]["name"]
 
-    data["confessionals"][channel.name].pop("role")
+        item = itemGen(luck)
+        aa = anyAbilityGen(luck, role)
+
+        confData["calcedItems"] = [item]
+        confData["calcedAas"] = [aa]
+
+        carepackageString += f'{confName} ({luck}): {item}, {aa}\n'
+    
     writeJson(GAME_FILE, data)
-    await ctx.send("Role forgotten.")
+    await ctx.send(carepackageString, components=[
+            disnake.ui.Button(label="Distribute", style=disnake.ButtonStyle.success, custom_id="send_carepackages"),
+        ])
 
-@role.sub_command(name='delete', description="Deletes the role for the confessional this command is sent in.")
-async def role_delete(ctx):
+@send.sub_command(name="items", description='Shows a list of how what items each confessional should get, and shows button to approve it.')
+async def send_items(ctx):
+    alliances = await determine_alliances(ctx.guild)
+    confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, ctx.guild.categories)
+    aliveConfs = [x.name for x in confCategory.channels]
     data = openJson(GAME_FILE)
-    channel = ctx.channel
-    if "confessionals" not in data or channel.name not in data["confessionals"] or "role" not in data["confessionals"][channel.name]:
-        await ctx.send("No role found for this confessional.")
-        return
+    itemString = "Calculated Items:\n"
+    for confName, confData in data.get("confessionals", {}).items():
+        if confName not in aliveConfs:
+            continue
+        luck = confData["luck"]
+        
+        items = []
+        i = random.randint(1,6)
+        count = 3
+        if i <= 3:
+            count = 1
+        elif i <=5:
+            count = 2
+        for j in range(count):
+            items.append(itemGen(luck))
+
+        confData["calcedItems"] = items
+
+        itemString += f'{confName} ({luck}): {", ".join(items)}\n'
     
-    roleData = data["confessionals"][channel.name]["role"]
-    for messageId in roleData["messageIds"]:
-        try:
-            message = await channel.fetch_message(messageId)
-            await message.delete()
-        except:
-            pass
-    data["confessionals"][channel.name].pop("role")
     writeJson(GAME_FILE, data)
-    await ctx.send("Role deleted.")
+    await ctx.send(itemString, components=[
+            disnake.ui.Button(label="Distribute", style=disnake.ButtonStyle.success, custom_id="send_items"),
+        ])
 
-@role.sub_command(name='refresh', description="Refreshes the role messages for the confessional this command is sent in.")
-async def role_refresh(ctx):
+@send.sub_command(name="aas", description='Shows a list of how what aas each confessional should get, and shows button to approve it.')
+async def send_aas(ctx):
+    alliances = await determine_alliances(ctx.guild)
+    confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, ctx.guild.categories)
+    aliveConfs = [x.name for x in confCategory.channels]
     data = openJson(GAME_FILE)
-    channel = ctx.channel
-    if "confessionals" not in data or channel.name not in data["confessionals"] or "role" not in data["confessionals"][channel.name]:
-        await ctx.send("No role found for this confessional.")
-        return 
+    aaString = "Calculated Items:\n"
+    for confName, confData in data.get("confessionals", {}).items():
+        if confName not in aliveConfs:
+            continue
+        luck = confData["luck"]
+        
+        role = None
+        if "role" in confData:
+            role = confData["role"]["name"]
+
+        aa = anyAbilityGen(luck, role)
+
+        confData["calcedAas"] = [aa]
+
+        aaString += f'{confName} ({luck}): {aa}\n'
     
-    roleData = data["confessionals"][channel.name]["role"]
-    newMessages = []
-    for messageId in roleData["messageIds"]:
-        try:
-            message = await channel.fetch_message(messageId)
-            await message.delete()
-            newId = await ctx.channel.send(message.content)
-            newMessages.append(newId.id)
-        except:
-            pass
-    data["confessionals"][channel.name]["role"]["messageIds"] = newMessages
     writeJson(GAME_FILE, data)
-    await ctx.send("Role messages refreshed.")
+    await ctx.send(aaString, components=[
+            disnake.ui.Button(label="Distribute", style=disnake.ButtonStyle.success, custom_id="send_aas"),
+        ])
 
-@role.sub_command(name='view', description="Views the role for the confessional this command is sent in.")
-async def role_view(ctx):
+
+async def distributeCoins(server):
     data = openJson(GAME_FILE)
-    channel = ctx.channel
-    if "confessionals" not in data or channel.name not in data["confessionals"] or "role" not in data["confessionals"][channel.name]:
-        await ctx.send("No role found for this confessional.")
-        return
-    
-    roleData = data["confessionals"][channel.name]["role"]
-    for messageId in roleData["messageIds"]:
-        try:
-            message = await channel.fetch_message(messageId)
-            await ctx.send(message.content)
-        except:
-            pass
-    ctx.send("End of role view.")
+    confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, server.categories)
+    participant = disnake.utils.find(lambda r: r.name == "Participant", server.roles)
+    for channel in confCategory.channels:
+        coins = data["confessionals"][channel.name]["calcedCoins"]
+        await inventories(channel, "coins", "add", str(coins))
+        await channel.send(f'{participant.mention} You got {coins} coins')
 
-async def updateRoleStrings(newStrings, messageIds, channel):
-    if len(newStrings) > len(messageIds):
-        for i in range(len(messageIds)):
-            message = await channel.fetch_message(messageIds[i])
-            await message.edit(content=newStrings[i])
-        for i in range(len(messageIds), len(newStrings)):
-            message = await channel.send(newStrings[i])
-            messageIds.append(message.id)
-    
-    elif len(newStrings) < len(messageIds):
-        for i in range(len(newStrings)):
-            message = await channel.fetch_message(messageIds[i])
-            await message.edit(content=newStrings[i])
-        for i in range(len(newStrings), len(messageIds)):
-            message = await channel.fetch_message(messageIds[i])
-            await message.delete()
-        del messageIds[len(newStrings):]
-    
-    else:
-        for i in range(len(newStrings)):
-            message = await channel.fetch_message(messageIds[i])
-            await message.edit(content=newStrings[i])
-
-    return messageIds
-
-@role.sub_command(name='alignment', description="Changes the alignment of the role for the confessional this command is sent in.")
-async def role_alignment(ctx, alignment: str):
+async def distributeCarepackages(server):
     data = openJson(GAME_FILE)
-    channel = ctx.channel
-    if "confessionals" not in data or channel.name not in data["confessionals"] or "role" not in data["confessionals"][channel.name]:
-        await ctx.send("No role found for this confessional.")
-        return
-    
-    roleData = data["confessionals"][channel.name]["role"]
-    roleData["alignment"] = alignment
-    roleStrings = generateRoleStrings(roleData, openJson(INFO_FILE))
-    roleData["messageIds"] = await updateRoleStrings(roleStrings, roleData["messageIds"], channel)
-    writeJson(GAME_FILE, data)
-    await ctx.send(f'Role alignment changed to {alignment}.')
+    confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, server.categories)
+    participant = disnake.utils.find(lambda r: r.name == "Participant", server.roles)
+    for channel in confCategory.channels:
+        items = data["confessionals"][channel.name]["calcedItems"]
+        aas = data["confessionals"][channel.name]["calcedAas"]
+        await inventories(channel, "items", "add", *items)
+        await inventories(channel, "aas", "add", *aas)
+        await channel.send(f'{participant.mention} Item: {", ".join(items)}\nAny Ability: {", ".join(aas)}')
+
+async def distributeItems(server):
+    data = openJson(GAME_FILE)
+    confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, server.categories)
+    participant = disnake.utils.find(lambda r: r.name == "Participant", server.roles)
+    for channel in confCategory.channels:
+        items = data["confessionals"][channel.name]["calcedItems"]
+        await inventories(channel, "items", "add", *items)
+        await channel.send(f'{participant.mention} You got {", ".join(items)}')
+
+async def distributeAas(server):
+    data = openJson(GAME_FILE)
+    confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, server.categories)
+    participant = disnake.utils.find(lambda r: r.name == "Participant", server.roles)
+    for channel in confCategory.channels:
+        aas = data["confessionals"][channel.name]["calcedAas"]
+        await inventories(channel, "aas", "add", *aas)
+        await channel.send(f'{participant.mention} You got {", ".join(aas)}')
 
 '''
 Planned Commands:
@@ -1154,40 +1178,8 @@ Planned Commands:
     view - Sends a message of the current aliases in a {alias}: {username} format
     clear - Clears all aliases
 
-/role - Slash command (maybe) base for managing confessional roles
-    create {role name} - Creates a role based on the role name for the confessional the command is sent in and sends and stores a base message. Returns an error message if it's an invalid role name or if a role already exists for this channel.
-    forget - Removes the role section from the channel it's sent in.
-    delete - Removes the role section from the channel it's sent in and the base role message(s).
-    refresh - Creates a new base message(s) that will be automatically updated (forgetting the previous one(s)).
-    view - Sends message(s) about the role. These won't be updated.
-    alignment {alignment} - Changes the alignment to the specified one.
-    ability - Sub command group. Note - -1 represents infinite charges.
-        add {ability} {charges=1} - If the role already has this ability, adds that many charges to it. If not, adds that ability to the role with the specified number of charges. Returns an error message if that ability can't be found in info.
-        remove {ability} {charges=1} - Removes the specified number of charges from the specified ability. Returns an error message if the role doesn't have that ability.
-        upgrade {ability} {upgrade (int)} - Sets the specified ability to the specified upgrade (0 being no upgrade). Returns an error message if the role doesn't have that ability or the upgrade number is out of bounds (<0 or ># of upgrades)
-        degrade {ability} {degrade (int)} - Sets the specified ability to the specified degrade (0 being no degrade). Returns an error message if the role doesn't have that ability or the degrade number is out of bounds (<0 or ># of degrades)
-    perk - Sub command group.
-        add {perk} - If the role already has this perk, adds another copy of it. If not, adds that perk to the role. Returns an error message if that perk can't be found in info.
-        remove {ability} - Removes one copy of the specified perk. Returns an error message if the role doesn't have that [perk].
-        upgrade {perk} {upgrade (int)} - Sets the specified perk to the specified upgrade (0 being no upgrade). Returns an error message if the role doesn't have that perk or the upgrade number is out of bounds (<0 or ># of upgrades)
-        degrade {perk} {degrade (int)} - Sets the specified perk to the specified degrade (0 being no degrade). Returns an error message if the role doesn't have that perk or the degrade number is out of bounds (<0 or ># of degrades)
-
-
-/link - Slash command base for managing confLinks. Admin only
-    clear - Clears confLinks
-    confs - Clears confLinks, then goes through all channels in "Confessionals" and looks at all members in that channel, and for every member with a Participant role in the channel
-        adds a "{member id}: {channel name}" pair to confLinks.
-    view - Sends a message of the current confLinks pairs in a {username}: "{channel name}" format
-    add {user} {channel} - Adds "{user id}: {channel name}" pair to confLinks, or returns an error message if that user id is already in confLinks
-    remove {user} - Removes "{user id}: {channel name}" pair from confLinks, or returns an error message if that user id is not in confLinks
-
-/luck - Slash command base for managing luck. Admin only
-    calculate - Goes through each confessional in "Confessionals" and attempts to calculate its luck by finding the corresponding user in a channel in "Alliances" and comparing the user's alignment to their allies'. Does not account for abilities/perks/items/effects.
-    view - Displays the stored luck values of all channels in "Confessionals"
-    set {user} {luck} - Sets the luck of the confessional linked to the specified user to the specified number.
-
 /send - Slash command base for automatically doing coins/carepackages/etc. Admin only
-    coins - Shows a list of how many coins the bot thinks each confessional should get, and shows buttons for the host to either approve or reject it. If approved, the bot will distribute it to each confessional and alert the players.
+    coins - Shows a list of how many coins the bot thinks each confessional should get, and shows buttons for the host to approve it. If approved, the bot will distribute it to each confessional and alert the players.
     carepackages - Shows a list of rolled carepackages and luck for each confessional, and shows buttons for the host to either approve or reject it. If approved, the bot will distribute it to each confessional and alert the players.
     items - Shows a list of rolled item rains and luck for each confessional, and shows buttons for the host to either approve or reject it. If approved, the bot will distributetribute it to ea it to each confessional and alert the players.
     aas - Shows a list of rolled aas and luck for each confessional, and shows buttons for the host to either approve or reject it. If approved, the bot will disch confessional and alert the players.
@@ -1313,6 +1305,7 @@ async def deceptPick(ctx: disnake.ApplicationCommandInteraction):
 
 @bot.listen("on_button_click")
 async def help_listener(ctx: disnake.MessageInteraction):
+    await ctx.response.defer()
     #if ctx.component.custom_id not in ["yes", "no", "good", "neutral", "evil"]:
         # We filter out any other button presses except
         # the components we wish to process.
@@ -1324,6 +1317,18 @@ async def help_listener(ctx: disnake.MessageInteraction):
         await ctx.send("Button Indeed")
     elif ctx.component.custom_id in ["good", "neutral", "evil"]:
         await ctx.send(ctx.component.label)
+    elif ctx.component.custom_id == "send_coins":
+        await distributeCoins(ctx.guild)
+        await ctx.edit_original_response("Coins distributed")
+    elif ctx.component.custom_id == "send_carepackages":
+        await distributeCarepackages(ctx.guild)
+        await ctx.edit_original_response("Carepackages distributed")
+    elif ctx.component.custom_id == "send_items":
+        await distributeItems(ctx.guild)
+        await ctx.edit_original_response("Items distributed")
+    elif ctx.component.custom_id == "send_aas":
+        await distributeAas(ctx.guild)
+        await ctx.edit_original_response("Aas distributed")
 
 #Runs bot
 bot.run(token)

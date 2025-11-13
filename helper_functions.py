@@ -172,6 +172,13 @@ def inventoryString(inventory):
     string += "```"
     return string
 
+def findIgnoringCase(string: str, string_array: list) -> str:
+    lower_string = string.lower()
+    for candidate_string in string_array:
+        if candidate_string.lower() == lower_string:
+            return candidate_string
+    return None
+
 #Code for making a role string (possibly multiple if it exceeds character limits)
 def generateRoleStrings(roleData, info):
     #Basics
@@ -180,7 +187,7 @@ def generateRoleStrings(roleData, info):
     currentString = f'```'
     endString = '```'
     if roleData["alignment"].lower() == "good":
-        roleData += f'Diff\n+'
+        currentString += f'Diff\n+'
     elif roleData["alignment"].lower() == "evil":
         currentString += f'Diff\n-'
     else:
@@ -203,6 +210,8 @@ def generateRoleStrings(roleData, info):
 
         if abilityData["upgrade"] == 0:
             abilityString += f'{abilityInfo["effect"]}'
+        elif abilityData["upgrade"] == 100: #for alteranate versions of abilities that can't be directly copied
+            abilityString += f'{abilityInfo["alternate"]}'
         elif abilityData["upgrade"] > 0:
             abilityString += f'{abilityInfo["upgrades"][abilityData["upgrade"] - 1]}'
         else:
