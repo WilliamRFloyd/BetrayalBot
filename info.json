@@ -2108,7 +2108,7 @@
             "rarity": "Common",
             "exclusive": false,
             "removed": false,
-            "effect": "Find out what type of action your target most recently did (investigative, killing, healing etc) and the player they used it on.",
+            "effect": "Find out what type of action your target most recently did (investigative, killing, healing, etc) and the player they used it on.",
             "upgrades": [
                 "Find out what type of action your 2 targets most recently did (investigative, killing, healing etc) and the player they used it on, listed seperately for each target."
             ],
@@ -2233,7 +2233,7 @@
             "rarity": "Uncommon",
             "exclusive": false,
             "removed": false,
-            "effect": "MMake an alliance member completely immune to death including eliminations for 24 hours. If Hero, you can gift a charge of this as an AA to others. Can't self pick. The target learns they are chosen.",
+            "effect": "Make an alliance member completely immune to death including eliminations for 24 hours. If Hero, you can gift a charge of this as an AA to others. Can't self pick. The target learns they are chosen.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -2293,7 +2293,7 @@
             "rarity": "Epic",
             "exclusive": false,
             "removed": false,
-            "effect": "Select someone, they pick as many neg statuses they want & will gain vote power equal. Will be inflicted with them all post-elim. Selecting immunities will remove immunities. 24h cooldown. If selected more than twice for this ability, they no longer gain immunities from Hydra perks.",
+            "effect": "Pick someone, they pick neg statuses they want & will gain VP equal. Will be inflicted with them post-elim. Chosen immunities remove immediately instead. 24h cooldown, must be used 12h before elim (or will carry). If chosen 3+ times, they no longer gain immunity from Hydra perks. Statuses inflicted by this cant be removed on mass by status infliction abilities (instead, cure half rounded up) and when removed dont provide immunities.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4587,7 +4587,7 @@
             "rarity": "Legendary",
             "exclusive": false,
             "removed": false,
-            "effect": "Choose 2 players. Those players are now connected, and if one of them dies the other does too. All status ailments/effects and buffs are shared as well. Link is broken when you die.",
+            "effect": "Choose 2 players. Those players are now connected, and if one of them dies the other does too. All status ailments/effects and buffs are shared as well. Link is broken when you die. If put within 6h of elim, that elim will not kill a linked player.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -5069,7 +5069,7 @@
         },
         "Spiritual Remains": {
             "role": "Terminal",
-            "effect": "While without regrets, your vote power is 2. This perk does not stack with itself.",
+            "effect": "While without regrets, your vote power is +2. This perk does not stack with itself.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5100,7 +5100,7 @@
             "effect": "You can choose with up to a 12 hour delay, when a status placed on you begins effecting you.",
             "upgrades": [],
             "degrades": [],
-            "additionalInfo": ""
+            "additionalInfo": "You only learn the type of status (including curse vs death curse), not what variant it is (Wizard freeze vs freeze, Ghost death curse vs death curse) before it effects you."
         },
         "Time Zoned": {
             "role": "Time Traveller",
@@ -5555,7 +5555,7 @@
             "effect": "Immune to any effects from somebody's perk or ability that can happen to you when they're dead.",
             "upgrades": [],
             "degrades": [],
-            "additionalInfo": ""
+            "additionalInfo": "This does not make you immune to effects on dead players if they were applied by an alive player (for instance, a corpse being Gas Bombed by an alive player would still hit you)."
         },
         "Corpse Raider": {
             "role": "Pathologist",

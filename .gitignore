@@ -7,3 +7,14 @@
 # Game Information #
 ####################
 inventoryInfo.json
+
+############
+# Testing  #
+############
+exampleInventoryInfo.json
+
+
+#########
+# Other #
+#########
+__pycache__/
