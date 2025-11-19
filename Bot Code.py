@@ -576,15 +576,18 @@ async def view(
         await ctx.send("Nice Try")
         return
     data = openJson(GAME_FILE)
+    print("Test")
     listStr = f'{section.capitalize()}\n'
-    for k, v in data.items():
-        if "confessional" in k and section in v:
+    for k, v in data["confessionals"].items():
+        if "inventory" not in v:
+            continue
+        if "confessional" in k and section in v["inventory"]:
             for channel in ctx.guild.channels:
                 if channel.name == k:
                     if channel.category.name == "Confessionals" or (channel.category.name == "Dead confessionals" and not alive_only):
                         listStr += f'{k[0:-13]}: '
                         strAddition = ""
-                        for item in v[section]:
+                        for item in v["inventory"][section]:
                             if search_for.lower() in item.lower():
                                 if strAddition != "":
                                     strAddition += ", "
@@ -620,13 +623,15 @@ async def all_invs(ctx):
 
 @all_invs.sub_command(name='clear', description="Removes all inventories.")
 async def clear_all_invs(ctx):
+    await ctx.response.defer()
     data = openJson(GAME_FILE)
     if "confessionals" in data:
         confData = data["confessionals"]
         for k in confData.keys():
-            confData[k].pop("inventory")
+            if "inventory" in confData[k]:
+                confData[k].pop("inventory")
     writeJson(GAME_FILE, data)
-    await ctx.send("Inventories cleared.")
+    await ctx.edit_original_response("Inventories cleared.")
 
 @all_invs.sub_command(name='create', description="Creates blank inventories for all confessionals without one.")
 async def create_all_invs(ctx):
@@ -869,7 +874,7 @@ async def genchats(ctx, num_players: int):
         await ctx.guild.create_role(name="Host", permissions=disnake.Permissions(administrator=True))
     for role in basicRoles:
         if role not in guildRoleNames:
-            await ctx.guild.create_role(name=basicRoles)
+            await ctx.guild.create_role(name=role)
 
     for i in range(1, num_players + 1):
         roleName = str(i)
@@ -1049,6 +1054,7 @@ async def send_carepackages(ctx):
     alliances = await determine_alliances(ctx.guild)
     confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, ctx.guild.categories)
     aliveConfs = [x.name for x in confCategory.channels]
+    luckyCoinConf = random.choice(aliveConfs)
     data = openJson(GAME_FILE)
     carepackageString = "Calculated Carepackages:\n"
     for confName, confData in data.get("confessionals", {}).items():
@@ -1066,7 +1072,11 @@ async def send_carepackages(ctx):
         confData["calcedItems"] = [item]
         confData["calcedAas"] = [aa]
 
+        if confName == luckyCoinConf:
+            confData["calcedItems"].append("Lucky Coin")
+
         carepackageString += f'{confName} ({luck}): {item}, {aa}\n'
+    carepackageString += f'Lucky Coin: {luckyCoinConf}'
     
     writeJson(GAME_FILE, data)
     await ctx.send(carepackageString, components=[
@@ -1303,6 +1313,7 @@ async def deceptPick(ctx: disnake.ApplicationCommandInteraction):
             disnake.ui.Button(label=evilRole, style=disnake.ButtonStyle.danger, custom_id="evil"),
         ])
 
+
 @bot.listen("on_button_click")
 async def help_listener(ctx: disnake.MessageInteraction):
     await ctx.response.defer()
@@ -1319,16 +1330,20 @@ async def help_listener(ctx: disnake.MessageInteraction):
         await ctx.send(ctx.component.label)
     elif ctx.component.custom_id == "send_coins":
         await distributeCoins(ctx.guild)
-        await ctx.edit_original_response("Coins distributed")
+        await ctx.edit_original_response(components=[])
+        await ctx.channel.send("Coins distributed")
     elif ctx.component.custom_id == "send_carepackages":
         await distributeCarepackages(ctx.guild)
-        await ctx.edit_original_response("Carepackages distributed")
+        await ctx.edit_original_response(components=[])
+        await ctx.channel.send("Carepackages distributed")
     elif ctx.component.custom_id == "send_items":
         await distributeItems(ctx.guild)
-        await ctx.edit_original_response("Items distributed")
+        await ctx.edit_original_response(components=[])
+        await ctx.channel.send("Items distributed")
     elif ctx.component.custom_id == "send_aas":
         await distributeAas(ctx.guild)
-        await ctx.edit_original_response("Aas distributed")
+        await ctx.edit_original_response(components=[])
+        await ctx.channel.send("Aas distributed")
 
 #Runs bot
 bot.run(token)

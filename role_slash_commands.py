@@ -42,7 +42,7 @@ def setup(bot, INFO_FILE="info.json", GAME_FILE="inventoryInfo.json"):
             "messageIds": []
         }
         for ability in roleInfo["abilities"]:
-            roleData["abilities"][ability] = {"charges": 1, "upgrade": 0}
+            roleData["abilities"][ability] = {"charges": roleInfo["abilities"][ability], "upgrade": 0}
         for perk in roleInfo["perks"]:
             roleData["perks"][perk] = {"copies": 1, "upgrade": 0}
         
@@ -301,6 +301,33 @@ def setup(bot, INFO_FILE="info.json", GAME_FILE="inventoryInfo.json"):
         writeJson(GAME_FILE, data)
         await ctx.send(f'Ability "{abilityName}" removed from this role.')
 
+    @role_ability.sub_command(name='alternate', description="Sets a ability for the role of the confessional this command is sent in to its alternate version.")
+    async def role_ability_alternate(ctx, ability: str):
+        data = openJson(GAME_FILE)
+        channel = ctx.channel
+        if "confessionals" not in data or channel.name not in data["confessionals"] or "role" not in data["confessionals"][channel.name]:
+            await ctx.send("No role found for this confessional.")
+            return
+        info = openJson(INFO_FILE)
+        abilityName = findIgnoringCase(ability, info["abilities"].keys())
+        if abilityName == None:
+            await ctx.send(f'Ability "{ability}" not found.')
+            return
+        if ["alternate"] not in info["abilities"][abilityName]:
+            await ctx.send(f'Ability does not have an alternate form.')
+            return
+        
+        roleData = data["confessionals"][channel.name]["role"]
+        if abilityName in roleData["abilities"]:
+            roleData["abilities"][abilityName]["upgrade"] = 100
+        else:
+            await ctx.send(f'Abilitiy "{ability}" not found for this role.')
+            return
+        roleStrings = generateRoleStrings(roleData, info)
+        roleData["messageIds"] = await updateRoleStrings(roleStrings, roleData["messageIds"], channel)
+        writeJson(GAME_FILE, data)
+        await ctx.send(f'Ability "{abilityName}" set to alternate version.')
+
     @role.sub_command_group(name='perk', description="Manage perks for the role of the confessional this command is sent in.")
     async def role_perk(ctx):
         pass
@@ -405,4 +432,31 @@ def setup(bot, INFO_FILE="info.json", GAME_FILE="inventoryInfo.json"):
         roleData["messageIds"] = await updateRoleStrings(roleStrings, roleData["messageIds"], channel)
         writeJson(GAME_FILE, data)
         await ctx.send(f'Perk "{perkName}" degraded to degrade {degrade} for this role.')
+    
+    @role_perk.sub_command(name='alternate', description="Sets a perk for the role of the confessional this command is sent in to its alternate version.")
+    async def role_perk_alternate(ctx, perk: str):
+        data = openJson(GAME_FILE)
+        channel = ctx.channel
+        if "confessionals" not in data or channel.name not in data["confessionals"] or "role" not in data["confessionals"][channel.name]:
+            await ctx.send("No role found for this confessional.")
+            return
+        info = openJson(INFO_FILE)
+        perkName = findIgnoringCase(perk, info["perks"].keys())
+        if perkName == None:
+            await ctx.send(f'Perk "{perk}" not found.')
+            return
+        if ["alternate"] not in info["perks"][perkName]:
+            await ctx.send(f'Perk does not have an alternate form.')
+            return
+        
+        roleData = data["confessionals"][channel.name]["role"]
+        if perkName in roleData["perks"]:
+            roleData["perks"][perkName]["upgrade"] = 100
+        else:
+            await ctx.send(f'Perk "{perk}" not found for this role.')
+            return
+        roleStrings = generateRoleStrings(roleData, info)
+        roleData["messageIds"] = await updateRoleStrings(roleStrings, roleData["messageIds"], channel)
+        writeJson(GAME_FILE, data)
+        await ctx.send(f'Perk "{perkName}" set to alternate version.')
     #End of role management code

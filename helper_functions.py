@@ -205,7 +205,7 @@ def generateRoleStrings(roleData, info):
             abilityString += '∞'
         abilityString += f'] - '
 
-        if (abilityData["upgrade"] > 0 and abilityData["upgrade"] > len(abilityInfo["upgrades"])) or (abilityData["upgrade"] < 0 and abs(abilityData["upgrade"]) > len(abilityInfo["downgrades"])):
+        if (abilityData["upgrade"] != 100 and abilityData["upgrade"] > 0 and abilityData["upgrade"] > len(abilityInfo["upgrades"])) or (abilityData["upgrade"] < 0 and abs(abilityData["upgrade"]) > len(abilityInfo["downgrades"])):
             abilityData["upgrade"] = 0
 
         if abilityData["upgrade"] == 0:
@@ -243,11 +243,13 @@ def generateRoleStrings(roleData, info):
         else:
             perkString += f'- '
 
-        if (perkData["upgrade"] > 0 and perkData["upgrade"] > len(perkInfo["upgrades"])) or (perkData["upgrade"] < 0 and abs(perkData["upgrade"]) > len(perkInfo["downgrades"])):
+        if (perkData["upgrade"] != 100 and perkData["upgrade"] > 0 and perkData["upgrade"] > len(perkInfo["upgrades"])) or (perkData["upgrade"] < 0 and abs(perkData["upgrade"]) > len(perkInfo["downgrades"])):
             perkData["upgrade"] = 0
 
         if perkData["upgrade"] == 0:
             perkString += f'{perkInfo["effect"]}'
+        elif perkData["upgrade"] == 100: #for alteranate versions of perks that can't be directly copied
+            perkString += f'{perkInfo["alternate"]}'
         elif perkData["upgrade"] > 0:
             perkString += f'{perkInfo["upgrades"][perkData["upgrade"] - 1]}'
         else:
