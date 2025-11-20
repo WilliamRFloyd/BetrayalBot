@@ -269,10 +269,12 @@ async def viewitem(ctx, item: str, additional_info: bool = False, hidden: bool =
     if additional_info:
         upgradeStr = f''
         upgrades = info["upgrades"]
+        '''
         if "Cannot be burnt" not in effect:
             upgrades.append(f'{effect} Cannot be burnt.')
         if "Cannot be stolen" not in effect:
             upgrades.append(f'{effect} Cannot be stolen.')
+        '''
         for upgrade in upgrades:
             upgradeStr += f'\n*{upgrade}*'
         embed.add_field(name=f'Upgrades:', value=f'{upgradeStr}', inline=False)
@@ -564,6 +566,19 @@ async def vote(ctx, *args):
     arg2 = ("set",) + args
     await inventories(ctx, "vote", *arg2)
 
+@bot.slash_command(description="List all roles of the specified alignment")
+async def view_alignment(
+    ctx,
+    alignment: str = commands.Param(choices={"Good": "Good", "Neutral": "Neutral", "Evil": "Evil"})):
+    info = openJson(INFO_FILE)
+    roleList = []
+    for k, v in info["roles"].items():
+        if v["alignment"] == alignment:
+            roleList.append(k)
+    roleString = f'{alignment} Roles:\n'
+    roleString += "\n".join(roleList)
+    await ctx.send(roleString)
+
 
 @bot.slash_command(description="Lists the contents of the specified section of each player's inventories.", guild_ids=[490904847701245952, 379383629010436096])
 @commands.default_member_permissions(administrator=True)
@@ -603,17 +618,30 @@ async def clearvotes(ctx, arg1="alive"):
     file = open(GAME_FILE)
     data = json.load(file)
     file.close()
-    for k, v in data.items():
-        if "confessional" in k and "vote" in v:
+    for k, v in data["confessionals"].items():
+        if "confessional" in k and "inventory" in v and "vote" in v["inventory"]:
             for channel in ctx.guild.channels:
                 if channel.name == k:
                     if arg1 == "alive" and channel.category.name == "Confessionals":
-                        v["vote"] = []
+                        v["inventory"]["vote"] = []
 
     file = open(GAME_FILE, "w")
     file.write(json.dumps(data, indent=4))
     file.close()
     await ctx.send("Votes cleared")
+
+#Code for retrieving game file (for when I'm away from my desktop so I can grab a backup in case it goes down)
+@bot.slash_command(name="retrieve_file", description="Retrieve game file", guild_ids=[379383629010436096])
+@commands.default_member_permissions(administrator=True)
+async def retrieve_file(ctx):
+    blueId = 323923179267555331
+    if ctx.author.id != blueId:
+        await ctx.send("no")
+        return
+    f = open(GAME_FILE, "rb")
+    diFile = disnake.File(f, filename="inventoryInfo.json")
+    await ctx.send(file=diFile)
+
 
 #Code for managing all inventoiries
 @bot.slash_command(name='all_invs', description="Manage all inventories.")

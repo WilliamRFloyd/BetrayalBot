@@ -691,7 +691,7 @@
             "upgrades": [],
             "targeting": "",
             "actionTypes": [],
-            "additionalInfo": ""
+            "additionalInfo": "Can be moved by things such as Ethereal Healing."
         },
         "Dark Eye": {
             "rarity": "Epic",
@@ -1073,7 +1073,6 @@
             },
             "perks": [
                 "Regenerative",
-                "Multi-Headed Stare-Down",
                 "Rejuvenative Aura",
                 "Head Growing"
             ]
@@ -2096,7 +2095,7 @@
             "rarity": "Rare",
             "exclusive": false,
             "removed": false,
-            "effect": "When used, if someone in your alliance is visited within the next 24 hours, burns the visitor and destroys their lowest tier item. The visitor fails if already burning, but still has an item destroyed. You may choose if this effects alliance members too. This announces in alliance chat, can be used solo.",
+            "effect": "When used, if someone in your alliance is visited within the next 24 hours, burns the visitor and destroys their lowest tier item. The visit is blocked if the visitor is already burning, but still has an item destroyed. You may choose if this effects alliance members too. This announces in alliance chat, can be used solo.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -2245,7 +2244,7 @@
             "rarity": "Rare",
             "exclusive": true,
             "removed": false,
-            "effect": "Select someone, destroy their lowest tier item and inflicting a negative status you are immune to of choice. Must cycle through all immunities before re-inflicting the same again.",
+            "effect": "Select someone, destroy their lowest tier item and inflicting a neg status you are immune to. Must cycle through all immunities before re-inflicting.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -2257,7 +2256,7 @@
             "rarity": "Uncommon",
             "exclusive": false,
             "removed": false,
-            "effect": "Select someone; they will be unable to perform actions to people other than their current alliance members for 12h. If not in an alliance, they will be unable to join one for 12h. Can stack.",
+            "effect": "Select someone; they will be unable to perform actions to people outside their current alliance members for 12h. If not in an alliance, they will be unable to join one for 12h. Can stack.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -2269,7 +2268,7 @@
             "rarity": "Rare",
             "exclusive": true,
             "removed": false,
-            "effect": "Select someone, dragging them out of their alliance. Inflict a negative status of choice you are not immune to. Must cycle through all non-immunities before re-inflicting the same again.",
+            "effect": "Select someone, dragging them out of their alliance. Inflict a neg status you are not immune to. Must cycle through all non-immunities before re-inflicting.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -2281,7 +2280,7 @@
             "rarity": "Epic",
             "exclusive": true,
             "removed": false,
-            "effect": "Select as many players as immunities (if 0, 1). Negative actions on them fail, the person using it will keep the charge but cannot vote/act for 6h. Neutral visits inform you & the target what occured & who did it. Lasts 8h. Can stack. You can bypass this. Gains max 2 per day from perk.",
+            "effect": "Select as many players as immunities (if 0, 1). Neg actions on them are blocked, the person using it will keep the charge but will be blocked from voting/acting for 6h. Neutral visits inform you & the target what occured & who did it. Lasts 8h. Can stack. You can bypass this. Gains max 2 per day from perk.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3213,7 +3212,7 @@
             "degrades": [],
             "targeting": "",
             "actionTypes": [],
-            "additionalInfo": "Cannot copy fake effects."
+            "additionalInfo": "Cannot copy fake effects. Cannot take evasion effects (and they will succesfully evade). Can bypass/take redirection effects. Can bypass/take block effects, except for some instance such as Ready-Stance."
         },
         "Prying Eyes": {
             "role": "Leech",
@@ -3388,7 +3387,7 @@
             "rarity": "Rare",
             "exclusive": true,
             "removed": false,
-            "effect": "Defensive: Upon use, anything used on you in the next 24 hours you will know about, you can choose to stop the effect entirely, inflict it on an ally, or take it. Offensive: Select someone, anything negative that happens to you in the next 12 hours, also happens to them, if they try to do a negative onto you, disable, restrain and blackmail them, preventing the action. You will be told who does what to you during this, and for every negative action done to you, the timer increases by 2 hours.",
+            "effect": "Defensive: Upon use, anything used on you in the next 24 hours you will know about, you can choose to block the visit entirely, inflict it on an ally, or take it. Offensive: Select someone, anything negative that happens to you in the next 12 hours, also happens to them, if they try to do a negative onto you, disable, restrain and blackmail them, preventing the action. You will be told who does what to you during this, and for every negative action done to you, the timer increases by 2 hours.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3531,7 +3530,7 @@
             "rarity": "Epic",
             "exclusive": true,
             "removed": false,
-            "effect": "Pick someone to charm, they can no longer vote you however they know who you are and your vote doubles if a charmed votes the same player as you. 48 hour cooldown.",
+            "effect": " Pick someone to charm, they can no longer vote you however they know who you are and your vote doubles if a charmed votes the same player as you, charmed players will also get x2 vote power when voting with you. 48 hour cooldown.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3711,7 +3710,7 @@
             "rarity": "Uncommon",
             "exclusive": false,
             "removed": false,
-            "effect": "When activated, the next action on you will fail, you know what it was, and who did it. Can be cancelled and regained",
+            "effect": "When activated, evade the next visit on you, you know what it was, and who did it. Can be cancelled and regained",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4227,7 +4226,7 @@
             "rarity": "Not an Any Ability",
             "exclusive": true,
             "removed": false,
-            "effect": "Guess someone's role. If nobody alive has investigated them and found their exact role, their role is revealed to everyone and you kill them. If hunt fails, you become Blackmailed.",
+            "effect": "Guess someone's role. If nobody alive has investigated them and found their exact role, their role is revealed to everyone and you kill them. If you guess wrong/their role was found, you become Blackmailed.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4921,7 +4920,7 @@
             "additionalInfo": ""
         },
         "Multi-Headed Stare-Down": {
-            "role": "Hydra",
+            "role": "None",
             "effect": "If you perform multiple actions, you can have them all register as 1 visit, even to multiple people. Action will register as the most convenient type used.",
             "upgrades": [],
             "degrades": [],
@@ -4936,7 +4935,7 @@
         },
         "Head Growing": {
             "role": "Hydra",
-            "effect": "Each time you/ally gain an immunity, and/or a new day starts, gain a base ability charge [Max 5 per day from immunities]. Multiple immunities in 1 from VR use do not give multiple charges. VR costs 2 per charge.",
+            "effect": "Each time you/ally gain an immunity, and/or a new day starts, gain a base ability charge [Max 5 per day from immunities]. VR costs 2 per charge, Head-Shield max 2 per day",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5069,7 +5068,7 @@
         },
         "Spiritual Remains": {
             "role": "Terminal",
-            "effect": "While without regrets, your vote power is +2. This perk does not stack with itself.",
+            "effect": "While without regrets, your vote has +2 power. This perk does not stack with itself.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5384,14 +5383,14 @@
         },
         "Sexual Findings": {
             "role": "Incubus",
-            "effect": "Every time someone new uses something on you, gain 25 coins. Every time you use something, gain 25 coins.",
+            "effect": "Every time someone new uses something on you, gain 25 coins. Every time you use something new, gain 25 coins.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
         },
         "Kiss Of Death": {
             "role": "Incubus",
-            "effect": "Each time an embraced dies, gain 500 coins.",
+            "effect": "Each time an embraced dies, gain 300 coins.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5433,7 +5432,7 @@
         },
         "Attachment": {
             "role": "Leech",
-            "effect": "Select a player as your host, you may change target at each day's start. You will know what action types they perform.",
+            "effect": "Select a player as your host, you may change target at each day's start. You will know what action types (positive/neutral/negative and ability/item) they perform.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5450,7 +5449,7 @@
             "effect": "You may see and copy 1 immunity from your host upon picking them",
             "upgrades": [],
             "degrades": [],
-            "additionalInfo": "Can copy fake immunities."
+            "additionalInfo": "Can copy fake immunities. Will not see role immunities from Succubus, Masochist, and Undercover."
         },
         "Pleasure": {
             "role": "Masochist",
@@ -5545,7 +5544,7 @@
         },
         "Iron-body": {
             "role": "Nephilim",
-            "effect": "\nDefensive: Lethal attacks will rebound and kill an ally instead\nOffensive: You will block lethal attacks against you and strike back 2 fold onto the attacker",
+            "effect": "\nDefensive: Attacks will rebound and kill an ally instead\nOffensive: You will block attacks against you and strike back 2 fold onto the attacker",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5822,7 +5821,7 @@
         },
         "Redressing": {
             "role": "Consort",
-            "effect": "If a harmful status effect or harmful action is used on you by someone you're using an original ability on, your ability cancels.",
+            "effect": "If a negative status effect or negative action is used on you by someone you're using an original ability on, your ability cancels, you learn this. Their action on you is blocked, despite the cancelling.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5836,7 +5835,7 @@
         },
         "Dark Company": {
             "role": "Cultist",
-            "effect": "You are immune to Curse. If a player in the Cultist's alliance is marked then they get Curse Immunity as long as they're in this alliance/marked.",
+            "effect": "You are immune to Curse. If a player in the Cultist's alliance is marked then they get Curse Immunity as long as they're in this alliance/marked. You may toggle this on/off for yourself/alliance members individually.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
