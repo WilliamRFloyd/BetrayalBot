@@ -2460,7 +2460,7 @@
             "rarity": "Uncommon",
             "exclusive": false,
             "removed": false,
-            "effect": "Select a player, upon their death, you can see their role, their items, money and their last actions. You gain a charge upon the selected player dying. If used on yourself and you die, you may continue to make chats with the living.",
+            "effect": "Select a player, upon their death, you can see their role, their items, money and their last actions. You gain a charge upon the selected player dying. If Medium and used on yourself and you die, you may continue to make chats with the living.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
