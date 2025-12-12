@@ -4,7 +4,7 @@ import json
 from helper_functions import *
 
 async def determine_alliances(server: disnake.Guild) -> dict:
-    data = openJson("inventoryInfo.json")
+    data = openJson("C:/Users/willr/Documents/Python/Betrayl Bot/gitBot/BetrayalBot/inventoryInfo.json")
     allianceCategory = disnake.utils.find(lambda c: c.name == "Alliances", server.categories)
     confCategory = disnake.utils.find(lambda c: c.name == "Confessionals", server.categories)
     alliances = {}

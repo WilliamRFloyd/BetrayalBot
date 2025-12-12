@@ -12,13 +12,16 @@ from disnake import TextInputStyle
 import datetime
 from helper_functions import *
 
+codePath = os.path.dirname(os.path.realpath(__file__))
+
 #Filename constants
-INFO_FILE = "info.json"
-GAME_FILE = "inventoryInfo.json"
+INFO_FILE = codePath + "/info.json"
+GAME_FILE = codePath + "/inventoryInfo.json"
 
 #Category name constants
 CONFESSIONALS_CATEGORY = "Confessionals"
 ALLIANCES_CATEGORY = "Alliances"
+
 
 #Creating connenction to discord
 load_dotenv()
@@ -56,7 +59,15 @@ def itemGen(luckOrRarity):
         return random.choice(allItems[rarityToNum(luckOrRarity)])
 
 #Rolls a random any ability based off luck and returns it
-def anyAbilityGen(luckOrRarity, role=None):
+def anyAbilityGen(luckOrRarity, playerRole=None):
+    if playerRole != None:
+        role = playerRole["name"]
+        perks = []
+        for k in playerRole["perks"].keys():
+            perks.append(k)
+    else:
+        role = None
+        perks = []
     data = openJson(INFO_FILE)
     #Legendary listed twice as for aas legendaries can roll on a legendary or mythical result
     rarities = ("Common", "Uncommon", "Rare", "Epic", "Legendary", "Legendary")
@@ -69,7 +80,7 @@ def anyAbilityGen(luckOrRarity, role=None):
                 if y["exclusive"]:
                     if role == None:
                         abilityName += f' [{y["role"]}]'
-                    elif role != y["role"]:
+                    elif role != y["role"] and "Eternal Hunger" not in perks:
                         continue
                 rarityAbilities.append(abilityName)
         allAAs.append(rarityAbilities)
@@ -1092,7 +1103,7 @@ async def send_carepackages(ctx):
         
         role = None
         if "role" in confData:
-            role = confData["role"]["name"]
+            role = confData["role"]
 
         item = itemGen(luck)
         aa = anyAbilityGen(luck, role)
@@ -1156,7 +1167,7 @@ async def send_aas(ctx):
         
         role = None
         if "role" in confData:
-            role = confData["role"]["name"]
+            role = confData["role"]
 
         aa = anyAbilityGen(luck, role)
 

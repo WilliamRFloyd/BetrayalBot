@@ -1240,10 +1240,12 @@
             "alignment": "Neutral",
             "description": "A creation of terror, roaming around the battlefield waiting for its next victim.",
             "abilities": {
-                "Absorption": 1
+                "Absorption": 2,
+                "Hoard Mentality": 3
             },
             "perks": [
-                "Eternal Hunger"
+                "Eternal Hunger",
+                "Ignoring Nature"
             ]
         },
         "Backstabber": {
@@ -2763,12 +2765,24 @@
             "rarity": "Not an Any Ability",
             "exclusive": true,
             "removed": false,
-            "effect": "Select a player. Upon their death you may see their abilities and perks and pick one of each. You will be given the ability and perk, and you will also regain a charge of Absorption after doing so. This cannot gain charges outside of its base conditions, and cannot be copied.",
+            "effect": "Select someone that isn't yourself (cannot stack). Upon their death, see their abilities and perks and pick one; Regain a charge of this after doing so. This cannot gain charges outside of its base conditions, and cannot be copied. This is an Astral visit.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
             "actionTypes": [],
             "additionalInfo": "Can copy fake abilities/perks (facade, confusion, etc). May also attempt to blindly take an ability/perk, will succeed if the target's actual role has said ability/perk."
+        },
+        "Hoard Mentality": {
+            "role": "Amalgamation",
+            "rarity": "Rare",
+            "exclusive": false,
+            "removed": false,
+            "effect": "You and your current allies all match the highest luck and coin bonus within the alliance, after Lucky/Unlucky, for 24h.",
+            "upgrades": [],
+            "degrades": [],
+            "targeting": "",
+            "actionTypes": [],
+            "additionalInfo": ""
         },
         "Man's Blessing": {
             "role": "Backstabber",
@@ -5173,7 +5187,14 @@
         },
         "Eternal Hunger": {
             "role": "Amalgamation",
-            "effect": "Every time something is used on you, gain 5% coin bonus.",
+            "effect": "Every time something is used on you, gain 5% coin bonus. If it's from an ally, gain an additional 2.5%. Absorption on allies also gives them this benefit if you choose to. Mass-use of the same ability from allies can be discounted from the 2.5% extra.",
+            "upgrades": [],
+            "degrades": [],
+            "additionalInfo": ""
+        },
+        "Ignoring Nature": {
+            "role": "Amalgamation",
+            "effect": "You can gain role-only AAs.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
