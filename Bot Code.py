@@ -107,7 +107,7 @@ async def on_ready():
     #with open('betrayal.png', 'rb') as f:
     #    icon = f.read()
     #await guild.edit(icon=icon)
-    print(bot.guilds[1].name)
+
 
 #Code that runs upon someone joining the server
 @bot.event
@@ -150,7 +150,7 @@ async def listmissing(ctx, obj_type: str, attribute: str):
 #Checking if luck gen is working correctly
 @bot.command(name='itemcheck')
 async def itemCheck(ctx, arg1):
-    print("test")
+    #print("test")
     file = open(INFO_FILE)
     data = json.load(file)
     file.close()
@@ -510,7 +510,7 @@ async def viewstatus(ctx, status: str, hidden: bool = False):
         closestStatus = find_most_similar_string(status, statusList)
         response = f'Perk not found, did you mean __{closestStatus}__?'
 
-    embed = disnake.Embed(title=f'{closestStatus}', description=f'{data["statuses"][closestStatus]["effect"]}', color=statusColors[s])
+    embed = disnake.Embed(title=f'{closestStatus}', description=f'{data["statuses"][closestStatus]["effect"]}', color=statusColors[closestStatus])
     await ctx.send(response, embed=embed, ephemeral=hidden)
     return
 
@@ -602,7 +602,7 @@ async def view(
         await ctx.send("Nice Try")
         return
     data = openJson(GAME_FILE)
-    print("Test")
+
     listStr = f'{section.capitalize()}\n'
     for k, v in data["confessionals"].items():
         if "inventory" not in v:

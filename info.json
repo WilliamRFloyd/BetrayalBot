@@ -2765,7 +2765,7 @@
             "rarity": "Not an Any Ability",
             "exclusive": true,
             "removed": false,
-            "effect": "Select someone that isn't yourself (cannot stack). Upon their death, see their abilities and perks and pick one; Regain a charge of this after doing so. This cannot gain charges outside of its base conditions, and cannot be copied. This is an Astral visit.",
+            "effect": "Select someone that isn't yourself (cannot stack). Upon their death, see their abilities and perks and pick one; Regain a charge of this after doing so. This cannot gain charges outside of its base conditions, and cannot be copied.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -2909,7 +2909,7 @@
             "rarity": "Legendary",
             "exclusive": false,
             "removed": false,
-            "effect": "Upon use, become immune to death, statuses and elimination, lasts 24h. If attacked or eliminated, except for using a scarlet potion, in this time, add 24 hours onto this - loops.",
+            "effect": "Upon use, become immune to death, negative statuses and elimination, lasts 24h. If attacked or eliminated, except for using a scarlet potion, in this time, add 24 hours onto this - loops.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -2973,7 +2973,7 @@
             "upgrades": [],
             "degrades": [],
             "targeting": "",
-            "actionTypes": [],
+            "actionTypes": ["Negative", "Information"],
             "additionalInfo": ""
         },
         "Break": {
@@ -3045,7 +3045,7 @@
             "upgrades": [],
             "degrades": [],
             "targeting": "",
-            "actionTypes": [],
+            "actionTypes": ["Positive/Negative", "Investigation & Buff/Nerf"],
             "additionalInfo": ""
         },
         "Side-Show": {
@@ -4556,8 +4556,8 @@
             "upgrades": [],
             "degrades": [],
             "targeting": "",
-            "actionTypes": [],
-            "additionalInfo": ""
+            "actionTypes": ["Negative", "Stealing"],
+            "additionalInfo": "Informs target their items were stolen."
         },
         "Shutdown": {
             "role": "Threatener",
@@ -5243,7 +5243,7 @@
         },
         "Bards Charisma": {
             "role": "Bard",
-            "effect": "If Bard, x2 luck and coins from all sources. If not, x1.5 coins instead of x2. Lucky does not effect coins. This perk cannot stack with itself.",
+            "effect": "If Bard, x2 luck and coins from all sources. If not Bard, x1.5 coins instead of x2. Lucky does not effect coins. This perk cannot stack with itself.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5523,7 +5523,7 @@
         },
         "Blend In": {
             "role": "Mimic",
-            "effect": "In a tie vote, only your opposition can be voted.",
+            "effect": " a tie vote, only your opposition can be voted.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
