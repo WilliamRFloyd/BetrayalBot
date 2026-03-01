@@ -34,7 +34,7 @@ def base_luck_calculation(player_conf_name: str, player_info: dict, alliances: d
             for ally_conf in members:
                 if ally_conf == player_conf_name:
                     continue
-                ally_alignment = player_info.get(ally_conf, {}).get("role", {}).get("alignment", "Neutral")
+                ally_alignment = player_info.get(ally_conf, {}).get("role", {}).get("alignment", "Neutral").capitalize()
                 #print(alignment_index_dict)
                 luck_modify += alignment_amount[player_conf_name][alignment_index_dict[ally_alignment]]
     

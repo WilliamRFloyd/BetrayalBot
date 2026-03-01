@@ -138,7 +138,7 @@
         "Seed": {
             "rarity": "Common",
             "cost": 500,
-            "effect": "Plant a seed, every 36 hours you'll gain a 5% coin bonus for every seed planted. At 50%, fertilizers will not double the seed %, and instead give 5%.",
+            "effect": "Plant a seed, every 48 hours you'll gain a 10% coin bonus for every seed planted. At 50%, fertilizers will not double the seed %, and instead give 5%. Being Lucky for 24h+ will give a 80% chance for seed to grow twice on 1 trigger, the chance halves per success. ",
             "upgrades": [],
             "targeting": "Self",
             "actionTypes": ["Positive"],
@@ -618,7 +618,7 @@
             "additionalInfo": ""
         },
         "Seed Gun": {
-            "rarity": "Uncommon",
+            "rarity": "Uncommon (Removed)",
             "cost": 800,
             "effect": "Fire a seed you have at someone of choice, reducing target coin % by double what the seed is giving you for 72 hours. Can go under 0%. If held, can buy seeds that can only be used to fire and start at 10% for 200 coins.",
             "upgrades": [],
@@ -742,7 +742,7 @@
         "Velvet Glove": {
             "rarity": "Epic",
             "cost": 4000,
-            "effect": "Pick a player, you will see their inventory and will steal an item of your choice from them",
+            "effect": "Pick an alive player, you will see their inventory and will steal an item of your choice from them",
             "upgrades": [],
             "targeting": "",
             "actionTypes": [],
@@ -1463,7 +1463,7 @@
             },
             "perks": [
                 "Stinging Serenity",
-                "Stable enough",
+                "Stable Enough",
                 "Bloodied",
                 "Iron-body"
             ]
@@ -1944,8 +1944,8 @@
             "effect": "You will know everything your target does and who to for 24 hours from use, including self visits. Does not include perk-based actions.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Neutral", "Information"],
             "additionalInfo": ""
         },
         "Spy": {
@@ -1956,8 +1956,8 @@
             "effect": "You will know everything that happens to your target and who did it 24 hours from use, including self visits.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Neutral", "Information"],
             "additionalInfo": ""
         },
         "Hidden": {
@@ -1968,8 +1968,8 @@
             "effect": "For 24 hours on use, anything done on you will be reflected back to the user.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Self",
+            "actionTypes": ["Neutral"],
             "additionalInfo": ""
         },
         "Chemistry": {
@@ -1980,8 +1980,8 @@
             "effect": "Select two people, if they share an alliance, you will be told, and can select another person, this loops.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Multiple (2)",
+            "actionTypes": ["Neutral", "Information"],
             "additionalInfo": ""
         },
         "Vibe Check": {
@@ -1992,8 +1992,8 @@
             "effect": "Select 2 people, you will know if they are the same alignment. You cannot select the same person more than twice.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Multiple (2)",
+            "actionTypes": ["Neutral", "Information"],
             "additionalInfo": ""
         },
         "Subtraction": {
@@ -2004,8 +2004,8 @@
             "effect": "Select someone, view their alliance's items. These items will be shown combined with each other. You also find out about any inventory affecting effects/perks on the player you chose.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Neutral", "Information"],
             "additionalInfo": ""
         },
         "Inspection Zone": {
@@ -2013,11 +2013,11 @@
             "rarity": "Uncommon",
             "exclusive": false,
             "removed": false,
-            "effect": "Upon use, you will know everything to effect you within the next 24 hours, and who did it.You evade lethal effects (excluding scarlet/curses). If someone tries to inflict you with a negative status, it will reflect back onto them.",
+            "effect": "Upon use, you will know everything to effect you within the next 24 hours, and who did it. You evade lethal effects (excluding scarlet/curses). If someone tries to inflict you with a negative status, it will reflect back onto them.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Self",
+            "actionTypes": ["Positive"],
             "additionalInfo": ""
         },
         "Burning Rubber": {
@@ -2028,8 +2028,8 @@
             "effect": "Target somebody, clearing all negative statuses on them, and everybody who visits them negatively or neutrally for the next 24 hours will be burned with an 8 hour burn.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Positive"],
             "additionalInfo": ""
         },
         "Road Rage": {
@@ -2040,8 +2040,8 @@
             "effect": "Target somebody, burn them with an 8 hour burn, and everybody who visits them positively within the next 24 hours will also burn with an 8 hour burn.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative"],
             "additionalInfo": ""
         },
         "Stick With the Pack": {
@@ -2052,8 +2052,8 @@
             "effect": "Target an ally, inflicting them with Rev Up permanently. This can't be empowered or energized.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single (Ally)",
+            "actionTypes": ["Positive"],
             "additionalInfo": ""
         },
         "Lunch Break": {
@@ -2064,7 +2064,7 @@
             "effect": "Disable Rev Up, Rider of the Storm, and all uses of Burning Rubber for 48 hours, to gain 24 hours of death immunity and elimination immunity.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
+            "targeting": "Self",
             "actionTypes": [],
             "additionalInfo": ""
         },
@@ -2076,8 +2076,8 @@
             "effect": "Select someone, for 24 hours you will know any negative visits to the person (and what they are), and can decide to undo each effect, burn the visitor, or do nothing at all. This includes all negatives such as death other than elimination.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Positive"],
             "additionalInfo": "Example of undoing an effect: If somebody shoots a player under fire guard, that player will still die. However, the user of fire guard may then choose to undo that death, reviving the player."
         },
         "Ethereal Healing": {
@@ -2088,8 +2088,8 @@
             "effect": "Select 2 people, removing all negatives from the first and putting them on the second, and removing all positives from the second onto the first. You can select dead people.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Multiple (2)",
+            "actionTypes": ["Positive on first, Negative on second"],
             "additionalInfo": ""
         },
         "Lava Wall": {
@@ -2100,7 +2100,7 @@
             "effect": "When used, if someone in your alliance is visited within the next 24 hours, burns the visitor and destroys their lowest tier item. The visit is blocked if the visitor is already burning, but still has an item destroyed. You may choose if this effects alliance members too. This announces in alliance chat, can be used solo.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
+            "targeting": "Self",
             "actionTypes": [],
             "additionalInfo": ""
         },
@@ -2114,8 +2114,8 @@
                 "Find out what type of action your 2 targets most recently did (investigative, killing, healing etc) and the player they used it on, listed seperately for each target."
             ],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Neutral", "Information"],
             "additionalInfo": ""
         },
         "Interrogate": {
@@ -2123,14 +2123,14 @@
             "rarity": "Uncommon",
             "exclusive": false,
             "removed": false,
-            "effect": "You're given 2 possible roles that the person you select could be, one is a random false role and the other is their actual role.",
+            "effect": "You're given 2 possible roles that the person you select could be, one is a host-chosen false role and the other is their actual role.",
             "upgrades": [
                 "Learn the role of the person you select.",
-                "You're given 2 possible roles that each of the two people you select could be, one is a random false role and the other is their actual role for each."
+                "You're given 2 possible roles that each of the two people you select could be, one is a host-chosen false role and the other is their actual role for each."
             ],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Neutral", "Information"],
             "additionalInfo": ""
         },
         "Solve": {
@@ -2141,8 +2141,8 @@
             "effect": "Figure out any piece of information of your choice about a player. Gain a charge for this every even day if you are Detective.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Neutral", "Information"],
             "additionalInfo": ""
         },
         "Reel": {
@@ -2150,11 +2150,11 @@
             "rarity": "Uncommon",
             "exclusive": false,
             "removed": false,
-            "effect": "Select a person - steal their most recent item - if they are opposite your alignment, you will see their inventory and can choose what item to steal.",
+            "effect": "Select an alive player - steal their most recent item - if they are opposite your alignment, you will see their inventory and can choose what item to steal.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative", "Stealing"],
             "additionalInfo": ""
         },
         "Fishing Trip": {
@@ -2165,8 +2165,8 @@
             "effect": "You receive a random common item or AA (you choose which). The more times you use Fishing Trip the higher the rarity of item/AA you will get. Upon mythical loop to common.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Self",
+            "actionTypes": ["Positive"],
             "additionalInfo": ""
         },
         "Hooked": {
@@ -2177,8 +2177,8 @@
             "effect": "For 24hrs, any items/AAs your target gives or receives, you'll take instead.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative", "Stealing"],
             "additionalInfo": ""
         },
         "Bait": {
@@ -2186,11 +2186,11 @@
             "rarity": "Legendary",
             "exclusive": false,
             "removed": false,
-            "effect": "Select someone: For 24 hours any action (excluding votes) people use on another player (excluding you & the target) will redirect towards the target. If the user or the target dies, this ability stops.",
+            "effect": "Select someone: For 24 hours any action (excluding votes) people (excluding you & the target) use on another player  will redirect towards the target. If the user or the target dies, this ability stops.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Neutral", "Redirecting"],
             "additionalInfo": ""
         },
         "Fire": {
@@ -2201,8 +2201,8 @@
             "effect": "Shoot a player. If you kill someone who is your alignment, you will commit suicide.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative", "Killing"],
             "additionalInfo": ""
         },
         "Venture": {
@@ -2213,8 +2213,8 @@
             "effect": "Find out if a player is good or not.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Neutral", "Information"],
             "additionalInfo": ""
         },
         "Mentor": {
@@ -2225,8 +2225,8 @@
             "effect": "Learn an alliance members role and learn one charge of an ability of theirs of your choice. Fails if your target is not the same alignment as you.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single (Ally)",
+            "actionTypes": ["Positive"],
             "additionalInfo": "Can copy fake abilities/perks (facade, confusion, etc). May also attempt to blindly take an ability/perk, will succeed if the target's actual role has said ability/perk."
         },
         "Protection": {
@@ -2237,8 +2237,8 @@
             "effect": "Make an alliance member completely immune to death including eliminations for 24 hours. If Hero, you can gift a charge of this as an AA to others. Can't self pick. The target learns they are chosen.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single (Ally)",
+            "actionTypes": ["Positive", "Protection"],
             "additionalInfo": ""
         },
         "Head Slam": {
@@ -2249,8 +2249,8 @@
             "effect": "Select someone, destroy their lowest tier item and inflicting a neg status you are immune to. Must cycle through all immunities before re-inflicting.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative"],
             "additionalInfo": ""
         },
         "Chomp": {
@@ -2261,8 +2261,8 @@
             "effect": "Select someone; they will be unable to perform actions to people outside their current alliance members for 12h. If not in an alliance, they will be unable to join one for 12h. Can stack.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative"],
             "additionalInfo": ""
         },
         "Tear-Out": {
@@ -2273,8 +2273,8 @@
             "effect": "Select someone, dragging them out of their alliance. Inflict a neg status you are not immune to. Must cycle through all non-immunities before re-inflicting.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative"],
             "additionalInfo": ""
         },
         "Head-Shield": {
@@ -2285,8 +2285,8 @@
             "effect": "Select as many players as immunities (if 0, 1). Neg actions on them are blocked, the person using it will keep the charge but will be blocked from voting/acting for 6h. Neutral visits inform you & the target what occured & who did it. Lasts 8h. Can stack. You can bypass this. Gains max 2 per day from perk.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Multiple (Varies)",
+            "actionTypes": ["Positive", "Protection"],
             "additionalInfo": ""
         },
         "Visceral Roar": {
@@ -2297,8 +2297,8 @@
             "effect": "Pick someone, they pick neg statuses they want & will gain VP equal. Will be inflicted with them post-elim. Chosen immunities remove immediately instead. 24h cooldown, must be used 12h before elim (or will carry). If chosen 3+ times, they no longer gain immunity from Hydra perks. Statuses inflicted by this cant be removed on mass by status infliction abilities (instead, cure half rounded up) and when removed dont provide immunities.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Neutral"],
             "additionalInfo": ""
         },
         "Lawful": {
@@ -2306,11 +2306,11 @@
             "rarity": "Epic",
             "exclusive": false,
             "removed": false,
-            "effect": "Changes the day to have two eliminations. Your votes count as 2 for both of them. You become immune to elimination for both. Must be used atleast 12 hours before elimination for full effect. If used past that, double elimination and vote of 2 does not occur, but immunity does.",
+            "effect": "Changes the day to have one more elimination. You have +1 VP during this elim. You become immune to elimination. Must be used atleast 12 hours before elimination for full effect. If used past that, extra elimination and +1 VP does not occur, but immunity does.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Self",
+            "actionTypes": ["Neutral"],
             "additionalInfo": ""
         },
         "Overrule": {
@@ -2321,8 +2321,8 @@
             "effect": "Remove 1 elimination immunities from a player for the upcoming elimination. If none, counts as -1 immunity.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative"],
             "additionalInfo": ""
         },
         "The Hammer": {
@@ -2333,8 +2333,8 @@
             "effect": "Use this to completely stop the upcoming elimination phase when the time comes.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Self",
+            "actionTypes": ["Neutral"],
             "additionalInfo": ""
         },
         "Kick": {
@@ -2345,8 +2345,8 @@
             "effect": "1 charge - Kick someone from your alliance. - 2 charges - select someone, you will kick them if they are in any alliances. Kicked players lose 25% of their total coins which is evenly spread throughout your alliance and your personal luck goes up by 1. Kicked people cannot re-join their alliance for 36 hours. Dying will stop any active kicks.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative"],
             "additionalInfo": ""
         },
         "Contract": {
@@ -2357,8 +2357,8 @@
             "effect": "Give an ally +25% coins value. If they are your alignment, gain +25% for yourself too.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single (Ally)",
+            "actionTypes": ["Positive"],
             "additionalInfo": ""
         },
         "Discount": {
@@ -2369,8 +2369,8 @@
             "effect": "Give yourself or an ally a 50% reduced price on every buyable item until you/they buy one. Does not stack to get more reduction.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single (Ally/Self)",
+            "actionTypes": ["Positive"],
             "additionalInfo": ""
         },
         "Ban": {
@@ -2381,8 +2381,8 @@
             "effect": "Ban all members from a targets alliance if they're in one. They cannot join any alliance nor make one for 36 hours, they cannot be in an alliance with any of the members they got banned from for 72 hours. If you die the ban goes off. This bypasses blocks.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative"],
             "additionalInfo": ""
         },
         "Entrapment": {
@@ -2393,8 +2393,8 @@
             "effect": "Select someone, if they attempt to harm you within the next 18 hours, evade it, re-inflict entrapment on them and inflict the harm back on them, along with gaining a charge/item of whatever they used. This can loop.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative"],
             "additionalInfo": "If someone attempts to pass you a 6PB, it will automatically explode on them."
         },
         "Target Fire": {
@@ -2405,8 +2405,8 @@
             "effect": "Select 2 people, if one harms the other within the next 36 hours, both get hit by it 3 fold.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Multiple (2)",
+            "actionTypes": ["Negative"],
             "additionalInfo": "If one attempts to pass the other a 6PB, it will automatically explode on both (thrice)."
         },
         "Smoke Grenade": {
@@ -2417,8 +2417,8 @@
             "effect": "Select someone, if they attempt to harm anyone within your alliance within the next 24 hours, cause it to fail, and give them drunk 3 stack, burned and cursed.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative"],
             "additionalInfo": ""
         },
         "Last Resort": {
@@ -2426,11 +2426,11 @@
             "rarity": "Epic",
             "exclusive": false,
             "removed": false,
-            "effect": "Select someone, they cannot be eliminated at next elimination. If saved from elimination, all voters on the target will become paralyzed.",
+            "effect": "Select someone, they cannot be eliminated at next elimination. If saved from elimination, all voters on the target will become paralyzed. Target is informed.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Positive", "Immunity"],
             "additionalInfo": ""
         },
         "Bury Alive": {
@@ -2441,8 +2441,8 @@
             "effect": "Bury someone for 24 hours, making them count as dead and finding out their role. They cannot act outside of what they could do when dead, except talk. Abilities that work on dead players will now work on your targets.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Neutral"],
             "additionalInfo": "Can copy fake abilities/perks (facade, confusion, etc). May also attempt to blindly take an ability/perk, will succeed if the target's actual role has said ability/perk."
         },
         "Preserve": {
@@ -2453,8 +2453,8 @@
             "effect": "If someone died, within 24 hours of the death you can use this on them to make them their body survive for 24 more hours. If they have heal, ethereal heal, break, saving grace, protection, holy light, or bless used on them within that time they will come back to life, if not, you take any money they have on them.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Posiitve"],
             "additionalInfo": ""
         },
         "Soul Seer": {
@@ -2462,11 +2462,11 @@
             "rarity": "Uncommon",
             "exclusive": false,
             "removed": false,
-            "effect": "Select a player, upon their death, you can see their role, their items, money and their last actions. You gain a charge upon the selected player dying. If Medium and used on yourself and you die, you may continue to make chats with the living.",
+            "effect": "Select a player, upon their death, you can see their role, their items, money and their last actions. If used on yourself and you die, you may continue to make chats with the living. Medium only: +1 charge upon the selected player dying.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Neutral", "Information"],
             "additionalInfo": ""
         },
         "Heal": {
@@ -2477,8 +2477,8 @@
             "effect": "Heal your target from the next fatal effect that happens to them aside from being eliminated.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Positive", "Healing"],
             "additionalInfo": ""
         },
         "Vaccinate": {
@@ -2489,8 +2489,8 @@
             "effect": "Your target becomes immune to a status effect of your choice.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Positive", "Immunity"],
             "additionalInfo": ""
         },
         "Cure": {
@@ -2501,8 +2501,8 @@
             "effect": "Cures your target of any status effect[s] of your choice.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Positive", "Curing"],
             "additionalInfo": ""
         },
         "Purification": {
@@ -2510,11 +2510,11 @@
             "rarity": "Uncommon",
             "exclusive": false,
             "removed": false,
-            "effect": "Select someone, all negative statues on them are inflicted back on the original users.",
+            "effect": "Select someone, all negative statuses on them are inflicted back on the original users.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Positive", "Curing"],
             "additionalInfo": ""
         },
         "Ascend": {
@@ -2525,8 +2525,8 @@
             "effect": "Soar into the air, and see who visits yourself and allies for the next 12 hours. You will avoid negatives while this is active.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Self",
+            "actionTypes": ["Positive"],
             "additionalInfo": ""
         },
         "Holy Light": {
@@ -2534,11 +2534,11 @@
             "rarity": "Uncommon",
             "exclusive": false,
             "removed": false,
-            "effect": " Select someone, returning any positives lost within the previous 18 hours. If they hadn't lost any positives, the next positive performed by them and done to them is 2 fold.",
+            "effect": "Select someone, returning any positives lost within the previous 18 hours. If they haven't lost any positives, the next positive performed by them and done to them is 2 fold.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Positive"],
             "additionalInfo": ""
         },
         "Emotional Surge": {
@@ -2549,8 +2549,8 @@
             "effect": "Inflict someone of choice with statuses that you have lost immunity to.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative", "Status"],
             "additionalInfo": ""
         },
         "Final Swing": {
@@ -2561,8 +2561,8 @@
             "effect": "Cannot be empowered or energized. While having less than or equal to 3 regrets, you can disable someone's perks and abilities until you die. If you have 4 or more, you can disable someone's perks or abilities until you die. Using this will add 3 regrets.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative"],
             "additionalInfo": ""
         },
         "Saving Grace": {
@@ -2573,8 +2573,8 @@
             "effect": "Select someone, saving them from elimination and negative effects for the next 24 hours. If they are not struck by elimination, gain a regret, else, lose a regret. If you de-activate this, you gain a non-negative removing version to use. Does not inform target.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Positive", "Protection"],
             "additionalInfo": ""
         },
         "Body Shield": {
@@ -2585,8 +2585,8 @@
             "effect": "Select someone, if they are attacked, they survive, however, you lose an active perk of choice; but also lose 3 regrets. Cannot remove Hourglass of life or be self-used unless reflected/redirected.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Positive", "Protection"],
             "additionalInfo": ""
         },
         "Double Time": {
@@ -2597,8 +2597,8 @@
             "effect": "Everyone in your alliance will have their next ability happen twice, or if it involves time, either twice as fast or twice as long (refer to ECO). Double time won't work on double time. Announces in alliance, can be used solo.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Self",
+            "actionTypes": ["Positive"],
             "additionalInfo": ""
         },
         "Rewind": {
@@ -2606,12 +2606,12 @@
             "rarity": "Rare",
             "exclusive": false,
             "removed": false,
-            "effect": "Select someone, any statuses they had and items they used in the past 24 hours, they regain. Cannot use on same person within 24 hours - Global Cooldown",
+            "effect": "Select someone, any statuses they had (excluding empower) and items they used in the past 24 hours, they regain. Cannot use on same person within 24 hours - Global Cooldown.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
-            "additionalInfo": ""
+            "targeting": "Single",
+            "actionTypes": ["Neutral"],
+            "additionalInfo": "Copied items cannot be copied again (via Rewind/Reuse/Etc)."
         },
         "Loop": {
             "role": "Time Traveller",
@@ -2621,8 +2621,8 @@
             "effect": "Select someone - Any negative abilities or item effects that have effected them within the past 24 hours and the next 24 hours, will effect them again, every 24 hours, 3 times.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative"],
             "additionalInfo": ""
         },
         "Black Cloak": {
@@ -2633,8 +2633,8 @@
             "effect": "Next time someone visits you, they get redirected to a target of your choice. Can be cancelled and regained.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Self",
+            "actionTypes": ["Neutral", "Redirecting"],
             "additionalInfo": ""
         },
         "Deduct": {
@@ -2645,8 +2645,8 @@
             "effect": "Find the exact role of a player of your choice, has a 24 hour cooldown after use if you are Undercover.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Neutral", "Information"],
             "additionalInfo": ""
         },
         "Investigate": {
@@ -2657,8 +2657,8 @@
             "effect": "Find out who voted your target at the previous elimination and who your target is voting for the upcoming elimination.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Neutral", "Information"],
             "additionalInfo": ""
         },
         "Freeze": {
@@ -2669,8 +2669,8 @@
             "effect": "Freeze somebody, giving them a special 4 day, 1/4 thaw chance Frozen. Can choose if it removes any other status effect they have apart from Cursed.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative", "Status"],
             "additionalInfo": ""
         },
         "Electrify": {
@@ -2681,8 +2681,8 @@
             "effect": "Electrify somebody, giving them a special Paralysed which stuns for 56 hours. Can choose if it removes any other status effect they have apart from Cursed.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative", "Status"],
             "additionalInfo": ""
         },
         "Empower": {
@@ -2708,8 +2708,8 @@
             "effect": "Burn somebody, giving them a special Burned which burns every 16 hours. Can choose if it removes any other status effect they have apart from Cursed.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative", "Status"],
             "additionalInfo": ""
         },
         "Bless": {
@@ -2720,8 +2720,8 @@
             "effect": "Bless somebody, removing all curses from them if they have any. It can also revive a dead player if they're preserved.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Positive", "Curing"],
             "additionalInfo": ""
         },
         "Encapsulate": {
@@ -2732,8 +2732,8 @@
             "effect": "Target a player. Inflict them with Frozen, bypassing immunities. While Frozen, they are unable to be visited by anyone outside of their alliance and you. However, they can be visited by anyone to cure Frozen.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single",
+            "actionTypes": ["Negative", "Status"],
             "additionalInfo": ""
         },
         "Sheltered in Ice": {
@@ -2744,8 +2744,8 @@
             "effect": "Inflict Frozen on everyone in your alliance. While they are Frozen, they are immune to negatives. If they are immune to Frozen, you will learn and may choose to bypass it. You may choose to unfreeze them at any time. Can be used solo.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Self",
+            "actionTypes": ["Neutral", "Status & Protection"],
             "additionalInfo": ""
         },
         "Nomadic Tribute": {
@@ -2756,7 +2756,7 @@
             "effect": "Anyone currently Frozen will secretly vote anyone of your choice for the next elimination. If they thaw after this ability is used, their vote will be returned to normal. ",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
+            "targeting": "Self",
             "actionTypes": [],
             "additionalInfo": ""
         },
@@ -2765,11 +2765,11 @@
             "rarity": "Not an Any Ability",
             "exclusive": true,
             "removed": false,
-            "effect": "Select someone that isn't yourself (cannot stack). Upon their death, see their abilities and perks and pick one; Regain a charge of this after doing so. This cannot gain charges outside of its base conditions, and cannot be copied.",
+            "effect": "Select someone that isn't yourself (cannot stack). Upon their death, see their abilities and perks and pick one; Regain a charge of this after doing so. This cannot gain charges outside of its base conditions, and cannot be copied. This visit is astral.",
             "upgrades": [],
             "degrades": [],
-            "targeting": "",
-            "actionTypes": [],
+            "targeting": "Single (Astral)",
+            "actionTypes": ["Neutral"],
             "additionalInfo": "Can copy fake abilities/perks (facade, confusion, etc). May also attempt to blindly take an ability/perk, will succeed if the target's actual role has said ability/perk."
         },
         "Hoard Mentality": {
@@ -2885,7 +2885,7 @@
             "rarity": "Rare",
             "exclusive": false,
             "removed": false,
-            "effect": "Select a player, their next offensive ability / item use will be 2-fold",
+            "effect": "Select a player, their next offensive ability / item use will be 2-fold (Can stack).",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -2909,7 +2909,7 @@
             "rarity": "Legendary",
             "exclusive": false,
             "removed": false,
-            "effect": "Upon use, become immune to death, negative statuses and elimination, lasts 24h. If attacked or eliminated, except for using a scarlet potion, in this time, add 24 hours onto this - loops.",
+            "effect": "Upon use, become immune to death, negative statuses and elimination, lasts 24h. If attacked or eliminated in this time (not suicide), add 24 hours onto this - loops.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -2981,7 +2981,7 @@
             "rarity": "Legendary",
             "exclusive": false,
             "removed": false,
-            "effect": "For 24 hours, if whoever you select dies, they will come back to life at the end of this time.",
+            "effect": "For 24 hours, if whoever you select dies, they will come back to life at the end of this time. Target knows if they are selected.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3045,7 +3045,7 @@
             "upgrades": [],
             "degrades": [],
             "targeting": "",
-            "actionTypes": ["Positive/Negative", "Investigation & Buff/Nerf"],
+            "actionTypes": ["Positive/Negative", "Information & Buff/Nerf"],
             "additionalInfo": ""
         },
         "Side-Show": {
@@ -3161,7 +3161,7 @@
             "rarity": "Not an Any Ability",
             "exclusive": true,
             "removed": false,
-            "effect": "Gain a charge of this ability only after Rage has activated four times. For 24 hours all visits are untraceable, any deaths are not revealed but still happen. Whoever is eliminated at the end of the day dies and doesn't get their last words. In the case of a draw, everybody involved dies. All investigation abilities reveal nothing.",
+            "effect": "Gain a charge of this ability only after Rage has activated four times. For 24 hours all visits are untraceable, any deaths are not revealed but still happen. Whoever is eliminated at the end of the day dies and doesn't get their last words. In the case of a draw, everybody involved dies. All investigation abilities, perks and items reveal nothing.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3173,7 +3173,7 @@
             "rarity": "Epic",
             "exclusive": true,
             "removed": false,
-            "effect": "Pick someone once every 24h. They will be told they have been embraced by an Incubus. embraced targets will have x2 vote power when voting with you or an embraced person and you also have x2 vote power when voting with embraced, as long as Sinister smile isnt on.",
+            "effect": "24h cooldown. They will be told they have been embraced by an Incubus. embraced targets will have x2 vote power when voting with you or an embraced person and you also have x2 vote power when voting with embraced, as long as Sinister smile isnt on.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3185,7 +3185,7 @@
             "rarity": "Not an Any Ability",
             "exclusive": true,
             "removed": false,
-            "effect": "Embraced targets only have their vote work when voting with you, or against you. You gain 2/6 vote power per living embraced and 1/6 per dead embraced, your vote rounds up. You can switch this on or off, embraced will not know.",
+            "effect": "Embraced targets only have their vote work when voting with you, or against you. You gain 2/6 vote power per living embraced and 1/6 per dead embraced, rounds up. You can toggle this, embraced will not know.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3209,7 +3209,7 @@
             "rarity": "Uncommon",
             "exclusive": true,
             "removed": false,
-            "effect": "Only works on embraced targets. Give them elim immunity and +1 vote power for next elimination. Can be cancelled. Target is told they are chosen.",
+            "effect": "Only works on embraced. Give them elim immunity and +1 VP for next elimination. Can be cancelled. Target is told they are chosen.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3377,19 +3377,19 @@
             "rarity": "Epic",
             "exclusive": false,
             "removed": false,
-            "effect": "Select a person, gain a copy of the next item they use. Items that are Mythical or higher, can be copied max twice. Reliable wish may only be copied three times. Can be cancelled and regained.",
+            "effect": "Select a person, gain a copy of the next item they use. Items that are Mythical or higher, can be copied max twice. Reliable Wishes may only be copied three times. Can be cancelled and regained.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
             "actionTypes": [],
-            "additionalInfo": ""
+            "additionalInfo": "Copied items cannot be copied again (via Rewind/Reuse/Etc)."
         },
         "Spacial Followings": {
             "role": "Nephilim",
             "rarity": "Rare",
             "exclusive": true,
             "removed": false,
-            "effect": "Defensive: When used, for 24 hours, you will disarm anyone of their items used against you or an ally and claim them for yourself, you will know who you disarmed. Offensive: Select someone, breaking their arms, preventing item use and passing for 24 hours and inflicting paralysis.",
+            "effect": "Defensive: For 24h, you will disarm anyone of their items used against you or an ally and claim them for yourself, you will know who you disarmed. They are not told they were disarmed. Offensive: Break your target's arms, preventing item use & passing for 24h and inflicting paralysis.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3401,7 +3401,7 @@
             "rarity": "Rare",
             "exclusive": true,
             "removed": false,
-            "effect": "Defensive: Upon use, anything used on you in the next 24 hours you will know about, you can choose to block the visit entirely, inflict it on an ally, or take it. Offensive: Select someone, anything negative that happens to you in the next 12 hours, also happens to them, if they try to do a negative onto you, disable, restrain and blackmail them, preventing the action. You will be told who does what to you during this, and for every negative action done to you, the timer increases by 2 hours.",
+            "effect": "Defensive: Anything used on you in the next 24h you will know about, you can choose to block the effect entirely, redirect it onto an ally, or take it.  Offensive: Select someone, anything negative that happens to you in the next 12h, also happens to them, if they try to do a negative onto you, disable, restrain & blackmail them, preventing the action. You will be told who does what to you during this, for every negative action done to you, the timer increases by 2 hours. ",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3413,7 +3413,7 @@
             "rarity": "Epic",
             "exclusive": true,
             "removed": false,
-            "effect": "Offensive only: Bind someone's alliance, causing them only to target each other for the next 24 hours, including votes. If not in an alliance, break their arms preventing item use and passing for 24h, and prevent them from joining an alliance for 24h.",
+            "effect": "Offensive only: Bind someone's alliance, causing them only to target each other for the next 24h, including votes. If not in an alliance, break their arms preventing item use and passing for 24h, and prevent them from joining an alliance for 24h.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4372,7 +4372,7 @@
             "rarity": "Legendary",
             "exclusive": false,
             "removed": false,
-            "effect": "If you are voted to be eliminated next elimination, a player of your choice instead will be eliminated. You stay anonymous during this. If successful, you become immune to the next Elimination too.",
+            "effect": "If you are voted to be eliminated next elimination, a player of your choice instead will be eliminated. You stay anonymous during this. If successful, you become immune to the next Elimination too. If Juggernaut: Gain elim immunity on use.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4420,19 +4420,19 @@
             "rarity": "Epic",
             "exclusive": true,
             "removed": false,
-            "effect": "Select someone, gain a use of this every day. The person will suffer the longer the curse is on them. Refer to perks.",
+            "effect": "Special Curse the target. Refer to perks. +1 charge a day.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
             "actionTypes": [],
-            "additionalInfo": ""
+            "additionalInfo": "Not the curse status."
         },
         "Shadowed Hands": {
             "role": "Phantom",
             "rarity": "Rare",
             "exclusive": true,
             "removed": false,
-            "effect": "Speed up all Abyssal effected by a day. Gain a charge if someone dies once past/at 6 days.",
+            "effect": "Adds +1 day to all Abyssal Curses. Gain a charge if someone dies once past/at 6 days.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4456,7 +4456,7 @@
             "rarity": "Rare",
             "exclusive": true,
             "removed": false,
-            "effect": "Upon use, if attacked (not suicide) within the next 24h, survive it, and your most recent Abyssal curse target is attacked at the end of this time, as if they were the original target of the attacker. Gain a charge each time an Abyssal Curse target dies to non-elim. ",
+            "effect": "If attacked by another player within the next 24h, survive it, and your most recent Abyssal curse target is attacked by it instead at the end of this time. Gain a charge each time an Abyssal Curse target dies to non-elim. ",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4788,7 +4788,7 @@
         },
         "Face Reader": {
             "role": "Analyst",
-            "effect": "If an ally gains information feedback from anything that they use, you will be told the information as well.",
+            "effect": "If an ally gains info feedback from anything, you will be told the information as well. You do not learn who this information came from.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -4956,14 +4956,14 @@
         },
         "Justice": {
             "role": "Judge",
-            "effect": "If both people eliminated during the Lawful trial are not your alignment then you gain a random Epic-Mythical tier item.",
+            "effect": "For every 2 people eliminated during your Lawful trial that are not your alignment, you gain a random Epic-Mythical tier item.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
         },
         "Dystopia": {
             "role": "Judge",
-            "effect": "If both of the people eliminated are your alignment during the Lawful trial then your abilities and alignment AA's are disabled, and you get Despaired.",
+            "effect": " If 2 people eliminated during your Lawful trial are your alignment, then your abilities and alignment AA's are disabled, and you get Despaired.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -4998,7 +4998,7 @@
         },
         "Lock On": {
             "role": "Mecha",
-            "effect": "Redirections will work on you, but also inflict your original target and redirection users with the ability/item as well.",
+            "effect": "Redirections will work on you, but also inflict your original target and redirection users with the ability/item as well (excluding 6 point bombs).",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5110,10 +5110,10 @@
         },
         "Timelines": {
             "role": "Time Traveller",
-            "effect": "You can choose with up to a 12 hour delay, when a status placed on you begins effecting you.",
+            "effect": "When a status is inflicted on you, you can choose to suspend it for up to 12 hours.",
             "upgrades": [],
             "degrades": [],
-            "additionalInfo": "You only learn the type of status (including curse vs death curse), not what variant it is (Wizard freeze vs freeze, Ghost death curse vs death curse) before it effects you."
+            "additionalInfo": "You only learn the type of status (including curse vs death curse), not what variant it is (Wizard freeze vs freeze, Ghost death curse vs death curse) before it effects you. You still count as having the status while it's suspended. Aura Veil can be used during the suspension to block the status. Ghost Death Curse cannot be suspended."
         },
         "Time Zoned": {
             "role": "Time Traveller",
@@ -5208,7 +5208,7 @@
         },
         "Finger of Death": {
             "role": "Backstabber",
-            "effect": "When you die, you may pick a target to have the first vote for someone count as 2 permanently. Once that target dies, you may choose another player.",
+            "effect": "When you die, you may pick a target to have +1 vote against them (if they're voted at all). Once that target dies, you may choose another player.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5369,10 +5369,10 @@
         },
         "Confusion": {
             "role": "Ghost",
-            "effect": "If you're investigated, the investigator will receive a random result instead.",
+            "effect": "If you're investigated, the investigator will receive a random result instead that the hosts believe will benefit you. This perk also can trick mechanical checks.",
             "upgrades": [],
             "degrades": [],
-            "additionalInfo": ""
+            "additionalInfo": "Examples of tricking mechanical checks: Can cause Vortex Liquid to roll at a higher chance by registering as dead."
         },
         "Rage": {
             "role": "Goliath",
@@ -5549,7 +5549,7 @@
             "degrades": [],
             "additionalInfo": ""
         },
-        "Stable enough": {
+        "Stable Enough": {
             "role": "Nephilim",
             "effect": "\nDefensive: Immune to 3 statuses of choice\nOffensive: Negative Status-inflicting items/AA last twice as long, or are twice as damaging depending on the status",
             "upgrades": [],
@@ -5898,7 +5898,7 @@
         },
         "Spiteful": {
             "role": "Forsaken Angel",
-            "effect": "Upon dying without successfully using Wing Tear - all negatives acquired throughout the game, will be put onto your killer[s] [spread out if voted].",
+            "effect": "Upon dying without successfully using Wing Tear - all negatives acquired throughout the game, will be put onto your killer[s] [spread out if voted]. Broken Blade if applied, applies after everything else.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -6010,21 +6010,21 @@
         },
         "Power Up": {
             "role": "Juggernaut",
-            "effect": "When 85% players are left you get: Cursed immunity, +1 inventory space, +1 item per item rain, and 25% added coin bonus.",
+            "effect": "When 85% players are left you get: status immunity of choice (not restrain/bm), +1 inventory space, +1 item per item rain, and 25% added coin bonus.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
         },
         "Power Up Mega": {
             "role": "Juggernaut",
-            "effect": "When 60% players are left you get: Cursed, Frozen & Paralysed immunity, +2 inventory space, +2 items per item rain, 50% added coin bonus and your vote counts as 2. Disables Power Up if active.",
+            "effect": "When 60% players are left you get: Previous immunity and 2 additional status immunity (not restrain), +2 inventory space, +2 item per item rain, +1 aa per power drop, 75% added coin bonus and your vote counts as 2. Disables Power Up if active.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
         },
         "Final Gambit": {
             "role": "Juggernaut",
-            "effect": "When 30% players are left you get: Immunity to bad status effects, death immunity, +2 inventory space, +2 items per item rain, 50% added coin bonus and your vote counts as 3. Disables Power Up & Power Up Mega if active.",
+            "effect": "When 30% players are left you get: Immunity to bad status effects, death immunity, +3 inventory space, +3 item per item rain, +1 non-common aa per power drop, 125% added coin bonus and your vote counts as 3. Disables Power Up & Power Up Mega if active.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""

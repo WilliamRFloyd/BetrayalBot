@@ -33,9 +33,11 @@ bot = commands.Bot(command_prefix='/', intents=intents, case_insensitive=True)
 
 import role_slash_commands
 import luck_slash_commands
+import info_server
 from luck_slash_commands import determine_alliances
 role_slash_commands.setup(bot, INFO_FILE, GAME_FILE)
 luck_slash_commands.setup(bot, INFO_FILE, GAME_FILE, ALLIANCES_CATEGORY, CONFESSIONALS_CATEGORY)
+info_server.setup(bot, INFO_FILE)
 
 #Rolls a random item based off luck/rarity and returns it
 def itemGen(luckOrRarity):

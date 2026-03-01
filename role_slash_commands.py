@@ -123,7 +123,6 @@ def setup(bot, INFO_FILE="info.json", GAME_FILE="inventoryInfo.json"):
                 await ctx.send(message.content)
             except:
                 pass
-        ctx.send("End of role view.")
 
     async def updateRoleStrings(newStrings, messageIds, channel):
         if len(newStrings) > len(messageIds):
@@ -159,7 +158,7 @@ def setup(bot, INFO_FILE="info.json", GAME_FILE="inventoryInfo.json"):
             return
         
         roleData = data["confessionals"][channel.name]["role"]
-        roleData["alignment"] = alignment
+        roleData["alignment"] = alignment.capitalize()
         roleStrings = generateRoleStrings(roleData, openJson(INFO_FILE))
         roleData["messageIds"] = await updateRoleStrings(roleStrings, roleData["messageIds"], channel)
         writeJson(GAME_FILE, data)
