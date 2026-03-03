@@ -761,7 +761,7 @@ async def clearinvs(ctx, arg1="alive"):
     await ctx.send("Inventories cleared")
 
 #Code for managing inventories
-@bot.command(aliases=['inventory', 'inv'], help='')
+@bot.command(aliases=['inventory', 'inv', 'i'], help='')
 async def inventories(ctx, arg1="", *arg2):
     #Getting discord roles
     for role in ctx.guild.roles:
@@ -935,7 +935,7 @@ async def inventories(ctx, arg1="", *arg2):
         file.write(json.dumps(data, indent=4))
         file.close()
     #Prints a copy of the inventory that doesn't get updated
-    elif arg1.lower() == "send":
+    elif arg1.lower() == "send" or "s":
         file = open("inventoryinfo.json")
         data = json.load(file)
         file.close()
@@ -1225,6 +1225,134 @@ async def help_listener(ctx: disnake.MessageInteraction):
         await ctx.send("Button Indeed")
     elif ctx.component.custom_id in ["good", "neutral", "evil"]:
         await ctx.send(ctx.component.label)
+
+# Signups
+
+@bot.command(name='signups')
+async def signups(ctx):
+
+    if ctx.guild.name == "Betrayal" and not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"]):
+        await ctx.send("You are not a host")
+        return
+
+    file = open("info.json")
+    data = json.load(file)
+    file.close()
+
+    channelID = str(ctx.channel.id)
+
+    data["signups"][channelID] = {
+        "players": [],
+        "cap": None,
+        "message": None
+    }
+
+    message = await ctx.send(
+        "```Signups (0):\n```",
+        components=[
+            disnake.ui.Button(label="In", style=disnake.ButtonStyle.green, custom_id="SignIn"),
+            disnake.ui.Button(label="Out", style=disnake.ButtonStyle.red, custom_id="SignOut")
+        ]
+    )
+
+    data["signups"][channelID]["message"] = message.id
+
+    file = open("info.json", "w")
+    json.dump(data, file, indent=4)
+    file.close()
+
+@bot.command(name='cap')
+async def cap(ctx, amount: int):
+
+    if ctx.guild.name == "Betrayal" and not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"]):
+        await ctx.send("You are not a host")
+        return
+
+    if amount <= 15:
+        await ctx.send("Minimum cap is 16")
+        return
+
+    file = open("info.json")
+    data = json.load(file)
+    file.close()
+
+    channelID = str(ctx.channel.id)
+
+    if channelID not in data["signups"]:
+        await ctx.send("No signup list in this channel")
+        return
+
+    data["signups"][channelID]["cap"] = amount
+
+    file = open("info.json", "w")
+    json.dump(data, file, indent=4)
+    file.close()
+
+    await ctx.send(f"Signup cap set to {amount}")
+
+@bot.listen("on_button_click")
+async def signup_buttons(inter):
+
+    file = open("info.json")
+    data = json.load(file)
+    file.close()
+
+    channelID = str(inter.channel.id)
+
+    if channelID not in data["signups"]:
+        return
+
+    signup = data["signups"][channelID]
+
+    if inter.message.id != signup["message"]:
+        return
+
+    players = signup["players"]
+    userID = inter.author.id
+    cap = signup["cap"]
+
+    if inter.component.custom_id == "SignIn":
+
+        if userID in players:
+            await inter.response.send_message("You're already signed up", ephemeral=True)
+            return
+
+        if cap != None and len(players) >= cap:
+            await inter.response.send_message("Signups are full", ephemeral=True)
+            return
+
+        players.append(userID)
+
+    elif inter.component.custom_id == "SignOut":
+
+        if userID not in players:
+            await inter.response.send_message("You're not signed up", ephemeral=True)
+            return
+
+        players.remove(userID)
+
+    text = f"```Signups ({len(players)}"
+    if cap != None:
+        text += f"/{cap}"
+    text += "):\n"
+
+    i = 1
+    for p in players:
+        member = inter.guild.get_member(p)
+        if member:
+            text += f"{i}. {member.display_name}\n"
+        else:
+            text += f"{i}. Unknown\n"
+        i += 1
+
+    text += "```"
+
+    file = open("info.json", "w")
+    json.dump(data, file, indent=4)
+    file.close()
+
+    await inter.response.edit_message(content=text)
+
 
 #Runs bot
 bot.run(token)
