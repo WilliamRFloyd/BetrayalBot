@@ -1921,6 +1921,22 @@
                 "Ethereal Presence"
             ]
         },
+        "Duelist": {
+            "alignment": "Traveller",
+            "description": "If you aren't gambling your life is it truely a gamble?",
+            "abilities": {
+                "First Blood": "inf",
+                "To Death": 3,
+                "Oversee": 1
+            },
+            "perks": [
+                "Dual Duels",
+                "Knighted",
+                "Bloody",
+                "Soul Smited",
+                "Trial by Combat"
+            ]
+        },
         "Ball": {
             "alignment": "Ball",
             "description": "Let's get rolling, let's get going, once it's rolling, you can't stop it-",
@@ -3089,7 +3105,7 @@
             "rarity": "Uncommon",
             "exclusive": false,
             "removed": false,
-            "effect": "Go invisible which allows nobody to visit you for 24 hours.",
+            "effect": "Go invisible, evading all external visits (excluding non-6pb/sacrifice item handing) for 24 hours. (Including perks)",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3125,7 +3141,7 @@
             "rarity": "Legendary",
             "exclusive": true,
             "removed": false,
-            "effect": "Vanish for up to two days, making nothing happen to you. You're also immune to votes. You may reappear at any time once you vanish.",
+            "effect": "Vanish for up to two days, evading everything, including votes, perks and self-negative effects. You may reappear at any time once you vanish.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4252,7 +4268,7 @@
             "rarity": "Rare",
             "exclusive": true,
             "removed": false,
-            "effect": "Mark someone with a special scent, when they die, you gain a Stack for Thrill of the Hunt and gain another charge for Scent Marker.",
+            "effect": "Mark someone with a special scent, when they die, you gain a Stack for Thrill of the Hunt and gain another charge for Scent Marker. This visit is astral.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4264,7 +4280,7 @@
             "rarity": "Rare",
             "exclusive": true,
             "removed": false,
-            "effect": "Reverse someone's coin percentage for 48 hours. The target is not informed until coin phase. If you are Imp, gain a charge for every 2 times you use Luck Up.",
+            "effect": "Reverse someone's coin percentage for 48 hours (including base). If Imp, gain a charge for every 2 luck up's used.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4276,7 +4292,7 @@
             "rarity": "Uncommon",
             "exclusive": false,
             "removed": false,
-            "effect": "Select someone giving them lucky, if they have lucky, give them unlucky and restrained. If you are Imp, gain a charge of this every time someone you have visited before dies.",
+            "effect": "Select someone giving them lucky, if they have lucky, give them unlucky and restrained. If Imp, gain a charge every time someone you had visited before dies.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4288,7 +4304,7 @@
             "rarity": "Epic",
             "exclusive": false,
             "removed": false,
-            "effect": "Select someone, steal all coin percentages and positive statuses from them and their alliance members for next coin phase. You get half the coin percentage % stolen.",
+            "effect": "Select someone, steal all coin percentages (including base) and positive statuses from them and their alliance members for next coin phase. You get half the coin % stolen.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4300,7 +4316,7 @@
             "rarity": "Rare",
             "exclusive": true,
             "removed": false,
-            "effect": "Select someone, doubling their current coin bonus until next coin phase. Cannot self select.",
+            "effect": "Select someone, doubling their current coin bonus (not including base) until next coin phase. Cannot self select.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4612,7 +4628,7 @@
             "rarity": "Legendary",
             "exclusive": false,
             "removed": false,
-            "effect": "Make a Voodoo Doll of someone, anything that happens to you will also happen to them, aside from receiving votes and being eliminated. This Voodoo Doll becomes an item in your inventory and whoever holds the item has this power.",
+            "effect": "Make a Voodoo Doll of someone, anything that happens to you will also happen to them, aside from receiving votes and being eliminated (Loops break). This Voodoo Doll becomes an item in your inventory and whoever holds the item has this power.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4709,6 +4725,42 @@
             "exclusive": true,
             "removed": true,
             "effect": "For one elimination phase, all players, living and dead, can vote on all voting pools. If there was not an undead revival pool active when this was used, it becomes active.",
+            "upgrades": [],
+            "degrades": [],
+            "targeting": "",
+            "actionTypes": [],
+            "additionalInfo": ""
+        },
+        "First Blood": {
+            "role": "Duelist",
+            "rarity": "Not an Any Ability",
+            "exclusive": true,
+            "removed": true,
+            "effect": "You may challenge others and players may challenge you to a duel - you agree on the stakes beforehand. Cannot be to the death. Limited to once per person per 2 days.",
+            "upgrades": [],
+            "degrades": [],
+            "targeting": "",
+            "actionTypes": [],
+            "additionalInfo": ""
+        },
+        "To Death": {
+            "role": "Duelist",
+            "rarity": "Not an Any Ability",
+            "exclusive": true,
+            "removed": true,
+            "effect": "Players may challenge you to a duel - with life on the line for them. If they win, they get a reward of your/hosts choice. If you lose, you dont die unless you have 0 charges left.",
+            "upgrades": [],
+            "degrades": [],
+            "targeting": "",
+            "actionTypes": [],
+            "additionalInfo": ""
+        },
+        "Oversee": {
+            "role": "Duelist",
+            "rarity": "Not an Any Ability",
+            "exclusive": true,
+            "removed": true,
+            "effect": "Must be used 12h before elim: Players choose someone they want dead. The top 2 alive players are forced to duel eachother with their life on the line at elim. If neither kill by 3 rounds, both die.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -4913,7 +4965,7 @@
             "additionalInfo": ""
         },
         "Legion": {
-            "role": "Overlord",
+            "role": "Hero/Entertainer/Overlord",
             "effect": "You may have 1 additional person in your alliance, should you choose to allow it.",
             "upgrades": [],
             "degrades": [],
@@ -5817,7 +5869,7 @@
             "effect": "You know who is drunk. People within your alliance can only be the target of positive drunk actions. You can select up to 25% of living players who are not within your alliance to never be the target of positives, and always the target of negatives.",
             "upgrades": [],
             "degrades": [],
-            "additionalInfo": "You are informed how many people you can pick with the second part of this perk. The player count includes reanimated players and excludes buried alive players."
+            "additionalInfo": "You are informed how many people you can pick with the second part of this perk. The player count includes reanimated players and excludes buried alive players. If a player is redirect immune and drunk, if they roll the drunk chance while targetting a player chosen by this perk with an invalid action type, that action will fail."
         },
         "Backstage Practise": {
             "role": "Consort",
@@ -5894,7 +5946,7 @@
             "effect": "Curses on you act as heals while active. It will not kill you upon its end. Death curses will additionally act as elimination protection till hit/gone.",
             "upgrades": [],
             "degrades": [],
-            "additionalInfo": ""
+            "additionalInfo": "Self-bought curses cannot revive you when preserved via Wing Tear."
         },
         "Spiteful": {
             "role": "Forsaken Angel",
@@ -5947,7 +5999,7 @@
         },
         "Thrill of the Hunt": {
             "role": "Hunter",
-            "effect": "Gain a Stack every time somebody dies with your Scent Marker.\n1 Stack = Gain +1 Luck.\n2 Stacks = Gain a charge for Mask.\n3 Stacks = Mask now cures status effects.\n4 Stacks = Your vote becomes 2.\n5 Stacks = You become immune to attacks.\n6 Stacks = First vote against you is null.\n7+ Stacks = Gain coins equal to 50 times your stack count.",
+            "effect": "Gain a Stack every time somebody dies with your Scent Marker.\n1 Stack = Gain +1 Luck.\n2 Stacks = Gain a charge for Mask.\n3 Stacks = Mask now cures status effects.\n4 Stacks = Gain +1 VP.\n5 Stacks = You become immune to attacks.\n6 Stacks = First vote against you is null.\n7+ Stacks = Gain coins equal to 50 times your stack count.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5968,7 +6020,7 @@
         },
         "Money Dump": {
             "role": "Imp",
-            "effect": "Any coins people lose due to your abilities, you gain.",
+            "effect": "Any coins people lose due to your abilities, you gain. Includes Trickster coins of what they \"should have got\", otherwise, its what they lost. If their coins would go negative, you get coins as if they did have them.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -6013,21 +6065,21 @@
             "effect": "When 85% players are left you get: status immunity of choice (not restrain/bm), +1 inventory space, +1 item per item rain, and 25% added coin bonus.",
             "upgrades": [],
             "degrades": [],
-            "additionalInfo": ""
+            "additionalInfo": "Rounds up"
         },
         "Power Up Mega": {
             "role": "Juggernaut",
-            "effect": "When 60% players are left you get: Previous immunity and 2 additional status immunity (not restrain), +2 inventory space, +2 item per item rain, +1 aa per power drop, 75% added coin bonus and your vote counts as 2. Disables Power Up if active.",
+            "effect": "When 60% players are left you get: Previous immunity and 2 additional status immunity (not restrain), +2 inventory space, +2 item per item rain, +1 aa per power drop, 75% added coin bonus and +1 VP. Disables Power Up if active.",
             "upgrades": [],
             "degrades": [],
-            "additionalInfo": ""
+            "additionalInfo": "Rounds up"
         },
         "Final Gambit": {
             "role": "Juggernaut",
-            "effect": "When 30% players are left you get: Immunity to bad status effects, death immunity, +3 inventory space, +3 item per item rain, +1 non-common aa per power drop, 125% added coin bonus and your vote counts as 3. Disables Power Up & Power Up Mega if active.",
+            "effect": "When 30% players are left you get: Immunity to bad status effects, death immunity, +3 inventory space, +3 item per item rain, +1 non-common aa per power drop, 125% added coin bonus and +2 VP. Disables Power Up & Power Up Mega if active.",
             "upgrades": [],
             "degrades": [],
-            "additionalInfo": ""
+            "additionalInfo": "Rounds up"
         },
         "Evil Aura": {
             "role": "Overlord",
@@ -6249,6 +6301,41 @@
         "Ethereal Presence": {
             "role": "The Reaper of Souls",
             "effect": "May talk in dead and living chat, ignoring any restrictions present - even after death.",
+            "upgrades": [],
+            "degrades": [],
+            "additionalInfo": ""
+        },
+        "Dual Duels": {
+            "role": "Duelist",
+            "effect": "While this traveller is alive, the duels event is on, but each player is limited to a max of 2, including vs the traveller with these abilities. Duels via event however do not kill, and instead can remove base ability charges, AAs, and inflict various other debuffs and buffs.",
+            "upgrades": [],
+            "degrades": [],
+            "additionalInfo": ""
+        },
+        "Knighted": {
+            "role": "Duelist",
+            "effect": "You know who players that beat you in a duel are voting on, and can only vote on those players: You must vote if able. Your VP is 2.",
+            "upgrades": [],
+            "degrades": [],
+            "additionalInfo": ""
+        },
+        "Bloody": {
+            "role": "Duelist",
+            "effect": "If you kill a player with 2 To Death charges, you can't choose to leave the game, and force a draw if you make it to the end.",
+            "upgrades": [],
+            "degrades": [],
+            "additionalInfo": ""
+        },
+        "Soul Smithed": {
+            "role": "Duelist",
+            "effect": "Your duel effects cannot be redirected, evaded or blocked.",
+            "upgrades": [],
+            "degrades": [],
+            "additionalInfo": ""
+        },
+        "Trial by Combat": {
+            "role": "Duelist",
+            "effect": "When in an alliance, IC odds (if there are any) are increased by 10%. However, the most voted player for the IC must duel you for it, and if you win, you take the IC. You can instead allow 2 players within the alliance to duel each other for it. You don't take up an alliance slot, you may join up to 2 alliances.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""

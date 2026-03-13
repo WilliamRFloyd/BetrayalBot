@@ -49,7 +49,8 @@ def create_role_message(role:str, info_file: str) -> str:
         message += f'{perk_name} - {perk_info.get("effect", "N/A")}\n\n'
 
     message += "```"
-    #print(len(message))
+    if len(message) > 2000:
+        return "Too long"
     return message
 
 
@@ -69,13 +70,40 @@ def setup(bot, INFO_FILE="info.json"):
         guild_channel_names = [x.name for x in ctx.guild.channels]
 
         for role, role_info in info["roles"].items():
+            if role_info["alignment"] in ("Good", "Neutral", "Evil", "Traveller"):
+                target_category = disnake.utils.find(lambda c: c.name == role_info["alignment"], ctx.guild.categories)
+            elif "(Removed)" in role_info["alignment"]:
+                target_category = disnake.utils.find(lambda c: c.name == "Removed", ctx.guild.categories)
+            print(role, target_category.name)
+
+            channel_name = role.lower().replace(" ", "-")
+            message = create_role_message(role, INFO_FILE)
+            if channel_name not in guild_channel_names:
+                role_channel = await ctx.guild.create_text_channel(name=channel_name, category=target_category)
+                await role_channel.set_permissions(ctx.guild.default_role, send_messages=False)
+                await role_channel.send(message)
+
+    @bot.slash_command(name='updatecards', description="Updates the channels/rolecards for each role.", guild_ids=[INFO_SERVER_ID])
+    @commands.default_member_permissions(administrator=True)
+    async def update_cards(ctx):
+        info = openJson(INFO_FILE)
+
+        guild_channel_names = [x.name for x in ctx.guild.channels]
+
+        for role, role_info in info["roles"].items():
             if role_info["alignment"] in ("Good", "Neutral", "Evil"):
-                channel_name = role.lower().replace(" ", "-")
-                message = create_role_message(role, INFO_FILE)
-                if channel_name not in guild_channel_names:
-                    alignment_category = disnake.utils.find(lambda c: c.name == role_info["alignment"], ctx.guild.categories)
-                    role_channel = await ctx.guild.create_text_channel(name=channel_name, category=alignment_category)
-                    await role_channel.set_permissions(ctx.guild.default_role, send_messages=False)
+                target_category = disnake.utils.find(lambda c: c.name == role_info["alignment"], ctx.guild.categories)
+            else:
+                continue
+            print(role, target_category.name)
+
+            channel_name = role.lower().replace(" ", "-")
+            message = create_role_message(role, INFO_FILE)
+            if channel_name in guild_channel_names:
+                role_channel = disnake.utils.find(lambda c: c.name == channel_name, ctx.guild.channels)
+                last_message = (await role_channel.history(limit=1).flatten())[0]
+                if last_message.content != message:
+                    await last_message.delete()
                     await role_channel.send(message)
                     
 

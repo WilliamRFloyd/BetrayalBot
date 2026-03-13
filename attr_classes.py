@@ -38,6 +38,5 @@ class Perk:
     def __init__(self, upgrade: int = 0):
         self.upgrade = upgrade
 
-    #
     def set_luck_functions(self, player_conf: str, player_info: dict, alliances: dict, luck_calc_dict: dict, alignment_amount: dict, luck_dict: dict) -> None:
         pass # To be implemented in subclasses

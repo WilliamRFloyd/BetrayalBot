@@ -54,7 +54,7 @@ class LeadActor(attr_classes.Perk):
                             evil_count += 1
                         elif member_alignment == "Good":
                             good_count += 1
-                    luck_modify += min(good_count, evil_count)
+                    luck_modify += min(good_count, evil_count) * 2
             luck_dict[player_conf_name] += luck_modify
         print(self)
         print(luck_calc_dict)
@@ -64,7 +64,7 @@ class LeadActor(attr_classes.Perk):
 
 class GasolineFumes(attr_classes.Perk):
     def set_luck_functions(self, player_conf_name: str, player_info: dict, alliances: dict, luck_calc_dict: dict, alignment_amount: dict, luck_dict: dict) -> None:
-        #+1 Luck for every player in the Doused section of the inventory
+        #+1 Luck for every two players in the Doused section of the inventory
         def gasoline_fumes_luck(player_conf_name: str, player_info: dict, alliances: dict, luck_calc_dict: dict, alignment_amount: dict, luck_dict: dict) -> None:
             doused_list = player_info[player_conf_name]["inventory"].get("Doused", [])
             luck_modify = len(doused_list) // 2
