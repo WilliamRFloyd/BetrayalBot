@@ -11,9 +11,11 @@ class HeroicPower(attr_classes.Perk):
         #+3 Luck if no one in your alliances has an opposite alignment
         def heroic_power_luck(player_conf_name: str, player_info: dict, alliances: dict, luck_calc_dict: dict, alignment_amount: dict, luck_dict: dict) -> None:
             luck_modify = 3
+            in_alliance = False
             alignment = player_info.get(player_conf_name, {}).get("role", {}).get("alignment", "Neutral")
             for alliance_name, members in alliances.items():
                 if player_conf_name in members:
+                    in_alliance = True
                     for member_name in members:
                         member = player_info.get(member_name, {})
                         member_alignment = member.get("role", {}).get("alignment", "Neutral")
@@ -28,6 +30,8 @@ class HeroicPower(attr_classes.Perk):
                             break
                     if luck_modify == 0:
                         break
+            if not in_alliance:
+                luck_modify = 0
             luck_dict[player_conf_name] += luck_modify
             
         
@@ -112,7 +116,7 @@ class Lonesome(attr_classes.Perk):
         #+3 if not in any alliances
         def lonesome_luck(player_conf_name: str, player_info: dict, alliances: dict, luck_calc_dict: dict, alignment_amount: dict, luck_dict: dict) -> None:
             luck_modify = 3
-            for alliance, members in alliances:
+            for alliance, members in alliances.items():
                 if player_conf_name in members:
                     luck_modify = 0
                     break
@@ -123,21 +127,36 @@ class Lonesome(attr_classes.Perk):
 
 class GoldenGavel(attr_classes.Perk):
     def set_luck_functions(self, player_conf_name: str, player_info: dict, alliances: dict, luck_calc_dict: dict, alignment_amount: dict, luck_dict: dict) -> None:
-        #+3 if not in any alliances
         def golden_gavel_luck(player_conf_name: str, player_info: dict, alliances: dict, luck_calc_dict: dict, alignment_amount: dict, luck_dict: dict) -> None:
-            luck_dict[player_conf_name] += player_info[player_conf_name]["inventory"].get("Golden Gavel", [0])[0]
+            try:
+                luck_dict[player_conf_name] += int(player_info[player_conf_name]["inventory"].get("GG", [0])[0])
+            except:
+                pass
             
         
         luck_calc_dict.setdefault(player_conf_name, {}).setdefault(attr_classes.LuckCalcOrder.PRE_STATUSES, []).append(golden_gavel_luck)
 
+class Tradesman(attr_classes.Perk):
+    def set_luck_functions(self, player_conf_name: str, player_info: dict, alliances: dict, luck_calc_dict: dict, alignment_amount: dict, luck_dict: dict) -> None:
+        def tradesman_luck(player_conf_name: str, player_info: dict, alliances: dict, luck_calc_dict: dict, alignment_amount: dict, luck_dict: dict) -> None:
+            try:
+                luck_dict[player_conf_name] += int(player_info[player_conf_name]["inventory"].get("Tradesman", [0])[0])
+            except:
+                pass
+            
+        
+        luck_calc_dict.setdefault(player_conf_name, {}).setdefault(attr_classes.LuckCalcOrder.PRE_STATUSES, []).append(tradesman_luck)
+
 class EvilAura(attr_classes.Perk):
     def set_luck_functions(self, player_conf_name: str, player_info: dict, alliances: dict, luck_calc_dict: dict, alignment_amount: dict, luck_dict: dict) -> None:
-        #+3 Luck if no one in your alliances has an opposite alignment
+        #+2 Luck if no one in your alliances has an opposite alignment
         def evil_aura_luck(player_conf_name: str, player_info: dict, alliances: dict, luck_calc_dict: dict, alignment_amount: dict, luck_dict: dict) -> None:
             luck_modify = 2
+            in_alliance = False
             alignment = player_info.get(player_conf_name, {}).get("role", {}).get("alignment", "Neutral")
             for alliance_name, members in alliances.items():
                 if player_conf_name in members:
+                    in_alliance = True
                     for member_name in members:
                         member = player_info.get(member_name, {})
                         member_alignment = member.get("role", {}).get("alignment", "Neutral")
@@ -152,7 +171,40 @@ class EvilAura(attr_classes.Perk):
                             break
                     if luck_modify == 0:
                         break
+            if not in_alliance:
+                luck_modify = 0
             luck_dict[player_conf_name] += luck_modify
             
         
         luck_calc_dict.setdefault(player_conf_name, {}).setdefault(attr_classes.LuckCalcOrder.PRE_STATUSES, []).append(evil_aura_luck)
+
+class FreakishNature(attr_classes.Perk):
+    def set_luck_functions(self, player_conf_name: str, player_info: dict, alliances: dict, luck_calc_dict: dict, alignment_amount: dict, luck_dict: dict) -> None:
+        #Sets luck of all allies of different alignments to 0 and adds their luck to the holder. Also temporarily undoes lucky/unlucky on the holder for the calculation, then reapplies it after.
+        def freakish_nature_luck(player_conf_name: str, player_info: dict, alliances: dict, luck_calc_dict: dict, alignment_amount: dict, luck_dict: dict) -> None:
+            alignment = player_info.get(player_conf_name, {}).get("role", {}).get("alignment", "Neutral")
+            statuses = [x.lower() for x in player_info.get(player_conf_name, {}).get("inventory", {}).get("statuses", [])]
+
+            #Temporarily remove lucky/unlucky for the holder
+            if "lucky" in statuses:
+                luck_dict[player_conf_name] = luck_dict[player_conf_name] // 2
+            elif "unlucky" in statuses:
+                luck_dict[player_conf_name] = luck_dict[player_conf_name] * 2
+
+            for alliance_name, members in alliances.items():
+                if player_conf_name in members:
+                    for member_name in members:
+                        if member_name == player_conf_name:
+                            continue
+                        member_alignment = player_info.get(member_name, {}).get("role", {}).get("alignment", "Neutral")
+                        if member_alignment != alignment:
+                            luck_dict[player_conf_name] += luck_dict[member_name]
+                            luck_dict[member_name] = 0
+
+            #Reapply lucky/unlucky for the holder
+            if "lucky" in statuses:
+                luck_dict[player_conf_name] = luck_dict[player_conf_name] * 2
+            elif "unlucky" in statuses:
+                luck_dict[player_conf_name] = luck_dict[player_conf_name] // 2
+
+        luck_calc_dict.setdefault(player_conf_name, {}).setdefault(attr_classes.LuckCalcOrder.FINAL, []).append(freakish_nature_luck)

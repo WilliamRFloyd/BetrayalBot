@@ -1217,7 +1217,8 @@
                 "Bless": 2
             },
             "perks": [
-                "Magic Barrier"
+                "Magic Barrier",
+                "Cantrip Casting"
             ]
         },
         "Yeti": {
@@ -1405,7 +1406,7 @@
             "alignment": "Neutral",
             "description": "You're a leech idk what to tell you.",
             "abilities": {
-                "Siphoning ": 3,
+                "Siphoning": 3,
                 "Prying Eyes": 1,
                 "Digestion": 1,
                 "Absolution": 1,
@@ -1651,7 +1652,7 @@
             "abilities": {
                 "Mark of the Fallen": 1,
                 "Forbidden Knowledge": 3,
-                "Sacrifice": "1"
+                "Sacrifice": 1
             },
             "perks": [
                 "Mob Mentality",
@@ -2466,11 +2467,11 @@
             "rarity": "Uncommon",
             "exclusive": false,
             "removed": false,
-            "effect": "If someone died, within 24 hours of the death you can use this on them to make them their body survive for 24 more hours. If they have heal, ethereal heal, break, saving grace, protection, holy light, or bless used on them within that time they will come back to life, if not, you take any money they have on them.",
+            "effect": "If someone died, within 24 hours of the death you can use this on them to make them their body survive for 24 more hours. If they have heal, preserve, ethereal heal, break, saving grace, protection or blessed within that time they will come back to life, if not, you take any money they have on them.",
             "upgrades": [],
             "degrades": [],
             "targeting": "Single",
-            "actionTypes": ["Posiitve"],
+            "actionTypes": ["Positive"],
             "additionalInfo": ""
         },
         "Soul Seer": {
@@ -2889,7 +2890,7 @@
             "rarity": "Uncommon",
             "exclusive": false,
             "removed": false,
-            "effect": "Select a player, their luck goes up by +2 and +50% until a luck event occurs. Any statuses on them that are negative will be degraded. Cannot be self used more than once",
+            "effect": "Select a player, their luck goes up by +2 and +50% until a luck event occurs. Any negative statuses on them will be degraded. Cannot be self used more than once",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -2925,7 +2926,7 @@
             "rarity": "Legendary",
             "exclusive": false,
             "removed": false,
-            "effect": "Upon use, become immune to death, negative statuses and elimination, lasts 24h. If attacked or eliminated in this time (not suicide), add 24 hours onto this - loops.",
+            "effect": "Upon use, become immune to death, negative statuses and elimination, lasts 24h. If not energized: If attacked or eliminated in this time (not suicide), add 24 hours onto this - loops.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3057,7 +3058,7 @@
             "rarity": "Uncommon",
             "exclusive": false,
             "removed": false,
-            "effect": "Select someone, for the next 48h, they will have -/+10% immunity card chances, you decide upon choosing them. If they are in an alliance within this time, you will know the alliance. Does not stack.",
+            "effect": "Select someone, for the next 48h, they will have -/+10% immunity card chances, you decide. If they are in an alliance within this time, you will know the alliance. Does not stack.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3069,7 +3070,7 @@
             "rarity": "Uncommon",
             "exclusive": true,
             "removed": false,
-            "effect": "Select someone, joining their alliance, as if someone invited you. You can be in 2 alliances at once using this method. If you use this when in 2, leave 1, you pick.",
+            "effect": "Select someone, joining their alliance as if someone invited you. You can be in 2 alliances at once using this method. If you use this when in 2, leave 1.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3093,7 +3094,7 @@
             "rarity": "Not an Any Ability",
             "exclusive": true,
             "removed": false,
-            "effect": "Select someone, their alliance must vote within alliance chat a person to die. Draws kill all not in the draw. An alliance of 2 will have draws kill both. People may only use vote/elimination/alliance impacting abilities/items and may not leave for the duration of this ability, counts as an elimination kill. If you pick someone alone, you will be blackmailed & despaired. If no one dies due to this ability, gain one-time death/elim immunity.",
+            "effect": "Select someone, their alliance must vote within alliance chat a person to die. Draws kill all not in the draw. An alliance of 2 will have draws kill both. People may only use vote/elim/alliance impacting abilities/items & can't leave until the vote ends, counts as an elimination kill. If you succesfully pick and alliance and no one dies due to this ability, gain one-time death/elim immunity.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -3232,7 +3233,7 @@
             "actionTypes": [],
             "additionalInfo": ""
         },
-        "Siphoning ": {
+        "Siphoning": {
             "role": "Leech",
             "rarity": "Not an Any Ability",
             "exclusive": true,
@@ -3545,10 +3546,10 @@
             "rarity": "Rare",
             "exclusive": false,
             "removed": false,
-            "effect": "Your vote counts as 2 for the next Elimination and 2 votes will be nullified against you.",
+            "effect": "Your vote gains +1 VP for the next Elimination and 2 votes will be nullified against you.",
             "upgrades": [
-                "Your vote counts as 3 for the next Elimination and 2 votes will be nullified against you.",
-                "Your vote counts as 2 for the next Elimination and 3 votes will be nullified against you."
+                "Your vote gains +2 VP for the next Elimination and 2 votes will be nullified against you.",
+                "Your vote gains +1 VP for the next Elimination and 3 votes will be nullified against you."
             ],
             "degrades": [],
             "targeting": "",
@@ -4352,7 +4353,7 @@
             "rarity": "Epic",
             "exclusive": false,
             "removed": false,
-            "effect": "Everyone who has visited you or a current ally during the game will have their vote count as 0 if it's placed on you, and you will give them Blackmailed upon the elimination phase ending.",
+            "effect": "Everyone who you/current allies have visited or visited you/current allies during the game will have their vote count as 0 if it's placed on you. Anyone who votes you/an ally who would have their vote 0'd on you, becomes blackmailed and despaired.",
             "upgrades": [],
             "degrades": [],
             "targeting": "",
@@ -5064,10 +5065,10 @@
         },
         "Service": {
             "role": "Medium",
-            "effect": "If you save anyone with Preserve, they cannot vote you for the rest of the game.",
+            "effect": "If you save anyone with Preserve, they cannot mechanically harm you for the rest of the game.",
             "upgrades": [],
             "degrades": [],
-            "additionalInfo": ""
+            "additionalInfo": "Does not include harming socially"
         },
         "Haunted Tombstone": {
             "role": "Medium",
@@ -5113,7 +5114,7 @@
         },
         "Golden Thread": {
             "role": "Seraph",
-            "effect": "If you are killed from an attack, your death is delayed for 24 hours, multiple attacks will all strike at the 24h mark. Elimination does not count towards this, except Soul-Bound or Finale. These attacks are treated like a visit and effect at the 24h mark, but have no origin.",
+            "effect": "If you are killed from an attack, your death is delayed for 24 hours, multiple attacks will all strike at the 24h mark. Elimination does not count towards this, except Lawful, Sunder, Soul-Bound, or Finale. These attacks are treated like a visit and effect at the 24h mark, but have no origin.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5202,6 +5203,13 @@
             "degrades": [],
             "additionalInfo": ""
         },
+        "Cantrip Casting": {
+            "role": "Wizard",
+            "effect": "Any status abilities that can remove statuses, you may choose to instead remove none. You may once per game move a charge of Bless into a negative status infliction ability.",
+            "upgrades": [],
+            "degrades": [],
+            "additionalInfo": ""
+        },
         "Winter Coat": {
             "role": "Yeti",
             "effect": "You reflect Frozen, and may choose to give allies immunity to Frozen. You may also choose to remove this immunity at any time even if they left the alliance.",
@@ -5267,7 +5275,7 @@
         },
         "Counting Stars": {
             "role": "Backstabber",
-            "effect": "Every time one of your allies die, you gain a charge for Man's Blessing or Decode.",
+            "effect": "Every time one of your allies die, you gain a charge for Mans Blessing or Decode. When a player dies with a Decoded Mans Blessing on them, gain MBx3 in luck and MBx10 in coin bonuses, along with 1 Mans Blessing charge.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5295,7 +5303,7 @@
         },
         "Bards Charisma": {
             "role": "Bard",
-            "effect": "If Bard, x2 luck and coins from all sources. If not Bard, x1.5 coins instead of x2. Lucky does not effect coins. This perk cannot stack with itself.",
+            "effect": "x2 luck and x1.5 coins from all sources. Lucky does not effect coins. This perk cannot stack with itself.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5379,21 +5387,21 @@
         },
         "Lead Actor": {
             "role": "Entertainer",
-            "effect": "You gain 2 luck from Good&Evil, for every good & evil pair in an alliance, gain an additional 2 luck. When you leave an alliance, you may have any form of leave message come up. You can leave your own abilities.",
+            "effect": "You gain 2 luck from Good&Evil, for every good & evil pair in an alliance, gain an additional 2 luck. When you leave an alliance, you may have any leave message come up. You can leave your own abilities.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
         },
         "Top-Hat Tip": {
             "role": "Entertainer",
-            "effect": "You start the game lucky, you are immune to unlucky. You can see yours & all your allies luck upon request (12h cooldown).",
+            "effect": "You start the game lucky, you are immune to unlucky. You can see yours & all your allies luck upon request (12h cd).",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
         },
         "False-Smile": {
             "role": "Entertainer",
-            "effect": "If someone leaves your alliance, use a free charge of opening act on them for -10%, or, you can inflict unlucky, frozen or disabled within 12h, frozen & disabled will last 12h.",
+            "effect": "If someone leaves your alliance, use a free charge of opening act on them for -10%, or, you can inflict unlucky, frozen or disabled within 12h, frozen & disabled will last 12h. Max once per player per day, if leaving due to Forced Performance.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5575,7 +5583,7 @@
         },
         "Blend In": {
             "role": "Mimic",
-            "effect": " a tie vote, only your opposition can be voted.",
+            "effect": "In a tie vote, only your opposition can be be voted.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5589,7 +5597,7 @@
         },
         "Shifting": {
             "role": "Mimic",
-            "effect": "Your alignment will change to whatever your alliance's dominant faction is luck wise. If there's a 'tie' then you may pick between the alignments.",
+            "effect": "Your alignment will change to whatever your alliance's dominant faction is luck wise. If there's a 'tie' then you may pick between the alignments. Additionally,  your alignment will change for alignment checking perks/abilities/items to best suit you. ",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5740,7 +5748,7 @@
         },
         "Jack of All Trades": {
             "role": "Villager",
-            "effect": "Gain an additional Any Ability from events and items that usually give Any Abilities.",
+            "effect": "Gain an additional Any Ability from events and items that usually give AAs. For each alive ally you have bonded, gain +luck equal to 25% of their total (rounded up).",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5901,7 +5909,7 @@
         },
         "Mob Mentality": {
             "role": "Cultist",
-            "effect": "The number of marked players the Cultist has grants different bonuses\n\n2 Marked = Coin bonus 10%\n3 Marked = Alliance receives a private Item Rain\n4 Marked = Given a Cursed Relic (Epic item)\n5 Marked = Forbidden Knowledge now works on all marked people and reveals all the marked to the Cultist.\n6 Marked = Gain 50% coin Bonus, and a charge of Forbidden Knowledge\n7 Marked = You can cure a player of all Status effects once per elimination phase (Unlimited)\n8 Marked = You can give a player any negative status effect of choice (basic) once per elimination phase (Unlimited)\n9+ Marked = Gain an extra 5% coin bonus for every marked person from this point onwards.",
+            "effect": "The number of marked players the Cultist has grants different bonuses\n\n2 Marked = Coin bonus 10%\n3 = You may choose to summon a private item rain for your alliance, ignoring lucky/unlucky and +luck abilities\n4 = Given a Cursed Relic (Epic item)\n5 = Forbidden Knowledge now works on all marked people and reveals all the marked to the Cultist.\n6 = Gain 50% coin Bonus, and a charge of Forbidden Knowledge\n7 = You can cure a player of all Status effects once per elimination phase (Unlimited)\n8 = You can give a player any negative status effect of choice (basic) once per elimination phase (Unlimited)\n9+ = Gain an extra 5% coin bonus for every marked person from this point onwards.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -5950,7 +5958,7 @@
         },
         "Spiteful": {
             "role": "Forsaken Angel",
-            "effect": "Upon dying without successfully using Wing Tear - all negatives acquired throughout the game, will be put onto your killer[s] [spread out if voted]. Broken Blade if applied, applies after everything else.",
+            "effect": "Upon dying without successfully using Wing Tear - all negatives acquired throughout the game, will be put onto your killer[s] [spread out if voted]. Lethal effects happen first, then everything else.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -6048,7 +6056,7 @@
         },
         "Party Trick": {
             "role": "Jester",
-            "effect": "If you gain a negative status, you will share it with all visitors while its active on you. You can turn this off.",
+            "effect": "If you gain a negative status, you will share it with all visitors while its active on you. You can turn this off. You can gain statuses you are immune to, if you lose the immunity, the status goes too.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""
@@ -6097,7 +6105,7 @@
         },
         "Abyssal Cursing": {
             "role": "Phantom",
-            "effect": "The longer it goes on, the more they suffer:\nD0 and D1 statuses can have +-3h variance in when they occur, you choose.\n0 Days - Inflict a status of choice [excluding DC/Emp].\n1 Day - Inflicted with 2 statuses of choice [^] that they are not immune to, if immune to all, remove 2 immunities.\n[Cannot inflict blackmail twice in a row to the same target]\n2 Days - Their actions have a 10% chance to effect someone random.\n3 Days - They have a ability degraded of their choice. \n4 Days - They have a  perk degraded of their choice. 10% more chance to effect someone random.\n5 Days - All abilities, including AAs are degraded.\n6 Days - All perks are degraded. 10% more chance to effect someone random.\n7 Days - Completely wipe their coins and items. 20% more chance to effect someone random.\n8 Days - Their entire role and AAs are disabled. \n9 Days+ - Additional 10% per day to effect someone random.",
+            "effect": "The longer it goes on, the more they suffer:\nD0 and D1 statuses can have +-3h variance in when they occur, you choose.\n0 Days - Inflict a status of choice [excluding DC/Emp].\n1 Day - Inflicted with 2 statuses of choice [^] that they are not immune to, if immune to all, remove 2 immunities.\n[Cannot inflict blackmail twice in a row to the same target]\n2 Days - Their actions have a 10% chance to effect someone random.\n3 Days - They have a ability degraded of their choice. \n4 Days - They have a perk degraded of their choice. 10% more chance to effect someone random.\n5 Days - All abilities, including AAs are degraded.\n6 Days - All perks are degraded. 10% more chance to effect someone random.\n7 Days - Completely wipe their coins and items. 20% more chance to effect someone random.\n8 Days - Their entire role and AAs are disabled. \n9 Days+ - Additional 10% per day to effect someone random.",
             "upgrades": [],
             "degrades": [],
             "additionalInfo": ""

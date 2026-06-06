@@ -3,6 +3,11 @@ from disnake.ext import commands
 import json
 from helper_functions import *
 import attr_classes
+import os
+
+codePath = os.path.dirname(os.path.realpath(__file__))
+
+GAME_FILE = codePath + "/inventoryInfo.json"
 
 alignment_index_dict = {
     "Good": 0,
@@ -11,7 +16,7 @@ alignment_index_dict = {
 }
 
 async def determine_alliances(server: disnake.Guild) -> dict:
-    data = openJson("C:/Users/willr/Documents/Python/Betrayl Bot/gitBot/BetrayalBot/inventoryInfo.json")
+    data = openJson(GAME_FILE)
     allianceCategory = disnake.utils.find(lambda c: c.name == "Alliances", server.categories)
     confCategory = disnake.utils.find(lambda c: c.name == "Confessionals", server.categories)
     alliances = {}
