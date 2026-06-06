@@ -106,6 +106,11 @@ def anyAbilityGen(luckOrRarity, playerRole=None):
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connencted to Discord!')
+
+    if not os.path.exists(GAME_FILE):
+        with open(GAME_FILE, "w") as f:
+            json.dump({}, f, indent=4)
+        print(f'{GAME_FILE} not found, created.')
     #with open('betrayal.png', 'rb') as f:
     #    icon = f.read()
     #await guild.edit(icon=icon)
