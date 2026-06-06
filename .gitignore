@@ -7,3 +7,15 @@
 # Game Information #
 ####################
 inventoryInfo.json
+kidneys.json
+
+############
+# Testing  #
+############
+exampleInventoryInfo.json
+
+
+#########
+# Other #
+#########
+__pycache__/

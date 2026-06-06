@@ -10,6 +10,18 @@ from disnake.ext import commands
 from disnake import utils
 from disnake import TextInputStyle
 import datetime
+from helper_functions import *
+
+codePath = os.path.dirname(os.path.realpath(__file__))
+
+#Filename constants
+INFO_FILE = codePath + "/info.json"
+GAME_FILE = codePath + "/inventoryInfo.json"
+
+#Category name constants
+CONFESSIONALS_CATEGORY = "Confessionals"
+ALLIANCES_CATEGORY = "Alliances"
+
 
 #Creating connenction to discord
 load_dotenv()
@@ -19,104 +31,17 @@ intents.members = True
 token = os.getenv('DISCORD_TOKEN')
 bot = commands.Bot(command_prefix='/', intents=intents, case_insensitive=True)
 
-def levenshtein_distance(s, t):
-    m, n = len(s), len(t)
-    d = [[0] * (n + 1) for _ in range(m + 1)]
-
-    for i in range(m + 1):
-        d[i][0] = i
-
-    for j in range(n + 1):
-        d[0][j] = j
-
-    for j in range(1, n + 1):
-        for i in range(1, m + 1):
-            if s[i - 1] == t[j - 1]:
-                d[i][j] = d[i - 1][j - 1]
-            else:
-                d[i][j] = min(d[i - 1][j], d[i][j - 1], d[i - 1][j - 1]) + 1
-
-    return d[m][n]
-
-
-def find_most_similar_string(string, string_array):
-    closest_string = None
-    closest_distance = float('inf')
-
-    for candidate_string in string_array:
-        distance = levenshtein_distance(string, candidate_string)
-        if distance < closest_distance:
-            closest_distance = distance
-            closest_string = candidate_string
-
-    return closest_string
-
-#Coverts rarity to numeric value
-def rarityToNum(rarity: str) -> int:
-    rarity = rarity.lower()
-    if rarity == "common":
-        return 0
-    elif rarity == "uncommon":
-        return 1
-    elif rarity == "rare":
-        return 2
-    elif rarity == "epic":
-        return 3
-    elif rarity == "legendary":
-        return 4
-    elif rarity == "mythical":
-        return 5
-
-#Takes a luck value and returns a corresponding rarity number. 0 = common, 1 = uncommon, etc.
-def getLuck(luck: int) -> int:
-    luckCap: int = 398
-    if luck > luckCap:
-        luck = luckCap
-        
-    commonOdds = 8000 - 500 * luck
-    if commonOdds < 0:
-        commonOdds = 0
-
-    uncommonOdds = 1500 + 300 * luck
-    if luck > 16:
-        uncommonOdds -= 500 * (luck - 16)
-    if uncommonOdds < 0:
-        uncommonOdds = 0
-
-    rareOdds = 200 + luck * 100
-    if luck >= 48:
-        rareOdds -= 100 * (luck - 47)
-    if luck > 48:
-        rareOdds -= 100 * (luck - 48)
-    if rareOdds < 0:
-        rareOdds = 0
-
-    epicOdds = 150 + luck * 50
-    if luck > 97:
-        epicOdds -= 100 * (luck - 97)
-    if epicOdds < 0:
-        epicOdds = 0
-
-    legendaryOdds = 100 + luck * 25
-    if luck > 197:
-        legendaryOdds -= 50 * (luck - 197)
-
-    mythicalOdds = 50 + luck * 25
-    
-    randNum = random.randint(1,10000)
-    currentLuckPool = (commonOdds, uncommonOdds, rareOdds, epicOdds, legendaryOdds, mythicalOdds)
-
-    total = 0
-    for i in range(6):
-        total += currentLuckPool[i]
-        if randNum <= total:
-            return i
+import role_slash_commands
+import luck_slash_commands
+import info_server
+from luck_slash_commands import determine_alliances
+role_slash_commands.setup(bot, INFO_FILE, GAME_FILE)
+luck_slash_commands.setup(bot, INFO_FILE, GAME_FILE, ALLIANCES_CATEGORY, CONFESSIONALS_CATEGORY)
+info_server.setup(bot, INFO_FILE)
 
 #Rolls a random item based off luck/rarity and returns it
 def itemGen(luckOrRarity):
-    file = open("info.json")
-    data = json.load(file)
-    file.close()
+    data = openJson(INFO_FILE)
     commonItems = [x for x, y in data["items"].items() if y["rarity"] == "Common"]
     uncommonItems = [x for x, y in data["items"].items() if y["rarity"] == "Uncommon"]
     rareItems = [x for x, y in data["items"].items() if y["rarity"] == "Rare"]
@@ -136,10 +61,16 @@ def itemGen(luckOrRarity):
         return random.choice(allItems[rarityToNum(luckOrRarity)])
 
 #Rolls a random any ability based off luck and returns it
-def anyAbilityGen(luckOrRarity):
-    file = open("info.json")
-    data = json.load(file)
-    file.close()
+def anyAbilityGen(luckOrRarity, playerRole=None):
+    if playerRole != None:
+        role = playerRole["name"]
+        perks = []
+        for k in playerRole["perks"].keys():
+            perks.append(k)
+    else:
+        role = None
+        perks = []
+    data = openJson(INFO_FILE)
     #Legendary listed twice as for aas legendaries can roll on a legendary or mythical result
     rarities = ("Common", "Uncommon", "Rare", "Epic", "Legendary", "Legendary")
     allAAs = []
@@ -149,7 +80,10 @@ def anyAbilityGen(luckOrRarity):
             if y["rarity"] == rarity and not y["removed"]:
                 abilityName = x
                 if y["exclusive"]:
-                    abilityName += f' [{y["role"]}]'
+                    if role == None:
+                        abilityName += f' [{y["role"]}]'
+                    elif role != y["role"] and "Eternal Hunger" not in perks:
+                        continue
                 rarityAbilities.append(abilityName)
         allAAs.append(rarityAbilities)
     
@@ -163,64 +97,8 @@ def anyAbilityGen(luckOrRarity):
         return random.choice(newAAsList)
     else:
         return random.choice(allAAs[rarityToNum(luckOrRarity)])
-    
-#Take a list and returns a string with each of the list's items on it's own line
-def formatList(list):
-    string = ""
-    for i in range(len(list)):
-        string += f'\n{list[i]}'
-    return string
 
-#Takes two lists and returns true if they share any elements
-def compareLists(list1, list2):
-    for i in list1:
-        if str(i) in list2:
-            return True
-    return False
 
-#Code for making the inventory string
-def inventoryString(inventory):
-    string = f'```Coins: {inventory["coins"]} [{inventory["bonus"]}%]\nInventory: '
-    for i in range(len(inventory["items"])):
-        string += inventory["items"][i]
-        if i != len(inventory["items"]) - 1:
-            string += ", "
-    string += "\nAA: "
-    i = 1
-    for k, v in inventory["aas"].items():
-        string += f'{k} [{v}]'
-        if i != len(inventory["aas"]):
-            string += ", "
-        i += 1
-    string += "\nStatuses: "
-    for i in range(len(inventory["statuses"])):
-        string += inventory["statuses"][i]
-        if i != len(inventory["statuses"]) - 1:
-            string += ", "
-    string += "\nEffects: "
-    for i in range(len(inventory["effects"])):
-        string += inventory["effects"][i]
-        if i != len(inventory["effects"]) - 1:
-            string += ", "
-    string += "\nImmunities: "
-    for i in range(len(inventory["immunities"])):
-        string += inventory["immunities"][i]
-        if i != len(inventory["immunities"]) - 1:
-            string += ", "
-    for k, v in inventory.items():
-        if k not in ("coins", "bonus", "items", "statuses", "effects", "aas", "id", "immunities", "vote"):
-            string += f'\n{k}: '
-            for i in range(len(v)):
-                string += v[i]
-                if i != len(v) - 1:
-                    string += ", "
-    string += "\nVote(s): "
-    for i in range(len(inventory["vote"])):
-        string += inventory["vote"][i]
-        if i != len(inventory["vote"]) - 1:
-            string += ", "
-    string += "```"
-    return string
 
 #Event handler
 
@@ -231,7 +109,7 @@ async def on_ready():
     #with open('betrayal.png', 'rb') as f:
     #    icon = f.read()
     #await guild.edit(icon=icon)
-    print(bot.guilds[1].name)
+
 
 #Code that runs upon someone joining the server
 @bot.event
@@ -242,7 +120,7 @@ async def on_member_join(member):
 #Checks
 @bot.slash_command(description="List all objects of the category that don't have the attribute filled out in the info file")
 async def listmissing(ctx, obj_type: str, attribute: str):
-    file = open("info.json")
+    file = open(INFO_FILE)
     data = json.load(file)
     file.close()
 
@@ -274,8 +152,8 @@ async def listmissing(ctx, obj_type: str, attribute: str):
 #Checking if luck gen is working correctly
 @bot.command(name='itemcheck')
 async def itemCheck(ctx, arg1):
-    print("test")
-    file = open("info.json")
+    #print("test")
+    file = open(INFO_FILE)
     data = json.load(file)
     file.close()
     arg1 = int(arg1)
@@ -361,7 +239,7 @@ async def carepackage(ctx, arg1 = "0", arg2 = "1"):
 #Code for viewing information of a specific item
 @bot.slash_command(description="View the information about the specified item")
 async def viewitem(ctx, item: str, additional_info: bool = False, hidden: bool = False):
-    file = open("info.json")
+    file = open(INFO_FILE)
     data = json.load(file)
     file.close()
     rarityColors = {
@@ -404,10 +282,12 @@ async def viewitem(ctx, item: str, additional_info: bool = False, hidden: bool =
     if additional_info:
         upgradeStr = f''
         upgrades = info["upgrades"]
+        '''
         if "Cannot be burnt" not in effect:
             upgrades.append(f'{effect} Cannot be burnt.')
         if "Cannot be stolen" not in effect:
             upgrades.append(f'{effect} Cannot be stolen.')
+        '''
         for upgrade in upgrades:
             upgradeStr += f'\n*{upgrade}*'
         embed.add_field(name=f'Upgrades:', value=f'{upgradeStr}', inline=False)
@@ -429,7 +309,7 @@ async def viewitem(ctx, item: str, additional_info: bool = False, hidden: bool =
 #@bot.command(name='viewrole', help="View the information about the specified role")
 @bot.slash_command(description="View the information about the specified role")
 async def viewrole(ctx, role: str, hidden: bool = False):
-    file = open("info.json")
+    file = open(INFO_FILE)
     data = json.load(file)
     file.close()
     alignmentColors = {
@@ -485,7 +365,7 @@ async def viewrole(ctx, role: str, hidden: bool = False):
 #Code for viewing information of a specific ability
 @bot.slash_command(description="View the information about the specified ability")
 async def viewability(ctx, ability: str, additional_info: bool = False, hidden: bool = False):
-    file = open("info.json")
+    file = open(INFO_FILE)
     data = json.load(file)
     file.close()
     rarityColors = {
@@ -554,7 +434,7 @@ async def viewability(ctx, ability: str, additional_info: bool = False, hidden: 
 #Code for viewing information of a specific perk
 @bot.slash_command(description="View the information about the specified perk")
 async def viewperk(ctx, perk: str, additional_info: bool = False, hidden: bool = False):
-    file = open("info.json")
+    file = open(INFO_FILE)
     data = json.load(file)
     file.close()
 
@@ -600,7 +480,7 @@ async def viewperk(ctx, perk: str, additional_info: bool = False, hidden: bool =
 #Code for viewing information of a specific status
 @bot.slash_command(description="View the information about the specified status")
 async def viewstatus(ctx, status: str, hidden: bool = False):
-    file = open("info.json")
+    file = open(INFO_FILE)
     data = json.load(file)
     file.close()
     statusColors = {
@@ -632,14 +512,14 @@ async def viewstatus(ctx, status: str, hidden: bool = False):
         closestStatus = find_most_similar_string(status, statusList)
         response = f'Perk not found, did you mean __{closestStatus}__?'
 
-    embed = disnake.Embed(title=f'{closestStatus}', description=f'{data["statuses"][closestStatus]["effect"]}', color=statusColors[s])
+    embed = disnake.Embed(title=f'{closestStatus}', description=f'{data["statuses"][closestStatus]["effect"]}', color=statusColors[closestStatus])
     await ctx.send(response, embed=embed, ephemeral=hidden)
     return
 
 
 @bot.command(name='itemslist')
 async def itemembed(ctx):
-    file = open("info.json")
+    file = open(INFO_FILE)
     data = json.load(file)
     file.close()
     rarityColors = {
@@ -665,7 +545,7 @@ async def itemembed(ctx):
 
 @bot.command(name='aalist')
 async def aalist(ctx):
-    file = open("info.json")
+    file = open(INFO_FILE)
     data = json.load(file)
     file.close()
     
@@ -699,6 +579,19 @@ async def vote(ctx, *args):
     arg2 = ("set",) + args
     await inventories(ctx, "vote", *arg2)
 
+@bot.slash_command(description="List all roles of the specified alignment")
+async def view_alignment(
+    ctx,
+    alignment: str = commands.Param(choices={"Good": "Good", "Neutral": "Neutral", "Evil": "Evil"})):
+    info = openJson(INFO_FILE)
+    roleList = []
+    for k, v in info["roles"].items():
+        if v["alignment"] == alignment:
+            roleList.append(k)
+    roleString = f'{alignment} Roles:\n'
+    roleString += "\n".join(roleList)
+    await ctx.send(roleString)
+
 
 @bot.slash_command(description="Lists the contents of the specified section of each player's inventories.", guild_ids=[490904847701245952, 379383629010436096])
 @commands.default_member_permissions(administrator=True)
@@ -710,18 +603,19 @@ async def view(
     if (not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"])):
         await ctx.send("Nice Try")
         return
-    file = open("inventoryinfo.json")
-    data = json.load(file)
-    file.close()
+    data = openJson(GAME_FILE)
+
     listStr = f'{section.capitalize()}\n'
-    for k, v in data.items():
-        if "confessional" in k and section in v:
+    for k, v in data["confessionals"].items():
+        if "inventory" not in v:
+            continue
+        if "confessional" in k and section in v["inventory"]:
             for channel in ctx.guild.channels:
                 if channel.name == k:
                     if channel.category.name == "Confessionals" or (channel.category.name == "Dead confessionals" and not alive_only):
                         listStr += f'{k[0:-13]}: '
                         strAddition = ""
-                        for item in v[section]:
+                        for item in v["inventory"][section]:
                             if search_for.lower() in item.lower():
                                 if strAddition != "":
                                     strAddition += ", "
@@ -734,79 +628,119 @@ async def clearvotes(ctx, arg1="alive"):
     if (not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"])):
         await ctx.send("Nice Try")
         return
-    file = open("inventoryinfo.json")
+    file = open(GAME_FILE)
     data = json.load(file)
     file.close()
-    for k, v in data.items():
-        if "confessional" in k and "vote" in v:
+    for k, v in data["confessionals"].items():
+        if "confessional" in k and "inventory" in v and "vote" in v["inventory"]:
             for channel in ctx.guild.channels:
                 if channel.name == k:
                     if arg1 == "alive" and channel.category.name == "Confessionals":
-                        v["vote"] = []
+                        v["inventory"]["vote"] = []
 
-    file = open("inventoryinfo.json", "w")
+    file = open(GAME_FILE, "w")
     file.write(json.dumps(data, indent=4))
     file.close()
     await ctx.send("Votes cleared")
 
-@bot.command(help='')
-async def clearinvs(ctx, arg1="alive"):
-    if (not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"])):
-        await ctx.send("Nice Try")
+#Code for retrieving game file (for when I'm away from my desktop so I can grab a backup in case it goes down)
+@bot.slash_command(name="retrieve_file", description="Retrieve game file", guild_ids=[379383629010436096])
+@commands.default_member_permissions(administrator=True)
+async def retrieve_file(ctx):
+    blueId = 323923179267555331
+    if ctx.author.id != blueId:
+        await ctx.send("no")
         return
-    
-    file = open("inventoryinfo.json", "w")
-    file.write(json.dumps({}, indent=4))
-    file.close()
-    await ctx.send("Inventories cleared")
+    f = open(GAME_FILE, "rb")
+    diFile = disnake.File(f, filename="inventoryInfo.json")
+    await ctx.send(file=diFile)
+
+
+#Code for managing all inventoiries
+@bot.slash_command(name='all_invs', description="Manage all inventories.")
+@commands.default_member_permissions(administrator=True)
+async def all_invs(ctx):
+    pass
+
+@all_invs.sub_command(name='clear', description="Removes all inventories.")
+async def clear_all_invs(ctx):
+    await ctx.response.defer()
+    data = openJson(GAME_FILE)
+    if "confessionals" in data:
+        confData = data["confessionals"]
+        for k in confData.keys():
+            if "inventory" in confData[k]:
+                confData[k].pop("inventory")
+    writeJson(GAME_FILE, data)
+    await ctx.edit_original_response("Inventories cleared.")
+
+@all_invs.sub_command(name='create', description="Creates blank inventories for all confessionals without one.")
+async def create_all_invs(ctx):
+    await ctx.response.defer()
+    data = openJson(GAME_FILE)
+    if "confessionals" in data:
+        confData = data["confessionals"]
+        confCategory = disnake.utils.find(lambda c: c.name == "Confessionals", ctx.guild.categories)
+        if not confCategory:
+            await ctx.send("No 'Confessionals' category found.")
+            return
+        for channel in confCategory.channels:
+            if channel.name not in confData:
+                confData[channel.name] = {"channelId": channel.id}
+            if "inventory" not in confData[channel.name]:
+                newInventory = {"coins": 0, "bonus": 0.0, "items": [], "aas": {}, "statuses": [], "effects": [], "immunities": [], "vote": []}
+                inventoryId = await channel.send(inventoryString(newInventory))
+                newInventory["id"] = inventoryId.id
+                confData[channel.name]["inventory"] = newInventory
+
+    writeJson(GAME_FILE, data)
+    await ctx.edit_original_response("Inventories created.")
 
 #Code for managing inventories
 @bot.command(aliases=['inventory', 'inv'], help='')
 async def inventories(ctx, arg1="", *arg2):
-    #Getting discord roles
-    for role in ctx.guild.roles:
-        if role.name == "Participant":
-            participantRole = role
-    for role in ctx.guild.roles:
-        if role.name == "Deceased":
-            deceasedRole = role
-    
-    channel = ctx.channel
-    allowed = "bluedetroyer"
-    gameMembers = []
-    for x in channel.members:
-        if compareLists(x.roles, ["Participant", "Deceased"]) and (not compareLists(x.roles, ["Master", "Host", "Co-Host", "True Deceased"])):
-            gameMembers.append(x)
-    if len(gameMembers) == 1:
-        allowed = gameMembers[0].name
+    if not isinstance(ctx, disnake.TextChannel):
+        channel = ctx.channel
+    else:
+        channel = ctx
     #Authorization check
-    if (not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"]) and not (ctx.author in channel.members)):
-        await ctx.send("You don't have permession to edit inventories in this channel")
-        return
+    #if (not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host", "Partcipant", "Deceased"])):
+    #    await ctx.send("You don't have permession to edit inventories in this channel")
+    #    return
+    
+    data = openJson(GAME_FILE)
+    if "confessionals" not in data:
+        data["confessionals"] = {}
+        writeJson(GAME_FILE, data)
+    
+
+    if arg1.lower() != "create":
+        if channel.name not in data["confessionals"] or "inventory" not in data["confessionals"][channel.name]:
+            await ctx.send("There's no inventory for this channel. Please create one first.")
+            return
+        inventory = data["confessionals"][channel.name]["inventory"]
+        message = await channel.fetch_message(inventory["id"])
+
     #Creating inventory
     if arg1.lower() == "create":
-        file = open("inventoryinfo.json")
-        data = json.load(file)
-        file.close()
-        if channel.name in data:
+        if channel.name in data["confessionals"] and "inventory" in data["confessionals"][channel.name]:
             await ctx.send("There's already an inventory for that channel. Please delete/forget it if you want to make a new one")
             return
-        newInventory = {"coins": 0, "bonus": 0, "items": [], "aas": {}, "statuses": [], "effects": [], "immunities": [], "vote": []}
+        newInventory = {"coins": 0, "bonus": 0.0, "items": [], "aas": {}, "statuses": [], "effects": [], "immunities": [], "vote": []}
         inventoryId = await channel.send(inventoryString(newInventory))
         newInventory["id"] = inventoryId.id
-        data[channel.name] = newInventory
-        file = open("inventoryinfo.json", "w")
-        file.write(json.dumps(data, indent=4))
-        file.close()
+        if channel.name in data["confessionals"]:
+            data["confessionals"][channel.name]["inventory"] = {}
+        else:
+            data["confessionals"][channel.name] = {"inventory": {}, "channelId": channel.id}
+        data["confessionals"][channel.name]["inventory"] = newInventory
+        writeJson(GAME_FILE, data)
+
     #Editing coins/coin bonus
     elif arg1.lower() in ("coins", "coin", "bonus"):
-        if arg1.lower() == "coin":
+        if arg1.lower() in ("coin"):
             arg1 = "coins"
-        file = open("inventoryinfo.json")
-        data = json.load(file)
-        file.close()
-        inventory = data[channel.name]
-        message = await channel.fetch_message(inventory["id"])
+
         if arg1.lower() == "bonus":
             amount = float(arg2[1])
         else:
@@ -818,9 +752,8 @@ async def inventories(ctx, arg1="", *arg2):
         elif arg2[0].lower() == "set":
             inventory[arg1.lower()] = amount
         await message.edit(content=inventoryString(inventory))
-        file = open("inventoryinfo.json", "w")
-        file.write(json.dumps(data, indent=4))
-        file.close()
+        writeJson(GAME_FILE, data)
+
     #Editing items/statuses/effects
     elif arg1.lower() in ("items", "statuses", "effect", "effects", "item", "status", "immunities", "immunity", "vote", "votes"):
         if arg1.lower() == "item":
@@ -833,11 +766,7 @@ async def inventories(ctx, arg1="", *arg2):
             arg1 = "effects"
         if arg1.lower() == "votes":
             arg1 = "vote"
-        file = open("inventoryinfo.json")
-        data = json.load(file)
-        file.close()
-        inventory = data[channel.name]
-        message = await channel.fetch_message(inventory["id"])
+
         if arg2[0].lower() == "add":
             for thing in arg2[1:]:
                 inventory[arg1.lower()].append(thing)
@@ -854,15 +783,10 @@ async def inventories(ctx, arg1="", *arg2):
             for thing in arg2[1:]:
                 inventory[arg1.lower()].append(thing)
         await message.edit(content=inventoryString(inventory))
-        file = open("inventoryinfo.json", "w")
-        file.write(json.dumps(data, indent=4))
-        file.close()
+        
+        writeJson(GAME_FILE, data)
     elif arg1.lower() in ("aa", "aas"):
-        file = open("inventoryinfo.json")
-        data = json.load(file)
-        file.close()
-        inventory = data[channel.name]
-        message = await channel.fetch_message(inventory["id"])
+        
         if arg2[0].lower() in ("add", "set"):
             for i in range(1, len(arg2)):
                 if arg2[i].isdigit():
@@ -881,19 +805,12 @@ async def inventories(ctx, arg1="", *arg2):
         elif arg2[0].lower() == "clear":
             inventory["aas"].clear()
         await message.edit(content=inventoryString(inventory))
-        file = open("inventoryinfo.json", "w")
-        file.write(json.dumps(data, indent=4))
-        file.close()
+        
+        writeJson(GAME_FILE, data)
     #Checks if the inventory has the proper amount of coins then removes those coins and adds the item to the inventory
     elif arg1.lower() == "buy":
-        file = open("inventoryinfo.json")
-        data = json.load(file)
-        file.close()
-        inventory = data[channel.name]
-        message = await channel.fetch_message(inventory["id"])
-        file = open("info.json")
-        items = json.load(file)
-        file.close()
+        items = openJson(INFO_FILE)
+
         purchase  = " ".join(arg2)
         for i, info in items["items"].items():
             if purchase.lower() == i.lower():
@@ -909,71 +826,39 @@ async def inventories(ctx, arg1="", *arg2):
                     response = f'{name} purchased for {cost} coins'
         await message.edit(content=inventoryString(inventory))
         await ctx.send(response)
-        file = open("inventoryinfo.json", "w")
-        file.write(json.dumps(data, indent=4))
-        file.close()
+        
+        writeJson(GAME_FILE, data)
         
     #Deletes the inventory message from the channel and removes it from the json file
     elif arg1.lower() == "delete":
-        file = open("inventoryinfo.json")
-        data = json.load(file)
-        file.close()
-        inventory = data[channel.name]
-        message = await channel.fetch_message(inventory["id"])
-        data.pop(channel.name)
+        data["confessionals"][channel.name].pop("inventory")
         await message.delete()
-        file = open("inventoryinfo.json", "w")
-        file.write(json.dumps(data, indent=4))
-        file.close()
+        writeJson(GAME_FILE, data)
     #Removes the inventory from the json file but leaves the message
     elif arg1.lower() == "forget":
-        file = open("inventoryinfo.json")
-        data = json.load(file)
-        file.close()
-        data.pop(channel.name)
-        file = open("inventoryinfo.json", "w")
-        file.write(json.dumps(data, indent=4))
-        file.close()
+        data["confessionals"][channel.name].pop("inventory")
+        writeJson(GAME_FILE, data)
     #Prints a copy of the inventory that doesn't get updated
     elif arg1.lower() == "send":
-        file = open("inventoryinfo.json")
-        data = json.load(file)
-        file.close()
-        inventory = data[channel.name]
+        inventory = data["confessionals"][channel.name]["inventory"]
         await ctx.send(content=inventoryString(inventory))
     elif arg1.lower() == "refresh":
-        file = open("inventoryinfo.json")
-        data = json.load(file)
-        file.close()
-        inventory = data[channel.name]
+        inventory = data["confessionals"][channel.name]["inventory"]
         message = await ctx.send(content=inventoryString(inventory))
         data[channel.name]["id"] = message.id
-        file = open("inventoryinfo.json", "w")
-        file.write(json.dumps(data, indent=4))
-        file.close()
+        writeJson(GAME_FILE, data)
     elif arg1.lower() == "section":
-        file = open("inventoryinfo.json")
-        data = json.load(file)
-        file.close()
-        inventory = data[channel.name]
-        message = await channel.fetch_message(inventory["id"])
         if arg2[0].lower() in ("create", "add"):
             inventory[arg2[1]] = []
         if arg2[0].lower() == "remove":
             inventory.pop(arg2[1])
         await message.edit(content=inventoryString(inventory))
-        file = open("inventoryinfo.json", "w")
-        file.write(json.dumps(data, indent=4))
-        file.close()
+        
+        writeJson(GAME_FILE, data)
     #Invalid arguments
     elif arg1 == "":
         await ctx.send("No argument found")
     else:
-        file = open("inventoryinfo.json")
-        data = json.load(file)
-        file.close()
-        inventory = data[channel.name]
-        message = await channel.fetch_message(inventory["id"])
         if arg1 in inventory:
             if arg2[0].lower() == "add":
                 for thing in arg2[1:]:
@@ -994,9 +879,7 @@ async def inventories(ctx, arg1="", *arg2):
                 for thing in arg2[1:]:
                     inventory[arg1].append(thing)
             await message.edit(content=inventoryString(inventory))
-            file = open("inventoryinfo.json", "w")
-            file.write(json.dumps(data, indent=4))
-            file.close()
+            writeJson(GAME_FILE, data)
         else:
             await ctx.send("Argument " + arg1 + " not recognized for inventory")
 
@@ -1007,7 +890,7 @@ async def randomRole(ctx, arg1=""):
         await randomRole(ctx, "good")
         await randomRole(ctx, "neutral")
         await randomRole(ctx, "evil")
-    file = open("info.json")
+    file = open(INFO_FILE)
     data = json.load(file)
     file.close()
     roleList = []
@@ -1032,7 +915,7 @@ async def genchats(ctx, num_players: int):
         await ctx.guild.create_role(name="Host", permissions=disnake.Permissions(administrator=True))
     for role in basicRoles:
         if role not in guildRoleNames:
-            await ctx.guild.create_role(name=basicRoles)
+            await ctx.guild.create_role(name=role)
 
     for i in range(1, num_players + 1):
         roleName = str(i)
@@ -1091,6 +974,272 @@ async def clearRoles(ctx):
             if "-" in channel.name or channel.name.isdigit():
                 await channel.delete()
         print("Channels done")
+
+#Code for managing confessional links
+@bot.slash_command(name='link', description="Manage links from users to their confessional.")
+@commands.default_member_permissions(administrator=True)
+async def link(ctx):
+    pass
+
+@link.sub_command(name='clear', description="Clears all confLinks.")
+async def link_clear(ctx):
+    data = openJson(GAME_FILE)
+    data["confLinks"] = {}
+    writeJson(GAME_FILE, data)
+    await ctx.send("confLinks cleared.")
+
+@link.sub_command(name='confs', description="Generates confLinks based on current confessionals and their members.")
+async def link_confs(ctx):
+    data = openJson(GAME_FILE)
+    if "confLinks" not in data:
+        data["confLinks"] = {}
+    if data["confLinks"] != {}:
+        await ctx.send("confLinks is not empty, please clear it first.")
+        return
+    
+    confCategory = disnake.utils.find(lambda c: c.name == "Confessionals", ctx.guild.categories)
+    if not confCategory:
+        await ctx.send("No 'Confessionals' category found.")
+        return
+    for channel in confCategory.channels:
+        for member in channel.members:
+            if compareLists(member.roles, ["Participant"]):
+                data["confLinks"][str(member.id)] = channel.name
+    writeJson(GAME_FILE, data)
+    await ctx.send("confLinks generated from current confessionals.")
+
+@link.sub_command(name='view', description="Views current confLinks.")
+async def link_view(ctx):
+    await ctx.response.defer()
+    data = openJson(GAME_FILE)
+    if "confLinks" not in data or data["confLinks"] == {}:
+        await ctx.send("confLinks is empty.")
+        return
+    message = "Current confLinks:\n"
+    for userId, channelName in data["confLinks"].items():
+        user = await bot.fetch_user(int(userId))
+        message += f'{user.name}: "{channelName}"\n'
+    await ctx.edit_original_response(message)
+
+@link.sub_command(name='add', description="Adds a confLink from the specified user to the specified channel.")
+async def link_add(ctx, user: disnake.User, channel: str):
+    data = openJson(GAME_FILE)
+    if "confLinks" not in data:
+        data["confLinks"] = {}
+    if channel not in [c.name for c in ctx.guild.channels]:
+        await ctx.send(f'Channel "{channel}" not found.')
+        return
+    if str(user.id) in data["confLinks"]:
+        await ctx.send(f'User {user.name} is already linked to "{data["confLinks"][str(user.id)]}".')
+        return
+
+    data["confLinks"][str(user.id)] = channel
+    writeJson(GAME_FILE, data)
+    await ctx.send(f'Link added: {user.name} -> "{channel}".')
+
+@link.sub_command(name='remove', description="Removes the confLink for the specified user.")
+async def link_remove(ctx, user: disnake.User):
+    data = openJson(GAME_FILE)
+    if "confLinks" not in data or str(user.id) not in data["confLinks"]:
+        await ctx.send(f'No confLink found for user {user.name}.')
+        return
+
+    data["confLinks"].pop(str(user.id))
+    writeJson(GAME_FILE, data)
+    await ctx.send(f'Link removed for user {user.name}.')
+#End of confessional link code
+
+#Sending code
+@bot.slash_command(name='send', description="Manage automatic sending of coins, carepackages, items, and aas.")
+@commands.default_member_permissions(administrator=True)
+async def send(ctx):
+    pass
+
+@send.sub_command(name="coins", description='Shows a list of how many coins each confessional should get, and shows button to approve it.')
+async def send_coins(ctx):
+    alliances = await determine_alliances(ctx.guild)
+    confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, ctx.guild.categories)
+    aliveConfs = [x.name for x in confCategory.channels]
+    data = openJson(GAME_FILE)
+    coinString = "Calculated Coins:\n"
+    for confName, confData in data.get("confessionals", {}).items():
+        if confName not in aliveConfs:
+            continue
+        confCoins = 200
+        confCoins += confData["inventory"]["bonus"] * 2
+        
+        for allianceName, members in alliances.items():
+            if confName in members:
+                numMembers = len(members)
+                if numMembers == 2:
+                    confCoins += 20
+                elif numMembers == 3:
+                    confCoins += 40
+                elif numMembers >= 4:
+                    confCoins += 100
+
+        if "lucky" in [x.lower() for x in confData["inventory"]["statuses"]]:
+            confCoins *= 1.5
+        if "unlucky" in [x.lower() for x in confData["inventory"]["statuses"]]:
+            confCoins *= .5 
+        confData["calcedCoins"] = int(confCoins)
+        coinString += f'{confName}: {int(confCoins)}\n'
+    
+    writeJson(GAME_FILE, data)
+    await ctx.send(coinString, components=[
+            disnake.ui.Button(label="Distribute", style=disnake.ButtonStyle.success, custom_id="send_coins"),
+        ])
+
+@send.sub_command(name="carepackages", description='Shows a list of how what carepackage each confessional should get, and shows button to approve it.')
+async def send_carepackages(ctx):
+    alliances = await determine_alliances(ctx.guild)
+    confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, ctx.guild.categories)
+    aliveConfs = [x.name for x in confCategory.channels]
+    luckyCoinConf = random.choice(aliveConfs)
+    data = openJson(GAME_FILE)
+    carepackageString = "Calculated Carepackages:\n"
+    for confName, confData in data.get("confessionals", {}).items():
+        if confName not in aliveConfs:
+            continue
+        luck = confData["luck"]
+        
+        role = None
+        if "role" in confData:
+            role = confData["role"]
+
+        item = itemGen(luck)
+        aa = anyAbilityGen(luck, role)
+
+        confData["calcedItems"] = [item]
+        confData["calcedAas"] = [aa]
+
+        if confName == luckyCoinConf:
+            confData["calcedItems"].append("Lucky Coin")
+
+        carepackageString += f'{confName} ({luck}): {item}, {aa}\n'
+    carepackageString += f'Lucky Coin: {luckyCoinConf}'
+    
+    writeJson(GAME_FILE, data)
+    await ctx.send(carepackageString, components=[
+            disnake.ui.Button(label="Distribute", style=disnake.ButtonStyle.success, custom_id="send_carepackages"),
+        ])
+
+@send.sub_command(name="items", description='Shows a list of how what items each confessional should get, and shows button to approve it.')
+async def send_items(ctx):
+    alliances = await determine_alliances(ctx.guild)
+    confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, ctx.guild.categories)
+    aliveConfs = [x.name for x in confCategory.channels]
+    data = openJson(GAME_FILE)
+    itemString = "Calculated Items:\n"
+    for confName, confData in data.get("confessionals", {}).items():
+        if confName not in aliveConfs:
+            continue
+        luck = confData["luck"]
+        
+        items = []
+        i = random.randint(1,6)
+        count = 3
+        if i <= 3:
+            count = 1
+        elif i <=5:
+            count = 2
+        for j in range(count):
+            items.append(itemGen(luck))
+
+        confData["calcedItems"] = items
+
+        itemString += f'{confName} ({luck}): {", ".join(items)}\n'
+    
+    writeJson(GAME_FILE, data)
+    await ctx.send(itemString, components=[
+            disnake.ui.Button(label="Distribute", style=disnake.ButtonStyle.success, custom_id="send_items"),
+        ])
+
+@send.sub_command(name="aas", description='Shows a list of how what aas each confessional should get, and shows button to approve it.')
+async def send_aas(ctx):
+    alliances = await determine_alliances(ctx.guild)
+    confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, ctx.guild.categories)
+    aliveConfs = [x.name for x in confCategory.channels]
+    data = openJson(GAME_FILE)
+    aaString = "Calculated Items:\n"
+    for confName, confData in data.get("confessionals", {}).items():
+        if confName not in aliveConfs:
+            continue
+        luck = confData["luck"]
+        
+        role = None
+        if "role" in confData:
+            role = confData["role"]
+
+        aa = anyAbilityGen(luck, role)
+
+        confData["calcedAas"] = [aa]
+
+        aaString += f'{confName} ({luck}): {aa}\n'
+    
+    writeJson(GAME_FILE, data)
+    await ctx.send(aaString, components=[
+            disnake.ui.Button(label="Distribute", style=disnake.ButtonStyle.success, custom_id="send_aas"),
+        ])
+
+
+async def distributeCoins(server):
+    data = openJson(GAME_FILE)
+    confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, server.categories)
+    participant = disnake.utils.find(lambda r: r.name == "Participant", server.roles)
+    for channel in confCategory.channels:
+        coins = data["confessionals"][channel.name]["calcedCoins"]
+        await inventories(channel, "coins", "add", str(coins))
+        await channel.send(f'{participant.mention} You got {coins} coins')
+
+async def distributeCarepackages(server):
+    data = openJson(GAME_FILE)
+    confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, server.categories)
+    participant = disnake.utils.find(lambda r: r.name == "Participant", server.roles)
+    for channel in confCategory.channels:
+        items = data["confessionals"][channel.name]["calcedItems"]
+        aas = data["confessionals"][channel.name]["calcedAas"]
+        await inventories(channel, "items", "add", *items)
+        await inventories(channel, "aas", "add", *aas)
+        await channel.send(f'{participant.mention} Item: {", ".join(items)}\nAny Ability: {", ".join(aas)}')
+
+async def distributeItems(server):
+    data = openJson(GAME_FILE)
+    confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, server.categories)
+    participant = disnake.utils.find(lambda r: r.name == "Participant", server.roles)
+    for channel in confCategory.channels:
+        items = data["confessionals"][channel.name]["calcedItems"]
+        await inventories(channel, "items", "add", *items)
+        await channel.send(f'{participant.mention} You got {", ".join(items)}')
+
+async def distributeAas(server):
+    data = openJson(GAME_FILE)
+    confCategory = disnake.utils.find(lambda c: c.name == CONFESSIONALS_CATEGORY, server.categories)
+    participant = disnake.utils.find(lambda r: r.name == "Participant", server.roles)
+    for channel in confCategory.channels:
+        aas = data["confessionals"][channel.name]["calcedAas"]
+        await inventories(channel, "aas", "add", *aas)
+        await channel.send(f'{participant.mention} You got {", ".join(aas)}')
+
+'''
+Planned Commands:
+/alias - Slash command base for managing confessional aliases (aliases are not cleared between games). Admin only.
+    add {alias} {user} - Adds an alias for the specified user. Returns an error message if that alias is already taken.
+    remove {alias} - Removes the specified alias
+    view - Sends a message of the current aliases in a {alias}: {username} format
+    clear - Clears all aliases
+
+/send - Slash command base for automatically doing coins/carepackages/etc. Admin only
+    coins - Shows a list of how many coins the bot thinks each confessional should get, and shows buttons for the host to approve it. If approved, the bot will distribute it to each confessional and alert the players.
+    carepackages - Shows a list of rolled carepackages and luck for each confessional, and shows buttons for the host to either approve or reject it. If approved, the bot will distribute it to each confessional and alert the players.
+    items - Shows a list of rolled item rains and luck for each confessional, and shows buttons for the host to either approve or reject it. If approved, the bot will distributetribute it to ea it to each confessional and alert the players.
+    aas - Shows a list of rolled aas and luck for each confessional, and shows buttons for the host to either approve or reject it. If approved, the bot will disch confessional and alert the players.
+    view {coins/aas/items} - Views last rolled {}
+    last {coins/aas/items} - Adds last rolled {} to each person's inventory
+    undo {coins/aas/items} - Removes the latest rolled {} from each person's inventory
+    add {coins/aas/items} {player} {int for coins or string for aa/item} - Adds {} to the specified player's confessional {}
+    remove {coins/aas/items} {player} {int for coins or string for aa/item} - Remoes {} from the specified player's confessional {}
+'''
 
 
 
@@ -1167,13 +1316,6 @@ async def sendMessage(ctx, arg1, arg2):
                 await channel.send(arg2)                       
                 
 
-@bot.command(name='removeto')
-async def removeTimeOut(ctx):
-        for member in bot.guilds[1].members:
-            if member.name == 'duncandont':
-                time = datetime.datetime(year=2025, month=8, day = 27, hour = 12, minute = 20, second=30)
-                await member.timeout(until=time)
-
 @bot.command(name='button')
 async def buttonTest(ctx: disnake.ApplicationCommandInteraction):
     if ctx.guild.name == "Betrayal" and not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"]) and not "bots" in ctx.channel.name and not ctx.author.name == "bluedetroyer":
@@ -1189,7 +1331,7 @@ async def deceptPick(ctx: disnake.ApplicationCommandInteraction):
     if ctx.guild.name == "Betrayal" and not compareLists(ctx.author.roles, ["Master", "Host", "Co-Host"]) and not "bots" in ctx.channel.name and not ctx.author.name == "bluedetroyer":
         await ctx.send(f'Do this is bots channel')
         return
-    file = open("info.json")
+    file = open(INFO_FILE)
     data = json.load(file)
     file.close()
     data = data["roles"]
@@ -1212,8 +1354,10 @@ async def deceptPick(ctx: disnake.ApplicationCommandInteraction):
             disnake.ui.Button(label=evilRole, style=disnake.ButtonStyle.danger, custom_id="evil"),
         ])
 
+
 @bot.listen("on_button_click")
 async def help_listener(ctx: disnake.MessageInteraction):
+    await ctx.response.defer()
     #if ctx.component.custom_id not in ["yes", "no", "good", "neutral", "evil"]:
         # We filter out any other button presses except
         # the components we wish to process.
@@ -1225,6 +1369,22 @@ async def help_listener(ctx: disnake.MessageInteraction):
         await ctx.send("Button Indeed")
     elif ctx.component.custom_id in ["good", "neutral", "evil"]:
         await ctx.send(ctx.component.label)
+    elif ctx.component.custom_id == "send_coins":
+        await distributeCoins(ctx.guild)
+        await ctx.edit_original_response(components=[])
+        await ctx.channel.send("Coins distributed")
+    elif ctx.component.custom_id == "send_carepackages":
+        await distributeCarepackages(ctx.guild)
+        await ctx.edit_original_response(components=[])
+        await ctx.channel.send("Carepackages distributed")
+    elif ctx.component.custom_id == "send_items":
+        await distributeItems(ctx.guild)
+        await ctx.edit_original_response(components=[])
+        await ctx.channel.send("Items distributed")
+    elif ctx.component.custom_id == "send_aas":
+        await distributeAas(ctx.guild)
+        await ctx.edit_original_response(components=[])
+        await ctx.channel.send("Aas distributed")
 
 #Runs bot
 bot.run(token)
