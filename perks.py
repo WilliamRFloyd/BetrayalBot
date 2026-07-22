@@ -81,14 +81,11 @@ class MotorGang(attr_classes.Perk):
     def set_luck_functions(self, player_conf_name: str, player_info: dict, alliances: dict, luck_calc_dict: dict, alignment_amount: dict, luck_dict: dict) -> None:
         #+1 Luck for every good player in an alliance with the holder
         def motor_gang_luck(player_conf_name: str, player_info: dict, alliances: dict, luck_calc_dict: dict, alignment_amount: dict, luck_dict: dict) -> None:
-            boosted_players = [player_conf_name]
             for alliance, members in alliances.items():
                 if player_conf_name in members:
                     for member in members:
-                        if player_info[member]["role"]["alignment"] == "Good" and member not in boosted_players:
-                            boosted_players.append(member)
-            for player in boosted_players:
-                luck_dict[player] += 1
+                        if player_info[member]["role"]["alignment"] == "Good":
+                            luck_dict[member] += 1
             
         
         luck_calc_dict.setdefault(player_conf_name, {}).setdefault(attr_classes.LuckCalcOrder.PRE_STATUSES, []).append(motor_gang_luck)

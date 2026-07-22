@@ -28,7 +28,7 @@ async def determine_alliances(server: disnake.Guild) -> dict:
                 if playerConf and playerConf not in alliances[channel.name]:
                     alliances[channel.name].append(playerConf)
     
-
+    print(alliances)
     return alliances
 
 def base_luck_calculation(player_conf_name: str, player_info: dict, alliances: dict, luck_calc_dict: dict, alignment_amount: dict, luck_dict: dict) -> None:
@@ -41,7 +41,8 @@ def base_luck_calculation(player_conf_name: str, player_info: dict, alliances: d
                     continue
                 ally_alignment = player_info.get(ally_conf, {}).get("role", {}).get("alignment", "Neutral").capitalize()
                 #print(alignment_index_dict)
-                luck_modify += alignment_amount[player_conf_name][alignment_index_dict[ally_alignment]]
+                if ally_alignment in alignment_index_dict.keys():
+                    luck_modify += alignment_amount[player_conf_name][alignment_index_dict[ally_alignment]]
     
     for item in player_info.get(player_conf_name, {}).get("inventory", {}).get("items", []):
         if item.lower() == "lucky coin":
