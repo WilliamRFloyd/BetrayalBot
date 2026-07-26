@@ -31,15 +31,15 @@ class Saveable:
         pass
 
     @staticmethod
-    def load_data(data: dict) -> Saveable:
+    def load_data(data: dict) -> "Saveable":
         pass
 
 class Perk(Saveable):
     name: str = ""
     upgrade: int = 0
-    owner: Player = None
+    owner: "Player" = None
     @staticmethod
-    def load_perk(perk_name: str, upgrade: int = 0) -> Perk:
+    def load_perk(perk_name: str, upgrade: int = 0) -> "Perk":
         perk_class_name = perk_name.replace(" ", "")
         try:
             module = importlib.import_module(f'perks')
@@ -59,7 +59,7 @@ class Perk(Saveable):
         self.name = name
         self.upgrade = upgrade
 
-    def set_luck_functions(self, luck_calc_dict: dict[Player, dict]) -> None:
+    def set_luck_functions(self, luck_calc_dict: dict["Player", dict]) -> None:
         pass # To be implemented in subclasses
 
     def save_data(self):
