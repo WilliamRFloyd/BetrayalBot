@@ -319,9 +319,9 @@ class PlayerRole(Saveable):
     abilities: list[Ability] = []
     perks: list[Perk] = []
     message_ids: list[int] = []
-    owner: Player = None
+    owner: "Player" = None
 
-    def __init__(self, role_name: str = "", role_info: dict = None, owner: Player = None, from_dict = None):
+    def __init__(self, role_name: str = "", role_info: dict = None, owner: "Player" = None, from_dict = None):
         self.abilities = []
         self.perks = []
         self.message_ids = []
