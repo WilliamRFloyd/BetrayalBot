@@ -672,7 +672,10 @@ async def clear_all_invs(ctx):
     check_active_game(ctx.guild)
 
     for player in Data.game_data.players:
-        player.remove_inventory()
+        if player.inventory is None:
+            continue
+        channel = ctx.guild.get_channel(player.channel_id)
+        inventories(channel, "delete")
 
     save_game_data()
     await ctx.edit_original_response("Inventories cleared.")
@@ -683,7 +686,10 @@ async def create_all_invs(ctx):
     check_active_game(ctx.guild)
 
     for player in Data.game_data.players:
-        player.add_inventory()
+        if player.inventory is not None:
+            continue
+        channel = ctx.guild.get_channel(player.channel_id)
+        inventories(channel, "create")
 
     save_game_data()
     await ctx.edit_original_response("Inventories created.")
@@ -732,14 +738,16 @@ async def inventories(ctx, arg1="", *arg2):
     #Deletes the inventory message from the channel and removes it from the json file
     elif arg1.lower() == "delete":
         player.remove_inventory()
-        await message.delete()
-
         save_game_data()
+        await message.delete()
+        await ctx.send("Inventory deleted")
     #Removes the inventory from the json file but leaves the message
     elif arg1.lower() == "forget":
         player.remove_inventory()
 
         save_game_data()
+
+        await ctx.send("Inventory forgotten")
     #Prints a copy of the inventory that doesn't get updated
     elif arg1.lower() in ("send", "s"):
         await ctx.send(content=str(inventory))
