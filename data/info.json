@@ -1126,7 +1126,7 @@
             "abilities": {
                 "Bury Alive": 2,
                 "Preserve": 2,
-                "Soul Seer": "inf"
+                "Soul Seer": -1
             },
             "perks": [
                 "Service",
@@ -1197,7 +1197,7 @@
             "description": "You want to stay a secret to everyone, if you get exposed to what you really are, then the future will not be bright for you.",
             "abilities": {
                 "Black Cloak": 7,
-                "Deduct": "inf",
+                "Deduct": -1,
                 "Investigate": 3
             },
             "perks": [
@@ -1387,8 +1387,8 @@
             "alignment": "Neutral",
             "description": "Charm magic isn't needed so much when your way with words bends the mind of mortals alone.",
             "abilities": {
-                "Demonic Embrace": "inf",
-                "Sinister Smile": "inf",
+                "Demonic Embrace": -1,
+                "Sinister Smile": -1,
                 "Hair Pulling": 3,
                 "Gentle Holdings": 3
             },
@@ -1501,9 +1501,9 @@
             "alignment": "Neutral",
             "description": "You're a mass seducer, but not so good at hiding what you do.",
             "abilities": {
-                "Charm": "inf",
+                "Charm": -1,
                 "Gag": 3,
-                "Contract Break": "inf"
+                "Contract Break": -1
             },
             "perks": [
                 "Sexual Encounter",
@@ -1603,7 +1603,7 @@
             "alignment": "Evil",
             "description": "Some men just want to watch the world burn.",
             "abilities": {
-                "Douse": "inf",
+                "Douse": -1,
                 "Incineration": 2,
                 "Ignite": 3,
                 "Chemical Burning": 1
@@ -1664,7 +1664,7 @@
             "alignment": "Evil",
             "description": "You're a husk, empty on the inside, but seemingly perfect on the outside.",
             "abilities": {
-                "Soul Seeking": "inf",
+                "Soul Seeking": -1,
                 "Soul Swap": 3,
                 "Coin Flip": 2,
                 "Luck Transfer": 2,
@@ -1807,9 +1807,9 @@
             "alignment": "Evil",
             "description": "Inflicting special curses on many, the days go by, their life ticks down.",
             "abilities": {
-                "Abyssal Curse": "inf",
+                "Abyssal Curse": -1,
                 "Shadowed Hands": 1,
-                "Abyssal Blessings": "inf",
+                "Abyssal Blessings": -1,
                 "Shadowed Guard": 1
             },
             "perks": [
@@ -1881,7 +1881,7 @@
             "description": "Off with their head.",
             "abilities": {
                 "Half-Swording": 2,
-                "Hand Off": "inf"
+                "Hand Off": -1
             },
             "perks": [
                 "Executioner's Blade",
@@ -1893,7 +1893,7 @@
             "alignment": "Traveller",
             "description": "I'm here to talk to you about your car's extended warranty.",
             "abilities": {
-                "The Deal": "inf",
+                "The Deal": -1,
                 "Swindle": 3
             },
             "perks": [
@@ -1926,7 +1926,7 @@
             "alignment": "Traveller",
             "description": "If you aren't gambling your life is it truely a gamble?",
             "abilities": {
-                "First Blood": "inf",
+                "First Blood": -1,
                 "To Death": 3,
                 "Oversee": 1
             },
@@ -1942,9 +1942,9 @@
             "alignment": "Ball",
             "description": "Let's get rolling, let's get going, once it's rolling, you can't stop it-",
             "abilities": {
-                "Rolling": "inf",
+                "Rolling": -1,
                 "Bouncing": 1,
-                "Speed Up": "inf"
+                "Speed Up": -1
             },
             "perks": [
                 "Obviously a Ball",

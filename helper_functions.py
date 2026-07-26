@@ -5,9 +5,29 @@ import json
 import re
 import datetime
 import helper_functions
+from shared_data import Data, INFO_FILE, GAME_FILE
+from attr_classes import Game, PlayerRole
+import disnake
 
 #Constants
 CHARACTER_LIMIT = 2000
+
+def save_game_data():
+    data = openJson(GAME_FILE)
+    data[str(Data.game_data.guild_id)] = Data.game_data.save_data()
+    writeJson(GAME_FILE, data)
+
+def check_active_game(guild: disnake.Guild):
+    if (guild.id == Data.game_data.guild_id):
+        return
+
+    save_game_data()
+    data = openJson(GAME_FILE)
+    if str(guild.id) in data.keys():
+        Data.game_data = Game.load_data(guild.id, data[str(guild.id)])
+    else:
+        Data.game_data = Game(guild.id, guild.name)
+        save_game_data()
 
 #Helper functions
 def levenshtein_distance(s, t):
@@ -44,7 +64,10 @@ def find_most_similar_string(string, string_array):
 
 def openJson(fileName: str) -> dict:
     with open(fileName, "r") as file:
-        data = json.load(file)
+        try:
+            data = json.load(file)
+        except:
+            data = {}
     return data
 
 def writeJson(fileName: str, data: dict):
@@ -180,42 +203,42 @@ def findIgnoringCase(string: str, string_array: list) -> str:
     return None
 
 #Code for making a role string (possibly multiple if it exceeds character limits)
-def generateRoleStrings(roleData, info):
+def generateRoleStrings(roleData: PlayerRole, info):
     #Basics
-    roleInfo = info["roles"][roleData["name"]]
+    roleInfo = info["roles"][roleData.role_name]
     allStrings = []
     currentString = f'```'
     endString = '```'
-    if roleData["alignment"].lower() == "good":
+    if roleData.alignment.lower() == "good":
         currentString += f'Diff\n+'
-    elif roleData["alignment"].lower() == "evil":
+    elif roleData.alignment.lower() == "evil":
         currentString += f'Diff\n-'
     else:
         currentString += f'\n'
 
-    currentString += f'{roleData["alignment"].upper()}\n{roleData["name"]}\n{roleInfo["description"]}\n\nAbilities:\n'
+    currentString += f'{roleData.alignment.upper()}\n{roleData.role_name}\n{roleInfo["description"]}\n\nAbilities:\n'
 
     #Abilites
-    for ability, abilityData in roleData["abilities"].items():
-        abilityInfo = info["abilities"][ability]
-        abilityString = f'{ability} [x'
-        if abilityData["charges"] != "inf":
-            abilityString += f'{abilityData["charges"]}'
+    for ability in roleData.abilities:
+        abilityInfo = info["abilities"][ability.name]
+        abilityString = f'{ability.name} [x'
+        if ability.charges != -1:
+            abilityString += f'{ability.charges}'
         else:
             abilityString += '∞'
         abilityString += f'] - '
 
-        if (abilityData["upgrade"] != 100 and abilityData["upgrade"] > 0 and abilityData["upgrade"] > len(abilityInfo["upgrades"])) or (abilityData["upgrade"] < 0 and abs(abilityData["upgrade"]) > len(abilityInfo["downgrades"])):
-            abilityData["upgrade"] = 0
+        if (ability.upgrade != 100 and ability.upgrade > 0 and ability.upgrade > len(abilityInfo["upgrades"])) or (ability.upgrade < 0 and abs(ability.upgrade) > len(abilityInfo["downgrades"])):
+            ability.upgrade = 0
 
-        if abilityData["upgrade"] == 0:
+        if ability.upgrade == 0:
             abilityString += f'{abilityInfo["effect"]}'
-        elif abilityData["upgrade"] == 100: #for alteranate versions of abilities that can't be directly copied
+        elif ability.upgrade == 100: #for alteranate versions of abilities that can't be directly copied
             abilityString += f'{abilityInfo["alternate"]}'
-        elif abilityData["upgrade"] > 0:
-            abilityString += f'{abilityInfo["upgrades"][abilityData["upgrade"] - 1]}'
+        elif ability.upgrade > 0:
+            abilityString += f'{abilityInfo["upgrades"][ability.upgrade - 1]}'
         else:
-            abilityString += f'{abilityInfo["downgrades"][abs(abilityData["upgrade"]) - 1]}'
+            abilityString += f'{abilityInfo["downgrades"][abs(ability.upgrade) - 1]}'
         
         abilityString += f'\n\n'
 
@@ -235,25 +258,22 @@ def generateRoleStrings(roleData, info):
     
     currentString += startingPerkString
 
-    for perk, perkData in roleData["perks"].items():
-        perkInfo = info["perks"][perk]
-        perkString = f'{perk} '
-        if perkData["copies"] > 1:
-            perkString += f'[x{perkData["copies"]}] - '
-        else:
-            perkString += f'- '
+    for perk in roleData.perks:
+        perkInfo = info["perks"][perk.name]
+        perkString = f'{perk.name} '
+        perkString += f'- '
 
-        if (perkData["upgrade"] != 100 and perkData["upgrade"] > 0 and perkData["upgrade"] > len(perkInfo["upgrades"])) or (perkData["upgrade"] < 0 and abs(perkData["upgrade"]) > len(perkInfo["downgrades"])):
-            perkData["upgrade"] = 0
+        if (perk.upgrade != 100 and perk.upgrade > 0 and perk.upgrade > len(perkInfo["upgrades"])) or (perk.upgrade < 0 and abs(perk.upgrade) > len(perkInfo["downgrades"])):
+            perk.upgrade = 0
 
-        if perkData["upgrade"] == 0:
+        if perk.upgrade == 0:
             perkString += f'{perkInfo["effect"]}'
-        elif perkData["upgrade"] == 100: #for alteranate versions of perks that can't be directly copied
+        elif perk.upgrade == 100: #for alteranate versions of perks that can't be directly copied
             perkString += f'{perkInfo["alternate"]}'
-        elif perkData["upgrade"] > 0:
-            perkString += f'{perkInfo["upgrades"][perkData["upgrade"] - 1]}'
+        elif perk.upgrade > 0:
+            perkString += f'{perkInfo["upgrades"][perk.upgrade - 1]}'
         else:
-            perkString += f'{perkInfo["downgrades"][abs(perkData["upgrade"]) - 1]}'
+            perkString += f'{perkInfo["downgrades"][abs(perk.upgrade) - 1]}'
         
         perkString += f'\n\n'
 

@@ -6,14 +6,14 @@
 ####################
 # Game Information #
 ####################
-inventoryInfo.json
-kidneys.json
+data/inventoryInfo.json
+data/kidneys.json
 
 ############
 # Testing  #
 ############
 exampleInventoryInfo.json
-
+test.py
 
 #########
 # Other #
