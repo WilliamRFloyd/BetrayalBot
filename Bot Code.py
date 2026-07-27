@@ -1055,13 +1055,15 @@ async def distributeCoins(server: disnake.Guild):
 
     participant = disnake.utils.find(lambda r: r.name == "Participant", server.roles)
     for player in Data.game_data.players:
-        if player.inventory is None:
+        if player.inventory is None or not player.can_gain():
             continue
         player.inventory.get_section("coins").contents += player.calced_coins
 
     save_game_data()
 
     for player in Data.game_data.players:
+        if player.inventory is None or not player.can_gain():
+            continue
         channel = server.get_channel(player.channel_id)
         await inventories(channel, "coins", "add", "0") #To update inventory
         await channel.send(f'{participant.mention} You got {player.calced_coins} coins')
@@ -1071,7 +1073,7 @@ async def distributeCarepackages(server):
 
     participant = disnake.utils.find(lambda r: r.name == "Participant", server.roles)
     for player in Data.game_data.players:
-        if player.inventory is None:
+        if player.inventory is None or not player.can_gain():
             continue
         player.inventory.get_section("items").contents += player.calced_items
         for aa in player.calced_aas:
@@ -1080,6 +1082,8 @@ async def distributeCarepackages(server):
     save_game_data()
 
     for player in Data.game_data.players:
+        if player.inventory is None or not player.can_gain():
+            continue
         channel = server.get_channel(player.channel_id)
         await inventories(channel, "coins", "add", "0") #To update inventory
         await channel.send(f'{participant.mention} Item: {", ".join(player.calced_items)}\nAny Ability: {", ".join(player.calced_aas)}')
@@ -1089,13 +1093,15 @@ async def distributeItems(server):
 
     participant = disnake.utils.find(lambda r: r.name == "Participant", server.roles)
     for player in Data.game_data.players:
-        if player.inventory is None:
+        if player.inventory is None or not player.can_gain():
             continue
         player.inventory.get_section("items").contents += player.calced_items
 
     save_game_data()
 
     for player in Data.game_data.players:
+        if player.inventory is None or not player.can_gain():
+            continue
         channel = server.get_channel(player.channel_id)
         await inventories(channel, "coins", "add", "0") #To update inventory
         await channel.send(f'{participant.mention} You got {", ".join(player.calced_items)}')
@@ -1105,7 +1111,7 @@ async def distributeAas(server):
 
     participant = disnake.utils.find(lambda r: r.name == "Participant", server.roles)
     for player in Data.game_data.players:
-        if player.inventory is None:
+        if player.inventory is None or not player.can_gain():
             continue
         for aa in player.calced_aas:
             player.inventory.process_command("aa", ["add", aa])
@@ -1113,6 +1119,8 @@ async def distributeAas(server):
     save_game_data()
 
     for player in Data.game_data.players:
+        if player.inventory is None or not player.can_gain():
+            continue
         channel = server.get_channel(player.channel_id)
         await inventories(channel, "coins", "add", "0") #To update inventory
         await channel.send(f'{participant.mention} You got {", ".join(player.calced_aas)}')
