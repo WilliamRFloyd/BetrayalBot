@@ -271,11 +271,13 @@ class Inventory(Saveable):
     def process_command(self, target: str, arguments: list) -> bool:
         reserved_targets = ("create", "send", "forget", "delete", "section", "message_id") #Handled by bot code
         target = target.lower()
-        if len(arguments) < 2:
+        if len(arguments) == 0:
             return False
         command = arguments[0].lower()
 
         if target in ("section", "sections"):
+            if len(arguments) < 2:
+                return False
             match command:
                 case "add":
                     name = arguments[1]
