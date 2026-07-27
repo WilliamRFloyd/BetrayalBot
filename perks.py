@@ -12,12 +12,12 @@ class HeroicPower(attr_classes.Perk):
         def heroic_power_luck(player: attr_classes.Player, alliances: dict[str, list[attr_classes.Player]], luck_calc_dict: dict, alignment_amount: dict) -> None:
             luck_modify = 3
             in_alliance = False
-            alignment = player.role.alignment
+            alignment = player.get_alignment()
             for alliance_name, members in alliances.items():
                 if player in members:
                     in_alliance = True
                     for member in members:
-                        member_alignment = member.role.alignment
+                        member_alignment = member.get_alignment()
                         if alignment == "Good" and member_alignment == "Evil":
                             luck_modify = 0
                             break
@@ -51,7 +51,7 @@ class LeadActor(attr_classes.Perk):
                     good_count = 0
                     evil_count = 0
                     for member in members:
-                        member_alignment = member.role.alignment
+                        member_alignment = member.get_alignment()
                         if member_alignment == "Evil":
                             evil_count += 1
                         elif member_alignment == "Good":
@@ -84,7 +84,7 @@ class MotorGang(attr_classes.Perk):
             for alliance, members in alliances.items():
                 if player in members:
                     for member in members:
-                        if member.role.alignment == "Good":
+                        if member.get_alignment() == "Good":
                             member.luck += 1
             
         
@@ -152,12 +152,12 @@ class EvilAura(attr_classes.Perk):
         def evil_aura_luck(player: attr_classes.Player, alliances: dict[str, list[attr_classes.Player]], luck_calc_dict: dict, alignment_amount: dict) -> None:
             luck_modify = 2
             in_alliance = False
-            alignment = player.role.alignment
+            alignment = player.get_alignment()
             for alliance_name, members in alliances.items():
                 if player in members:
                     in_alliance = True
                     for member in members:
-                        member_alignment = member.role.alignment
+                        member_alignment = member.get_alignment()
                         if alignment == "Good" and member_alignment == "Evil":
                             luck_modify = 0
                             break
@@ -179,7 +179,7 @@ class FreakishNature(attr_classes.Perk):
     def set_luck_functions(self, luck_calc_dict: dict) -> None:
         #Sets luck of all allies of different alignments to 0 and adds their luck to the holder. Also temporarily undoes lucky/unlucky on the holder for the calculation, then reapplies it after.
         def freakish_nature_luck(player: attr_classes.Player, alliances: dict[str, list[attr_classes.Player]], luck_calc_dict: dict, alignment_amount: dict) -> None:
-            alignment = player.role.alignment
+            alignment = player.get_alignment()
             if player.inventory is None:
                 statuses = []
             else:
@@ -196,7 +196,7 @@ class FreakishNature(attr_classes.Perk):
                     for member in members:
                         if member is player:
                             continue
-                        member_alignment = member.role.alignment
+                        member_alignment = member.get_alignment()
                         if member_alignment != alignment:
                             player.luck += member.luck
                             member.luck = 0

@@ -419,6 +419,7 @@ class Player(Saveable):
     calced_coins: int = 0
     calced_items: list[str] = []
     calced_aas: list[str] = []
+    additional_data: dict = {}
     status: PlayerStatus = PlayerStatus.ALIVE
 
     def __init__(self, conf_name, channel_id = 0, from_dict = None):
@@ -468,6 +469,11 @@ class Player(Saveable):
     def remove_inventory(self):
         if self.inventory is not None:
             del self.inventory
+
+    def get_alignment(self) -> str:
+        if self.role is None:
+            return "N/A"
+        return self.role.alignment
 
     def can_gain(self) -> bool: #Returns true if the player can get coin drop/item rain/etc
         if self.status == PlayerStatus.ALIVE:

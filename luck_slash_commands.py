@@ -42,14 +42,13 @@ def determine_alliances(server: disnake.Guild) -> dict:
     return alliances
 
 def base_luck_calculation(player: attr_classes.Player, alliances: dict[str, list[attr_classes.Player]], luck_calc_dict: dict, alignment_amount: dict) -> None:
-    alignment = player.role.alignment
     luck_modify = 0
     for alliance_name, members in alliances.items():
         if player in members:
             for ally in members:
                 if ally is player:
                     continue
-                ally_alignment = ally.role.alignment
+                ally_alignment = ally.get_alignment()
                 #print(alignment_index_dict)
                 if ally_alignment in alignment_index_dict.keys():
                     luck_modify += alignment_amount[player][alignment_index_dict[ally_alignment]]
@@ -76,6 +75,8 @@ def status_luck_calculation(player: attr_classes.Player, alliances: dict[str, li
 
 def set_luck_functions(alliances: dict, luck_calc_dict: dict, alignment_amount: dict) -> None:
     for player in Data.game_data.players:
+        if not player.can_gain():
+            continue
         perks = []
         if player.has_role():
             perks = player.role.perks
@@ -100,6 +101,8 @@ def do_luck_calcs(alliances: dict, luck_calc_dict: dict, alignment_amount: dict)
 
 def setup_calcs(luck_calc_dict: dict, alignment_amount: dict):
     for player in Data.game_data.players:
+        if not player.can_gain():
+            continue
         if not player.has_role():
             continue
 
