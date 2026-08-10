@@ -190,7 +190,6 @@ class InventorySection(Saveable):
                         for argument in arguments:
                             self.contents.append(argument)
                     case "dict":
-                        self.contents.clear()
                         for i in range(len(arguments)):
                             argument = arguments[i]
                             if argument.isdigit():
