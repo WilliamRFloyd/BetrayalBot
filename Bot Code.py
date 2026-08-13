@@ -27,11 +27,13 @@ token = os.getenv('DISCORD_TOKEN')
 bot = commands.Bot(command_prefix='/', intents=intents, case_insensitive=True)
 
 import role_slash_commands
-import luck_slash_commands
+import game_calculations.luck_slash_commands as luck_slash_commands
+import game_calculations.alliance_commands as alliance_commands
 import info_server
-from luck_slash_commands import determine_alliances, set_player_statuses
-role_slash_commands.setup(bot, INFO_FILE, GAME_FILE)
-luck_slash_commands.setup(bot, INFO_FILE, GAME_FILE, ALLIANCES_CATEGORY, CONFESSIONALS_CATEGORY)
+from game_calculations.alliance_commands import determine_alliances, set_player_statuses
+role_slash_commands.setup(bot)
+luck_slash_commands.setup(bot)
+alliance_commands.setup(bot)
 info_server.setup(bot, INFO_FILE)
 
 #Rolls a random item based off luck/rarity and returns it

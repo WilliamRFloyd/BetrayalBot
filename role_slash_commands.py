@@ -5,7 +5,7 @@ from helper_functions import *
 from shared_data import Data, INFO_FILE
 from attr_classes import Ability, Perk
 
-def setup(bot, INFO_FILE="info.json", GAME_FILE="inventoryInfo.json"):
+def setup(bot):
     #Code for managing roles
     @bot.slash_command(name='role', description="Manage confessional roles.")
     async def role(ctx):
