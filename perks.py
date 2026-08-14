@@ -208,3 +208,47 @@ class FreakishNature(attr_classes.Perk):
                 player.luck = player.luck // 2
 
         luck_calc_dict.setdefault(self.owner).setdefault(attr_classes.LuckCalcOrder.FINAL, []).append(freakish_nature_luck)
+
+class BankLoans(attr_classes.Perk):
+    def set_coin_functions(self, coin_calc_dict) -> None:
+
+        def bank_loans_coin(player: attr_classes.Player, alliances: dict[str, list[attr_classes.Player]]) -> None:
+            loans = player.inventory.get_section("Loans")
+            if loans is None:
+                return
+            if "on" not in [x.lower() for x in loans.contents]:
+                return
+            effected_players = []
+            for alliance_name, members in alliances.items():
+                if player in members:
+                    for member in members:
+                        if member not in effected_players:
+                            effected_players.append(member)
+            for effected_player in effected_players:
+                effected_player.calced_coins = int(effected_player.calced_coins * 1.2)
+        
+        coin_calc_dict.setdefault(self.owner).setdefault(attr_classes.CoinCalcOrder.POST_STATUSES, []).append(bank_loans_coin)
+
+class Greedy(attr_classes.Perk):
+    def set_coin_functions(self, coin_calc_dict) -> None:
+
+        def greedy_coin(player: attr_classes.Player, alliances: dict[str, list[attr_classes.Player]]) -> None:
+            loans = player.inventory.get_section("Greedy")
+            if loans is None:
+                return
+            if "on" not in [x.lower() for x in loans.contents]:
+                return
+            effected_players = []
+            player_alignment = player.get_alignment()
+            for alliance_name, members in alliances.items():
+                if player in members:
+                    for member in members:
+                        if member not in effected_players:
+                            effected_players.append(member)
+            for effected_player in effected_players:
+                if effected_player.get_alignment() != player_alignment:
+                    player.calced_coins += effected_player.calced_coins
+                    effected_player.calced_coins = 0
+        
+        coin_calc_dict.setdefault(self.owner).setdefault(attr_classes.CoinCalcOrder.FINAL, []).append(greedy_coin)
+

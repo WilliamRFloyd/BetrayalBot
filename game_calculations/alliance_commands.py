@@ -37,7 +37,7 @@ def determine_alliances(server: disnake.Guild) -> dict:
 
 def setup(bot):
     @bot.slash_command(name='check_alliances', description="Checks what the bot thinks the alliances are.")
-    #@commands.default_member_permissions(administrator=True)
+    @commands.default_member_permissions(administrator=True)
     async def check_alliances(ctx):
         check_active_game(ctx.guild)
         alliances = determine_alliances(ctx.guild)

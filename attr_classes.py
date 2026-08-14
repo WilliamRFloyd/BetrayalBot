@@ -16,6 +16,12 @@ class LuckCalcOrder(Enum):
     POST_STATUSES = 3 #Calculates after statuses are applied
     FINAL = 4 #Final things, like Freakish Nature setting luck to 0
 
+class CoinCalcOrder(Enum):
+    COIN_CALC = 0
+    STATUSES = 2
+    POST_STATUSES = 3
+    FINAL = 4
+
 class PlayerStatus(Enum):
     ALIVE = 0
     DEAD = 1
@@ -23,7 +29,11 @@ class PlayerStatus(Enum):
     NULL = 3
 
 perks_to_sections: dict[str: [str, str]] = {
-    "Golden Gavel": ["GG", "number"]
+    "Golden Gavel": ["GG", "number"],
+    "Tradesman": ["Tradesman", "number"],
+    "Gasoline Fumes": ["Doused", "list"],
+    "Bank Loans": ["Loans", "list"],
+    "Greedy": ["Greedy", "list"]
 }
 
 class Saveable:
@@ -60,6 +70,9 @@ class Perk(Saveable):
         self.upgrade = upgrade
 
     def set_luck_functions(self, luck_calc_dict: dict["Player", dict]) -> None:
+        pass # To be implemented in subclasses
+
+    def set_coin_functions(self, coin_calc_dict: dict["Player", dict]) -> None:
         pass # To be implemented in subclasses
 
     def save_data(self):

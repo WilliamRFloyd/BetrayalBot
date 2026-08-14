@@ -29,11 +29,13 @@ bot = commands.Bot(command_prefix='/', intents=intents, case_insensitive=True)
 import role_slash_commands
 import game_calculations.luck_slash_commands as luck_slash_commands
 import game_calculations.alliance_commands as alliance_commands
+import game_calculations.coin_slash_commands as coin_slash_commands
 import info_server
 from game_calculations.alliance_commands import determine_alliances, set_player_statuses
 role_slash_commands.setup(bot)
 luck_slash_commands.setup(bot)
 alliance_commands.setup(bot)
+coin_slash_commands.setup(bot)
 info_server.setup(bot, INFO_FILE)
 
 #Rolls a random item based off luck/rarity and returns it
@@ -939,39 +941,13 @@ async def send(ctx):
 
 @send.sub_command(name="coins", description='Shows a list of how many coins each confessional should get, and shows button to approve it.')
 async def send_coins(ctx):
-    alliances = determine_alliances(ctx.guild)
+    coin_slash_commands.perform_coin_calculation(determine_alliances(ctx.guild))
 
-    coinString = "Calculated Coins:\n"
-    for player in Data.game_data.players:
-        if not player.can_gain() or player.inventory is None:
-            continue
-
-        confCoins = 200
-        bonus = player.inventory.get_section("bonus").contents
-        confCoins += bonus * 2
-        
-        for allianceName, members in alliances.items():
-            if player in members:
-                numMembers = len(members)
-                if numMembers == 2:
-                    confCoins += 20
-                elif numMembers == 3:
-                    confCoins += 40
-                elif numMembers >= 4:
-                    confCoins += 100
-
-        statuses = [x.lower() for x in player.inventory.get_section("status").contents]
-        if "lucky" in statuses:
-            confCoins *= 1.5
-        if "unlucky" in statuses:
-            confCoins *= .5 
-        player.calced_coins = int(confCoins)
-        coinString += f'{player.conf_name}: {int(confCoins)}\n'
-    
-    save_game_data()
+    coinString = coin_slash_commands.make_coin_string()
+            
     await ctx.send(coinString, components=[
-            disnake.ui.Button(label="Distribute", style=disnake.ButtonStyle.success, custom_id="send_coins"),
-        ])
+        disnake.ui.Button(label="Distribute", style=disnake.ButtonStyle.success, custom_id="send_coins"),
+    ])
 
 @send.sub_command(name="carepackages", description='Shows a list of how what carepackage each confessional should get, and shows button to approve it.')
 async def send_carepackages(ctx):
