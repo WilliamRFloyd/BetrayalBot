@@ -90,7 +90,7 @@ def setup(bot):
 
     @coin.sub_command(name='calculate', description="Calculates coin gain for each confessional based on their allies.")
     async def coin_calculate(ctx):
-        perform_coin_calculation()
+        perform_coin_calculation(determine_alliances(ctx.guild))
 
         await ctx.send("Coin calculation complete.")
 

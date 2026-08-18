@@ -680,18 +680,21 @@ async def clear_all_invs(ctx):
             continue
         channel = ctx.guild.get_channel(player.channel_id)
         if channel is not None:
-            await inventories(channel, "delete")
+            await inventories(channel, "forget")
 
     save_game_data()
     await ctx.edit_original_response("Inventories cleared.")
 
-@all_invs.sub_command(name='create', description="Creates blank inventories for all confessionals without one.")
+@all_invs.sub_command(name='create', description="Creates blank inventories for all active confessionals without one.")
 async def create_all_invs(ctx):
     await ctx.response.defer()
     check_active_game(ctx.guild)
+    set_player_statuses(ctx.guild)
 
     for player in Data.game_data.players:
         if player.inventory is not None:
+            continue
+        if not player.in_play():
             continue
         channel = ctx.guild.get_channel(player.channel_id)
         if channel is not None:
