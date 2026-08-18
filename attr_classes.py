@@ -31,9 +31,10 @@ class PlayerStatus(Enum):
 perks_to_sections: dict[str: [str, str]] = {
     "Golden Gavel": ["GG", "number"],
     "Tradesman": ["Tradesman", "number"],
+    "Corruption": ["Corruption", "number"],
     "Gasoline Fumes": ["Doused", "list"],
     "Bank Loans": ["Loans", "list"],
-    "Greedy": ["Greedy", "list"]
+    "Greedy": ["Greedy", "list"],
 }
 
 class Saveable:

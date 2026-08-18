@@ -146,6 +146,18 @@ class Tradesman(attr_classes.Perk):
         
         luck_calc_dict.setdefault(self.owner).setdefault(attr_classes.LuckCalcOrder.PRE_STATUSES, []).append(tradesman_luck)
 
+class Corruption(attr_classes.Perk):
+    def set_luck_functions(self, luck_calc_dict: dict) -> None:
+        def corruption_luck(player: attr_classes.Player, alliances: dict[str, list[attr_classes.Player]], luck_calc_dict: dict, alignment_amount: dict) -> None:
+            if player.inventory is None:
+                return
+            corruption_section = player.inventory.get_section("Corruption")
+            if corruption_section is None:
+                return
+            player.luck += corruption_section.contents
+
+        luck_calc_dict.setdefault(self.owner).setdefault(attr_classes.LuckCalcOrder.PRE_STATUSES, []).append(corruption_luck)
+
 class EvilAura(attr_classes.Perk):
     def set_luck_functions(self, luck_calc_dict: dict) -> None:
         #+2 Luck if no one in your alliances has an opposite alignment

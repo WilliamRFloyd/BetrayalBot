@@ -5285,14 +5285,14 @@
             "effect": "When in an alliance, all members gain x1.2 more coins. Also allows you to transfer an amount of coins to anyone. Anyone in the Banker's alliance can also transfer money to each other. Banker will know who passes what amounts to who and Banker can turn this on or off.",
             "upgrades": [],
             "degrades": [],
-            "additionalInfo": ""
+            "additionalInfo": "Bot will automatically account for the bonus if the holder has an inventory section called 'Loans' which is set to 'On'"
         },
         "Greedy": {
             "role": "Banker",
             "effect": "If in an alliance, you may take all coins that non-aligned allies get. If 50% of living player pay payday, you gain elimination immunity for next elimination, if 75% pay, also gain +2 vote power for upcoming elimination.",
             "upgrades": [],
             "degrades": [],
-            "additionalInfo": ""
+            "additionalInfo": "Bot will automatically account for the theft if the holder has an inventory section called 'Greedy' which is set to 'On'"
         },
         "Shopkeeper": {
             "role": "Banker",
