@@ -95,9 +95,19 @@ class BardsCharisma(attr_classes.Perk):
         #*2 Luck
         def bards_charisma_luck(player: attr_classes.Player, alliances: dict[str, list[attr_classes.Player]], luck_calc_dict: dict, alignment_amount: dict) -> None:
             player.luck *= 2
-            
         
         luck_calc_dict.setdefault(self.owner).setdefault(attr_classes.LuckCalcOrder.POST_STATUSES, []).append(bards_charisma_luck)
+
+    def set_coin_functions(self, coin_calc_dict):
+        #*1.5 Coins if not Lucky (technically it's supposed to be lucky doesn't apply but it works out the same because they're both 1.5x)
+        def bards_charisma_coin(player: attr_classes.Player, alliances: dict[str, list[attr_classes.Player]]) -> None:
+            statuses = player.inventory.get_section("status")
+            if statuses is not None:
+                if "lucky" in [x.lower() for x in statuses.contents]:
+                    return
+            player.calced_coins *= 1.5
+
+        coin_calc_dict.setdefault(self.owner).setdefault(attr_classes.CoinCalcOrder.POST_STATUSES, []).append(bards_charisma_coin)
     
 class Loveable(attr_classes.Perk):
     def set_luck_functions(self, luck_calc_dict: dict) -> None:
