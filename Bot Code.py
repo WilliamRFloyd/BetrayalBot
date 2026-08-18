@@ -679,7 +679,8 @@ async def clear_all_invs(ctx):
         if player.inventory is None:
             continue
         channel = ctx.guild.get_channel(player.channel_id)
-        await inventories(channel, "delete")
+        if channel is not None:
+            await inventories(channel, "delete")
 
     save_game_data()
     await ctx.edit_original_response("Inventories cleared.")
@@ -693,7 +694,8 @@ async def create_all_invs(ctx):
         if player.inventory is not None:
             continue
         channel = ctx.guild.get_channel(player.channel_id)
-        await inventories(channel, "create")
+        if channel is not None:
+            await inventories(channel, "create")
 
     save_game_data()
     await ctx.edit_original_response("Inventories created.")
