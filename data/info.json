@@ -1958,12 +1958,18 @@
             "rarity": "Common",
             "exclusive": false,
             "removed": false,
-            "effect": "You will know everything your target does and who to for 24 hours from use, including self visits. Does not include perk-based actions.",
-            "upgrades": [],
-            "degrades": [],
+            "effect": "Pick a player: for 24 hours, learn all visits they do and to who, including self visits.",
+            "upgrades": [
+                "Pick a player: for 48 hours, learn all visits they do and to who, including self visits.", 
+                "Pick 2 players: for 24 hours, learn all visits they do and to who, including self visits."
+            ],
+            "degrades": [
+                "Pick a player: for 24 hours, learn all visits they do and to who.",
+                "Pick a player: for 12 hours, learn all visits they do and to who, including self visits."
+            ],
             "targeting": "Single",
             "actionTypes": ["Neutral", "Information"],
-            "additionalInfo": ""
+            "additionalInfo": "Usable on Dead"
         },
         "Spy": {
             "role": "Agent",
