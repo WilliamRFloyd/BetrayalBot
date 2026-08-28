@@ -881,7 +881,7 @@ async def delete(ctx, channel: str):
         return
 
     player = Data.game_data.get_player(channel)
-    Data.game_data.players.pop(player)
+    Data.game_data.players.remove(player)
 
     save_game_data()
     await ctx.send(f'Confessional "{channel}" has been executed for its crimes.')
