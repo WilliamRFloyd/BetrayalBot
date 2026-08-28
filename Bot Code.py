@@ -23,6 +23,7 @@ load_dotenv()
 intents = disnake.Intents.default()
 intents.message_content = True
 intents.members = True
+intents.guilds = True
 token = os.getenv('DISCORD_TOKEN')
 bot = commands.Bot(command_prefix='/', intents=intents, case_insensitive=True)
 
@@ -871,6 +872,20 @@ async def clearRoles(ctx):
                 await channel.delete()
         print("Channels done")
 
+@bot.slash_command(name='delete', description="Deletes a confessional.")
+@commands.default_member_permissions(administrator=True)
+async def delete(ctx, channel: str):
+    check_active_game(ctx.guild)
+    if not Data.game_data.has_player(channel):
+        await ctx.send(f'No confessional found for "{channel}".')
+        return
+
+    player = Data.game_data.get_player(channel)
+    Data.game_data.players.pop(player)
+
+    save_game_data()
+    await ctx.send(f'Confessional "{channel}" has been executed for its crimes.')
+
 #Code for managing confessional links
 @bot.slash_command(name='link', description="Manage links from users to their confessional.")
 @commands.default_member_permissions(administrator=True)
@@ -1107,27 +1122,6 @@ async def distributeAas(server):
         channel = server.get_channel(player.channel_id)
         await inventories(channel, "coins", "add", "0") #To update inventory
         await channel.send(f'{participant.mention} You got {", ".join(player.calced_aas)}')
-
-'''
-Planned Commands:
-/alias - Slash command base for managing confessional aliases (aliases are not cleared between games). Admin only.
-    add {alias} {user} - Adds an alias for the specified user. Returns an error message if that alias is already taken.
-    remove {alias} - Removes the specified alias
-    view - Sends a message of the current aliases in a {alias}: {username} format
-    clear - Clears all aliases
-
-/send - Slash command base for automatically doing coins/carepackages/etc. Admin only
-    coins - Shows a list of how many coins the bot thinks each confessional should get, and shows buttons for the host to approve it. If approved, the bot will distribute it to each confessional and alert the players.
-    carepackages - Shows a list of rolled carepackages and luck for each confessional, and shows buttons for the host to either approve or reject it. If approved, the bot will distribute it to each confessional and alert the players.
-    items - Shows a list of rolled item rains and luck for each confessional, and shows buttons for the host to either approve or reject it. If approved, the bot will distributetribute it to ea it to each confessional and alert the players.
-    aas - Shows a list of rolled aas and luck for each confessional, and shows buttons for the host to either approve or reject it. If approved, the bot will disch confessional and alert the players.
-    view {coins/aas/items} - Views last rolled {}
-    last {coins/aas/items} - Adds last rolled {} to each person's inventory
-    undo {coins/aas/items} - Removes the latest rolled {} from each person's inventory
-    add {coins/aas/items} {player} {int for coins or string for aa/item} - Adds {} to the specified player's confessional {}
-    remove {coins/aas/items} {player} {int for coins or string for aa/item} - Remoes {} from the specified player's confessional {}
-'''
-
 
 
 #Random Stuff
